@@ -1,7 +1,9 @@
 import { discoverModules } from '../discovery/fsDiscovery';
 import { ModuleRegistryService } from '../registry/moduleRegistry';
-const registry = new ModuleRegistryService();
+import { validateAndLoadModule, loadModule } from '../lifecycle/loadModule';
+import { LifecycleStateMachine } from '../lifecycle/stateMachine';
 export const moduleRoutes = async (server) => {
+    const registry = new ModuleRegistryService();
     server.post('/modules/discover', async (request, reply) => {
         const { rootPath } = request.body;
         if (!rootPath) {
@@ -21,6 +23,36 @@ export const moduleRoutes = async (server) => {
             return reply.status(404).send({ error: 'Module not found' });
         }
         return module;
+    });
+    server.post('/modules/:id/validate', async (request, reply) => {
+        const { id } = request.params;
+        const module = await registry.get(id);
+        if (!module) {
+            return reply.status(404).send({ error: 'Module not found' });
+        }
+        const allModules = registry.list();
+        const result = await validateAndLoadModule(module, allModules);
+        if (!result.valid) {
+            return reply.status(400).send({ valid: false, error: result.error });
+        }
+        registry.setState(id, 'validated');
+        return { valid: true, state: 'validated' };
+    });
+    server.post('/modules/:id/load', async (request, reply) => {
+        const { id } = request.params;
+        const module = await registry.get(id);
+        if (!module) {
+            return reply.status(404).send({ error: 'Module not found' });
+        }
+        const stateMachine = new LifecycleStateMachine('validated');
+        try {
+            const result = await loadModule(module, stateMachine);
+            registry.setState(id, stateMachine.current());
+            return result;
+        }
+        catch (err) {
+            return reply.status(500).send({ error: err.message });
+        }
     });
 };
 //# sourceMappingURL=moduleRoutes.js.map

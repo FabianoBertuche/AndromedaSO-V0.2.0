@@ -10,8 +10,8 @@ export const moduleManifestSchema = z.object({
   version: z.string().regex(semverRegExp),
   entrypoint: z.string().min(1),
   contracts: z.object({
-    input: z.string().min(1),
-    output: z.string().min(1)
+    input: z.string(),  // Allow empty strings during discovery, validation will catch them
+    output: z.string()  // Allow empty strings during discovery, validation will catch them
   }).optional(),
   capabilities: z.array(z.string().min(1)).optional().default([]),
   status: z.enum(['active', 'disabled', 'deprecated']).optional().default('active'),

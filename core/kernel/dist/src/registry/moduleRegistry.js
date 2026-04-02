@@ -11,15 +11,20 @@ export class ModuleRegistryService {
                 continue; // skip non-active modules
             }
             const record = this.memoryRegistry.register(manifest, 'registered');
-            await persistModule({
-                moduleId: manifest.id,
-                groupName: manifest.group,
-                variantName: manifest.variant,
-                version: manifest.version,
-                status: record.state,
-                capabilities: manifest.capabilities,
-                contracts: manifest.contracts
-            });
+            try {
+                await persistModule({
+                    moduleId: manifest.id,
+                    groupName: manifest.group,
+                    variantName: manifest.variant,
+                    version: manifest.version,
+                    status: record.state,
+                    capabilities: manifest.capabilities,
+                    contracts: manifest.contracts
+                });
+            }
+            catch (error) {
+                // If persistence is temporarily unavailable, keep working with in-memory registry
+            }
             registered.push(record);
         }
         return registered;

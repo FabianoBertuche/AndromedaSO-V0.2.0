@@ -5,8 +5,13 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import { buildServer } from '../../src/server';
 let server;
-beforeEach(() => { server = buildServer(); });
-afterEach(async () => { await server.close(); });
+beforeEach(async () => {
+    server = buildServer();
+    await server.ready();
+});
+afterEach(async () => {
+    await server.close();
+});
 describe('User Story 1: Module Discovery and Registration APIs', () => {
     it('registers a valid module from a single root', async () => {
         const tmp = await fs.mkdtemp(path.join(os.tmpdir(), 'andromeda-story1-'));
@@ -31,6 +36,9 @@ describe('User Story 1: Module Discovery and Registration APIs', () => {
         await fs.writeFile(moduleA + '/module.manifest.yaml', `id: mod-a\nname: Module A\ngroup: group1\nvariant: v1\nversion: 1.0.0\nentrypoint: ./index.js\ncontracts:\n  input: ./contracts/input.ts\n  output: ./contracts/output.ts\ncapabilities:\n  - run\nstatus: active\ncritical: false\ndependencies: []\n`);
         await fs.writeFile(moduleB + '/module.manifest.yaml', `id: mod-b\nname: Module B\ngroup: group2\nvariant: v2\nversion: 1.0.0\nentrypoint: ./index.js\ncontracts:\n  input: ./contracts/input.ts\n  output: ./contracts/output.ts\ncapabilities:\n  - run\nstatus: active\ncritical: false\ndependencies: []\n`);
         const res = await request(server.server).post('/api/modules/discover').send({ rootPath: tmp });
+        if (res.status !== 200) {
+            console.error('DISCOVER FAILED', res.body);
+        }
         expect(res.status).toBe(200);
         expect(res.body.registered).toHaveLength(2);
         const ids = res.body.registered.map((m) => m.id);

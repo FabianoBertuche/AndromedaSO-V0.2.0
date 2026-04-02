@@ -1,0 +1,26 @@
+
+> andromeda-core-kernel@0.1.0 test
+> vitest run --run --testTimeout 30000
+
+
+[1m[46m RUN [49m[22m [36mv4.1.2 [39m[90mC:/FB/Andromeda SO V0.2.0/core/kernel[39m
+
+ [32mÔ£ô[39m tests/unit/registry/inMemoryRegistry.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/validation/dependencyValidator.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts/moduleManifest.spec.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/contracts/moduleContract.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/lifecycle/stateMachine.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/lifecycle/stateMachine.service.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/validation/manifestParser.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/discovery/fsDiscovery.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/userStory1.integration.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 129[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/userStory2.integration.spec.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 178[2mms[22m[39m
+ [32mÔ£ô[39m tests/integration/harness.integration.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 3533[2mms[22m[39m
+     [33m[2mÔ£ô[22m[39m starts PostgreSQL container and executes a query [33m 2764[2mms[22m[39m
+     [33m[2mÔ£ô[22m[39m starts Redis container and performs key operations [33m 768[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m      Tests [22m [1m[32m28 passed[39m[22m[90m (28)[39m
+[2m   Start at [22m 15:21:15
+[2m   Duration [22m 4.28s[2m (transform 565ms, setup 0ms, import 2.30s, tests 3.93s, environment 1ms)[22m
+
