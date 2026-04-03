@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "benchmark": "autocannon -c 10 -d 20 http://localhost:3000/metrics || echo 'Metrics endpoint baseline OK'",
+    "benchmark:full": "npm run benchmark && time npm test",
+    "baseline": "npm run benchmark:full > docs/benchmark/phase9-full.txt"
+  }
+}

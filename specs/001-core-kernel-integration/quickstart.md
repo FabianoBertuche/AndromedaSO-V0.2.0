@@ -52,3 +52,25 @@ npm run start:core-kernel
 ## Notas
 - Para desenvolvimento rápido, use `npm run dev` com `NODE_ENV=development` (não padrão de produção).
 - Para reset de estado: `docker compose -f docker-compose.yml down -v` e reiniciar as dependências.
+
+## Benchmark e validação de critérios
+
+Executar benchmark de performance da feature:
+
+```bash
+npm test -- tests/integration/performance.benchmark.spec.ts
+```
+
+Este benchmark valida:
+- discovery + registro em escala (100 módulos)
+- taxa de sucesso de validação de contratos
+- tempo médio de carregamento
+- consistência de estado no ciclo de vida
+
+Relatório consolidado:
+- `specs/001-core-kernel-integration/hardening-report.md`
+
+Referências arquiteturais:
+- `specs/001-core-kernel-integration/plan.md`
+- `specs/001-core-kernel-integration/research.md`
+- `.specify/memory/constitution.md`

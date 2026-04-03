@@ -1,9 +1,13 @@
 import { readdir, stat } from 'fs/promises';
 import { join } from 'path';
+import pino from 'pino';
 import { parseModuleManifestFile } from '../validation/manifestParser';
 import { ModuleManifest } from '../contracts/moduleManifest.schema';
 
+const logger = pino({ name: 'fsDiscovery' });
+
 export async function findManifestFiles(dir: string): Promise<string[]> {
+  logger.info({ dir }, 'Starting manifest file discovery');
   const entries = await readdir(dir, { withFileTypes: true });
   const manifestPaths: string[] = [];
 
@@ -16,21 +20,30 @@ export async function findManifestFiles(dir: string): Promise<string[]> {
     }
 
     if (entry.isFile() && entry.name.toLowerCase() === 'module.manifest.yaml') {
+      logger.debug({ filePath: entryPath }, 'Found manifest file');
       manifestPaths.push(entryPath);
     }
   }
 
+  logger.info({ count: manifestPaths.length, dir }, 'Completed manifest file discovery');
   return manifestPaths;
 }
 
 export async function discoverModules(rootDir: string): Promise<ModuleManifest[]> {
+  logger.info({ rootDir }, 'Starting module discovery');
   const manifestFiles = await findManifestFiles(rootDir);
   const manifests: ModuleManifest[] = [];
 
   for (const filePath of manifestFiles) {
-    const manifest = await parseModuleManifestFile(filePath);
-    manifests.push(manifest);
+    try {
+      const manifest = await parseModuleManifestFile(filePath);
+      manifests.push(manifest);
+      logger.info({ moduleId: manifest.id, filePath }, 'Parsed module manifest');
+    } catch (err) {
+      logger.error({ filePath, error: (err as any).message }, 'Failed to parse manifest file');
+    }
   }
 
+  logger.info({ count: manifests.length, rootDir }, 'Completed module discovery');
   return manifests;
 }

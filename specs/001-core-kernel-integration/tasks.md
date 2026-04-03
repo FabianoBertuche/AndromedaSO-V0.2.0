@@ -43,40 +43,40 @@
 
 ## Phase 5: User Story 2 — Module Validation and Loading (P2)
 
-- [ ] T027 Write integration tests for contract validation, incompatible variant rejection and invalid module rejection.
-- [ ] T028 Implement contract validator service in `core/kernel/src/validation/contractValidator.ts`.
-- [ ] T029 Implement validate-and-load workflow in `core/kernel/src/lifecycle/loadModule.ts`.
-- [ ] T030 Implement API endpoints `POST /api/modules/:id/validate` and `POST /api/modules/:id/load`.
-- [ ] T031 Enforce critical-module blocking rules when validation or loading fails.
+- [x] T027 Write integration tests for contract validation, incompatible variant rejection and invalid module rejection.
+- [x] T028 Implement contract validator service in `core/kernel/src/validation/contractValidator.ts`.
+- [x] T029 Implement validate-and-load workflow in `core/kernel/src/lifecycle/loadModule.ts`.
+- [x] T030 Implement API endpoints `POST /api/modules/:id/validate` and `POST /api/modules/:id/load`.
+- [x] T031 Enforce critical-module blocking rules when validation or loading fails.
 
 ## Phase 6: User Story 3 — Module Lifecycle Management (P3)
 
-- [ ] T032 Write end-to-end tests for lifecycle flow: discover → validate → load → initialize → start → stop.
-- [ ] T033 Implement lifecycle orchestration service for initialize, start, stop and failure handling.
-- [ ] T034 Implement API endpoints `POST /api/modules/:id/start`, `POST /api/modules/:id/stop`, `GET /api/modules/:id/status`.
-- [ ] T035 Persist lifecycle events to `lifecycle_events` table and synchronize runtime cache state.
-- [ ] T036 Add safeguards for timeouts, retry limits, explicit dev mode and prevention of implicit loops.
+- [x] T032 Write end-to-end tests for lifecycle flow: discover → validate → load → initialize → start → stop.
+- [x] T033 Implement lifecycle orchestration service for initialize, start, stop and failure handling.
+- [x] T034 Implement API endpoints `POST /api/modules/:id/start`, `POST /api/modules/:id/stop`, `GET /api/modules/:id/status`.
+- [x] T035 Persist lifecycle events to `lifecycle_events` table and synchronize runtime cache state.
+- [x] T036 Add safeguards for timeouts, retry limits, explicit dev mode and prevention of implicit loops.
 
 ## Phase 7: User Story 4 — Coherent System Growth (P1)
 
-- [ ] T037 Write tests for adding a new module type via contracts without breaking existing modules.
-- [ ] T038 Implement core plugin extension interface in `core/kernel/src/contracts/corePluginInterface.ts`.
-- [ ] T039 Implement contract registration extension points for future module types.
-- [ ] T040 Validate retrocompatibility of the extension mechanism with existing module flows.
+- [x] T037 Write tests for adding a new module type via contracts without breaking existing modules.
+- [x] T038 Implement core plugin extension interface in `core/kernel/src/contracts/corePluginInterface.ts`.
+- [x] T039 Implement contract registration extension points for future module types.
+- [x] T040 Validate retrocompatibility of the extension mechanism with existing module flows.
 
 ## Phase 8: Observability and Safety
 
-- [ ] T041 Implement structured logging with pino across discovery, registry, validation and lifecycle services.
-- [ ] T042 Implement metrics endpoint and runtime counters for registry size, lifecycle transitions and failed validations.
-- [ ] T043 Implement audit trail persistence for validation decisions and lifecycle transitions.
-- [ ] T044 Add detection and alerts for retry storms, slow startup and registry growth thresholds.
+- [x] T041 Implement structured logging with pino across discovery, registry, validation and lifecycle services.
+- [x] T042 Implement metrics endpoint and runtime counters for registry size, lifecycle transitions and failed validations.
+- [x] T043 Implement audit trail persistence for validation decisions and lifecycle transitions.
+- [x] T044 Add detection and alerts for retry storms, slow startup and registry growth thresholds.
 
 ## Phase 9: Hardening and Documentation
 
-- [ ] T045 Write performance benchmark for discovery, validation and loading with 100 modules.
-- [ ] T046 Validate success criteria against benchmark results and record findings.
-- [ ] T047 Write/update feature documentation under `specs/001-core-kernel-integration/` and project docs referencing constitution, architecture decisions and quickstart.
-- [ ] T048 Review code and tests for forbidden circular dependencies and architectural drift.
+- [x] T045 Write performance benchmark for discovery, validation and loading with 100 modules.
+- [x] T046 Validate success criteria against benchmark results and record findings.
+- [x] T047 Write/update feature documentation under `specs/001-core-kernel-integration/` and project docs referencing constitution, architecture decisions and quickstart.
+- [x] T048 Review code and tests for forbidden circular dependencies and architectural drift.
 
 ## Dependencies & Execution Order
 
