@@ -23,6 +23,20 @@ export function buildServer(logger = true) {
       }
     };
   });
+  server.get('/api/status', async () => {
+    const modules = runtimeRegistry.list();
+    const activeModules = modules.filter((m) => m.state === 'running').map((m) => m.id);
+    const metricSnapshot = metrics.getMetrics();
+
+    return {
+      status: 'healthy',
+      registrySize: modules.length,
+      activeModules,
+      metrics: {
+        retry_storm_total: metricSnapshot.prometheus.retry_storm_total
+      }
+    };
+  });
   server.register(moduleRoutes as any, { prefix: '/api', registry: runtimeRegistry });
   server.register(evolutionRoutes);
   server.register(orchestratorRoutes);
