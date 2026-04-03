@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import { moduleRoutes } from './api/moduleRoutes';
 import { evolutionRoutes } from './api/evolutionRoutes';
 import { orchestratorRoutes } from './routes/orchestratorRoutes';
+import { modelCenterRoutes } from './routes/modelCenterRoutes';
 import { metrics } from './config/metrics';
 import { ModuleRegistryService } from './registry/moduleRegistry';
 
@@ -38,6 +39,7 @@ export function buildServer(logger = true) {
     };
   });
   server.register(moduleRoutes as any, { prefix: '/api', registry: runtimeRegistry });
+  server.register(modelCenterRoutes, { prefix: '/api' });
   server.register(evolutionRoutes);
   server.register(orchestratorRoutes);
   return server;

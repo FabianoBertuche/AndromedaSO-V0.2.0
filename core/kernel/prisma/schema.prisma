@@ -34,3 +34,43 @@ model AgentMultiTask {
   @@index([agentId])
   @@index([taskId])
 }
+
+model Provider {
+  id          String             @id @default(cuid())
+  name        String             @unique
+  displayName String
+  apiBase     String?
+  apiKeyEnc   String?
+  health      String
+  models      ModelCatalogItem[]
+  createdAt   DateTime           @default(now())
+}
+
+model ModelCatalogItem {
+  id          String    @id @default(cuid())
+  providerId  String
+  provider    Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  modelId     String
+  displayName String
+  capability  String
+  score       Float     @default(0)
+  latencyMs   Int       @default(0)
+  costUSD     Float?
+  createdAt   DateTime  @default(now())
+
+  @@index([providerId])
+  @@index([modelId])
+}
+
+model ModelBenchmarkResult {
+  id        String   @id @default(cuid())
+  modelId   String
+  taskType  String
+  score     Float
+  latencyMs Int
+  tokensIn  Int
+  tokensOut Int
+  costUSD   Float?
+  success   Boolean  @default(true)
+  executedAt DateTime @default(now())
+}

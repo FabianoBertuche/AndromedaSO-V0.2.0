@@ -25,3 +25,27 @@ Após validar esta constituição:
 2. Criar a primeira spec do core registry/kernel integration.
 3. Depois criar specs de providers e canais.
 4. Só então seguir para o módulo de agentes.
+
+## Execução local (sem conflito com Docker prod)
+
+Se o stack de produção estiver ativo (`docker-compose.prod.yml`), as portas padrão podem ficar ocupadas.
+Use os scripts locais abaixo:
+
+1. Backend kernel (porta `4001`):
+
+```bash
+cd core/kernel
+npm run start:local
+```
+
+2. Frontend (porta `5175`, proxy para backend local):
+
+```bash
+cd frontend
+npm run dev:local
+```
+
+Endpoints úteis:
+
+- Backend health: `http://localhost:4001/health`
+- Frontend local: `http://localhost:5175/`

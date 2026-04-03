@@ -86,6 +86,14 @@
 - [x] T064 Implement orchestrator runtime visibility endpoints (`GET /tasks/:id/orchestration`, `GET /orchestrator/status`) and SSE stream.
 - [x] T065 Implement frontend orchestrator UI (task tree + realtime chat + team status + fallback surface) and MVP11 integration tests.
 
+## Phase 11: MVP04 Model Center and Router Intelligence
+
+- [x] T066 Add provider/model/benchmark persistence models in Prisma schema and migration artifacts.
+- [x] T067 Implement `ModelProviderService` with provider create, model sync, health check and benchmark suite.
+- [x] T068 Expand Model Center routes with providers sync/health, benchmark and router decision history.
+- [x] T069 Implement frontend pages (`ModelProviders`, `RouterIntelligence`) and `LLMTestbed` component with neon matrix UI.
+- [x] T070 Add integration tests for provider flow (`POST /providers -> sync -> infer -> benchmark`) and router coding selection.
+
 ## Dependencies & Execution Order
 
 - Phase 1 must complete before all other phases.

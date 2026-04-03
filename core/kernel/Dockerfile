@@ -12,6 +12,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+RUN apk add --no-cache curl
+
 COPY package*.json ./
 RUN npm install --omit=dev && npm install -g tsx
 

@@ -10,11 +10,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "start": "tsx src/index.ts",
+    "start:local": "set PORT=4001&& tsx src/index.ts",
     "migrate": "drizzle-kit migrate",
     "benchmark": "autocannon -c 10 -d 20 http://localhost:4000/api/metrics",
     "benchmark:full": "npm run benchmark"
   },
   "dependencies": {
+    "@prisma/client": "^6.6.0",
     "@types/pg": "^8.20.0",
     "dotenv": "^16.1.4",
     "drizzle-orm": "^0.16.1",
@@ -36,6 +38,7 @@
     "autocannon": "^8.0.0",
     "drizzle-kit": "^0.31.10",
     "eslint": "^8.57.0",
+    "prisma": "^6.6.0",
     "supertest": "^7.2.2",
     "testcontainers": "^11.13.0",
     "ts-node": "^10.9.1",

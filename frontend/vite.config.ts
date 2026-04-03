@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const apiTarget = process.env.VITE_API_TARGET || 'http://localhost:4000';
+
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -8,31 +10,31 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/status': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/agents': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/dashboard': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/tasks': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/eval': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       },
       '/orchestrator': {
-        target: 'http://localhost:4000',
+        target: apiTarget,
         changeOrigin: true
       }
     }
