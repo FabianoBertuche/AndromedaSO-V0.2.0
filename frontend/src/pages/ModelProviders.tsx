@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { createProvider, getProviderHealth, listProviders, syncProviderModels } from '../api/kernel';
+import { FormEvent, useState } from 'react';
+import { useCreateProvider, useProviderHealthCheck, useProviders, useSyncProviderModels } from '../hooks/useProviders';
 import type { Provider } from '../types/model';
 
 function healthBadge(health: string, latencyMs?: number) {
@@ -13,39 +13,27 @@ function healthBadge(health: string, latencyMs?: number) {
 }
 
 export function ModelProviders() {
-  const [providers, setProviders] = useState<Provider[]>([]);
   const [name, setName] = useState('openai');
   const [displayName, setDisplayName] = useState('OpenAI');
-  const [loading, setLoading] = useState(false);
+  const providersQuery = useProviders();
+  const createProviderMutation = useCreateProvider();
+  const syncProviderMutation = useSyncProviderModels();
+  const healthCheckMutation = useProviderHealthCheck();
 
-  const refresh = async () => {
-    const result = await listProviders();
-    setProviders(result.providers);
-  };
-
-  useEffect(() => {
-    refresh();
-  }, []);
+  const providers: Provider[] = providersQuery.data?.providers ?? [];
+  const loading = createProviderMutation.isPending;
 
   const addProvider = async (event: FormEvent) => {
     event.preventDefault();
-    setLoading(true);
-    try {
-      await createProvider({ name, displayName });
-      await refresh();
-    } finally {
-      setLoading(false);
-    }
+    await createProviderMutation.mutateAsync({ name, displayName });
   };
 
   const syncModels = async (providerId: string) => {
-    await syncProviderModels(providerId);
-    await refresh();
+    await syncProviderMutation.mutateAsync(providerId);
   };
 
   const testHealth = async (providerId: string) => {
-    await getProviderHealth(providerId);
-    await refresh();
+    await healthCheckMutation.mutateAsync(providerId);
   };
 
   return (

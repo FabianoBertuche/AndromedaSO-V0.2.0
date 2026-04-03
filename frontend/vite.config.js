@@ -1,39 +1,44 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-export default defineConfig({
-    plugins: [react()],
-    server: {
-        host: 'localhost',
-        port: 5173,
-        proxy: {
-            '/api': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/status': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/agents': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/dashboard': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/tasks': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/eval': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
-            },
-            '/orchestrator': {
-                target: 'http://localhost:4000',
-                changeOrigin: true
+export default defineConfig(function (_a) {
+    var mode = _a.mode;
+    var env = loadEnv(mode, '.', '');
+    var apiTarget = env.VITE_API_TARGET || 'http://localhost:4000';
+    return {
+        plugins: [react()],
+        server: {
+            host: 'localhost',
+            port: 5173,
+            proxy: {
+                '/api': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/status': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/agents': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/dashboard': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/tasks': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/eval': {
+                    target: apiTarget,
+                    changeOrigin: true
+                },
+                '/orchestrator': {
+                    target: apiTarget,
+                    changeOrigin: true
+                }
             }
         }
-    }
+    };
 });
