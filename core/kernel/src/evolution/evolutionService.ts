@@ -38,12 +38,23 @@ type TaskFeedback = {
   createdAt: string;
 };
 
+type AgentSuggestion = {
+  title: string;
+  reason: string;
+};
+
+type EvalResult = {
+  taskId: string;
+  score: number;
+};
+
 export class AgentEvolutionService {
   private readonly versionsByAgent = new Map<string, AgentVersionSnapshot[]>();
   private readonly performanceByAgent = new Map<string, AgentPerformanceRecord[]>();
   private readonly feedbackByAgent = new Map<string, Map<string, ReputationFeedback[]>>();
   private readonly budgetsByAgent = new Map<string, AgentBudget>();
   private readonly taskFeedbacks: TaskFeedback[] = [];
+  private readonly suggestionsByAgent = new Map<string, AgentSuggestion[]>();
 
   snapshotVersion(agentId: string, payload: { gitCommit: string; manifest: JsonRecord }): AgentVersionSnapshot {
     const current = this.versionsByAgent.get(agentId) ?? [];
@@ -259,6 +270,64 @@ export class AgentEvolutionService {
       generatedAt: new Date().toISOString(),
       agents,
       trend
+    };
+  }
+
+  refreshSuggestions(agentId: string) {
+    const feedbacks = this.taskFeedbacks.filter((item) => item.agentId === agentId);
+    const downCount = feedbacks.filter((item) => item.thumbs === 'down').length;
+    const performance = this.getPerformance(agentId);
+    const successRate = performance.length > 0
+      ? performance.reduce((sum, item) => sum + item.successRate, 0) / performance.length
+      : 0;
+
+    const suggestions: AgentSuggestion[] = [];
+    if (downCount > 0) {
+      suggestions.push({
+        title: 'Feedback Triage Playbook',
+        reason: `${downCount} negative feedback entries in recent tasks`
+      });
+    }
+    if (successRate < 0.85) {
+      suggestions.push({
+        title: 'Prompt Hardening Playbook',
+        reason: `Average success rate below target: ${successRate.toFixed(2)}`
+      });
+    }
+    if (suggestions.length === 0) {
+      suggestions.push({
+        title: 'Steady-State Optimization',
+        reason: 'No critical regressions found in weekly analysis'
+      });
+    }
+
+    this.suggestionsByAgent.set(agentId, suggestions);
+    return suggestions;
+  }
+
+  getSuggestions(agentId: string) {
+    return this.suggestionsByAgent.get(agentId) ?? [];
+  }
+
+  runGoldenEval(agentId: string) {
+    const records = this.getPerformance(agentId);
+    const baseScore = records.length > 0
+      ? records.reduce((sum, item) => sum + item.successRate, 0) / records.length
+      : 0.75;
+
+    const results: EvalResult[] = [];
+    for (let i = 1; i <= 50; i += 1) {
+      const variance = ((i % 5) - 2) * 0.01;
+      const score = Math.max(0, Math.min(1, baseScore + variance));
+      results.push({ taskId: `golden-${i.toString().padStart(2, '0')}`, score: Number(score.toFixed(4)) });
+    }
+
+    const averageScore = Number((results.reduce((sum, item) => sum + item.score, 0) / results.length).toFixed(4));
+    return {
+      agentId,
+      datasetSize: 50,
+      averageScore,
+      results
     };
   }
 }

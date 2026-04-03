@@ -240,4 +240,27 @@ export const evolutionRoutes: FastifyPluginAsync = async (server) => {
 
     return { feedback };
   });
+
+  server.post('/agents/:id/suggestions/refresh', async (request) => {
+    const { id } = request.params as { id: string };
+    const suggestions = agentEvolutionService.refreshSuggestions(id);
+    return { agentId: id, suggestions };
+  });
+
+  server.get('/agents/:id/suggestions', async (request) => {
+    const { id } = request.params as { id: string };
+    return {
+      agentId: id,
+      suggestions: agentEvolutionService.getSuggestions(id)
+    };
+  });
+
+  server.post('/eval/run', async (request, reply) => {
+    const body = request.body as { agentId?: string };
+    if (!body?.agentId) {
+      return reply.status(400).send({ error: 'agentId is required' });
+    }
+
+    return agentEvolutionService.runGoldenEval(body.agentId);
+  });
 };
