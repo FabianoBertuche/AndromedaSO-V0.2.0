@@ -22,7 +22,7 @@ export function buildServer(logger = true) {
       }
     };
   });
-  server.register(moduleRoutes, { prefix: '/api', registry: runtimeRegistry });
+  server.register(moduleRoutes as any, { prefix: '/api', registry: runtimeRegistry });
   server.register(evolutionRoutes);
   return server;
 }
