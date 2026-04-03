@@ -78,6 +78,14 @@
 - [x] T047 Write/update feature documentation under `specs/001-core-kernel-integration/` and project docs referencing constitution, architecture decisions and quickstart.
 - [x] T048 Review code and tests for forbidden circular dependencies and architectural drift.
 
+## Phase 10: MVP11 Multi-Agent Orchestration
+
+- [x] T061 Implement TaskDecomposer service for LLM-like subtask decomposition and `POST /tasks/multi` endpoint.
+- [x] T062 Implement AgentCollaboration message relay via `POST /agents/:id/message` and inbox/message-bus support.
+- [x] T063 Implement ConflictResolution with majority vote and human fallback state propagation.
+- [x] T064 Implement orchestrator runtime visibility endpoints (`GET /tasks/:id/orchestration`, `GET /orchestrator/status`) and SSE stream.
+- [x] T065 Implement frontend orchestrator UI (task tree + realtime chat + team status + fallback surface) and MVP11 integration tests.
+
 ## Dependencies & Execution Order
 
 - Phase 1 must complete before all other phases.

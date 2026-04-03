@@ -1,4 +1,5 @@
 import type { Agent, CostData } from '../types/kernel';
+import type { MultiTaskResponse, OrchestrationDetail, OrchestratorStatus } from '../types/kernel';
 
 export type KernelStatus = {
   status: 'healthy' | 'ok' | 'degraded' | string;
@@ -165,3 +166,41 @@ export async function postTaskFeedback(payload: TaskFeedbackRequest): Promise<{ 
 
   return { ok: true };
 }
+
+export async function createMultiTask(task: string): Promise<MultiTaskResponse> {
+  const response = await fetch('/tasks/multi', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ task })
+  });
+
+  return parseJson<MultiTaskResponse>(response);
+}
+
+export async function fetchOrchestration(taskId: string): Promise<OrchestrationDetail> {
+  const response = await fetch(`/tasks/${encodeURIComponent(taskId)}/orchestration`);
+  return parseJson<OrchestrationDetail>(response);
+}
+
+export async function sendAgentMessage(from: string, to: string, content: string, taskId?: string): Promise<{ delivered: boolean }> {
+  const response = await fetch(`/agents/${encodeURIComponent(from)}/message`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ to, content, taskId })
+  });
+  return parseJson<{ delivered: boolean }>(response);
+}
+
+export async function fetchOrchestratorStatus(): Promise<OrchestratorStatus> {
+  const response = await fetch('/orchestrator/status');
+  return parseJson<OrchestratorStatus>(response);
+}
+
+export function openOrchestratorStream(taskId: string): EventSource {
+  return new EventSource(`/orchestrator/${encodeURIComponent(taskId)}/stream`);
+}
+

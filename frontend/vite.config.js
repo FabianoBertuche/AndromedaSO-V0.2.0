@@ -29,6 +29,10 @@ export default defineConfig({
             '/eval': {
                 target: 'http://localhost:4000',
                 changeOrigin: true
+            },
+            '/orchestrator': {
+                target: 'http://localhost:4000',
+                changeOrigin: true
             }
         }
     }

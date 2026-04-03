@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskStatus {
+  pending
+  running
+  completed
+  conflict
+  human_fallback
+}
+
+model MultiTask {
+  id         String           @id @default(cuid())
+  status     TaskStatus       @default(pending)
+  subtasks   Json
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  agents     AgentMultiTask[]
+}
+
+model AgentMultiTask {
+  id       String    @id @default(cuid())
+  agentId  String
+  taskId   String
+  role     String
+  task     MultiTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([agentId])
+  @@index([taskId])
+}

@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: andromeda-redis
+    ports:
+      - "6379:6379"
+
+  kernel:
+    image: node:20-alpine
+    container_name: andromeda-kernel
+    working_dir: /app/core/kernel
+    command: sh -c "npm install && npm start"
+    environment:
+      - PORT=4000
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis
+
+  frontend:
+    image: node:20-alpine
+    container_name: andromeda-frontend
+    working_dir: /app/frontend
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    environment:
+      - VITE_KERNEL_URL=http://kernel:4000
+    volumes:
+      - ./:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - kernel
