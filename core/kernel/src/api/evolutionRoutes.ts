@@ -77,4 +77,55 @@ export const evolutionRoutes: FastifyPluginAsync = async (server) => {
     const records = agentEvolutionService.getPerformance(id);
     return { agentId: id, records };
   });
+
+  server.post('/agents/:id/reputation/feedback', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = request.body as { capability?: string; feedback?: number };
+
+    if (!body?.capability || typeof body.feedback !== 'number') {
+      return reply.status(400).send({ error: 'capability and feedback are required' });
+    }
+
+    const normalizedFeedback = Math.max(0, Math.min(1, body.feedback));
+    agentEvolutionService.addCapabilityFeedback(id, body.capability, normalizedFeedback);
+    return { ok: true };
+  });
+
+  server.get('/agents/:id/reputation', async (request) => {
+    const { id } = request.params as { id: string };
+    return agentEvolutionService.getReputation(id);
+  });
+
+  server.post('/agents/:id/budget/set', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = request.body as { dailyLimit?: number; monthlyLimit?: number };
+
+    if (typeof body?.dailyLimit !== 'number' || typeof body?.monthlyLimit !== 'number') {
+      return reply.status(400).send({ error: 'dailyLimit and monthlyLimit are required' });
+    }
+
+    const budget = agentEvolutionService.setBudget(id, body.dailyLimit, body.monthlyLimit);
+    return { agentId: id, budget };
+  });
+
+  server.post('/agents/:id/budget/spend', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = request.body as { amount?: number };
+
+    if (typeof body?.amount !== 'number' || body.amount < 0) {
+      return reply.status(400).send({ error: 'amount must be a positive number' });
+    }
+
+    const outcome = agentEvolutionService.spendBudget(id, body.amount);
+    if (!outcome.allowed) {
+      return reply.status(429).send({ error: 'Budget limit exceeded', ...outcome });
+    }
+
+    return outcome;
+  });
+
+  server.get('/agents/:id/budget', async (request) => {
+    const { id } = request.params as { id: string };
+    return { agentId: id, budget: agentEvolutionService.getBudget(id) };
+  });
 };

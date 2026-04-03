@@ -15,9 +15,25 @@ export type AgentPerformanceRecord = {
   throughput: number;
 };
 
+type ReputationFeedback = {
+  score: number;
+  createdAt: string;
+};
+
+type AgentBudget = {
+  dailyLimit: number;
+  monthlyLimit: number;
+  spentDaily: number;
+  spentMonthly: number;
+  dayKey: string;
+  monthKey: string;
+};
+
 export class AgentEvolutionService {
   private readonly versionsByAgent = new Map<string, AgentVersionSnapshot[]>();
   private readonly performanceByAgent = new Map<string, AgentPerformanceRecord[]>();
+  private readonly feedbackByAgent = new Map<string, Map<string, ReputationFeedback[]>>();
+  private readonly budgetsByAgent = new Map<string, AgentBudget>();
 
   snapshotVersion(agentId: string, payload: { gitCommit: string; manifest: JsonRecord }): AgentVersionSnapshot {
     const current = this.versionsByAgent.get(agentId) ?? [];
@@ -90,6 +106,110 @@ export class AgentEvolutionService {
 
   getPerformance(agentId: string): AgentPerformanceRecord[] {
     return this.performanceByAgent.get(agentId) ?? [];
+  }
+
+  addCapabilityFeedback(agentId: string, capability: string, score: number) {
+    const byCapability = this.feedbackByAgent.get(agentId) ?? new Map<string, ReputationFeedback[]>();
+    const feedbacks = byCapability.get(capability) ?? [];
+    feedbacks.push({ score, createdAt: new Date().toISOString() });
+    byCapability.set(capability, feedbacks);
+    this.feedbackByAgent.set(agentId, byCapability);
+  }
+
+  getReputation(agentId: string): Record<string, number> {
+    const feedbackCapabilities = this.feedbackByAgent.get(agentId) ?? new Map<string, ReputationFeedback[]>();
+    const performance = this.getPerformance(agentId);
+    const now = new Date();
+
+    const averageSuccessRate = performance.length > 0
+      ? performance.reduce((sum, item) => sum + item.successRate, 0) / performance.length
+      : 0;
+
+    const reputations: Record<string, number> = {};
+    feedbackCapabilities.forEach((feedbacks, capability) => {
+      const feedbackAverage = feedbacks.length > 0
+        ? feedbacks.reduce((sum, item) => sum + item.score, 0) / feedbacks.length
+        : 0;
+
+      const lastActivity = feedbacks.length > 0
+        ? new Date(feedbacks[feedbacks.length - 1].createdAt)
+        : now;
+
+      const weeksInactive = Math.max(0, Math.floor((now.getTime() - lastActivity.getTime()) / (7 * 24 * 60 * 60 * 1000)));
+      const decay = weeksInactive * 0.01;
+      const score = averageSuccessRate * 0.6 + feedbackAverage * 0.4 - decay;
+      reputations[capability] = Number(Math.max(0, Math.min(1, score)).toFixed(4));
+    });
+
+    return reputations;
+  }
+
+  setBudget(agentId: string, dailyLimit: number, monthlyLimit: number) {
+    const now = new Date();
+    const dayKey = now.toISOString().slice(0, 10);
+    const monthKey = now.toISOString().slice(0, 7);
+    const current = this.budgetsByAgent.get(agentId);
+
+    const budget: AgentBudget = {
+      dailyLimit,
+      monthlyLimit,
+      spentDaily: current?.spentDaily ?? 0,
+      spentMonthly: current?.spentMonthly ?? 0,
+      dayKey,
+      monthKey
+    };
+
+    this.budgetsByAgent.set(agentId, budget);
+    return budget;
+  }
+
+  spendBudget(agentId: string, amount: number) {
+    const budget = this.budgetsByAgent.get(agentId);
+    if (!budget) {
+      return { allowed: true, spentDaily: 0, spentMonthly: 0 };
+    }
+
+    const now = new Date();
+    const dayKey = now.toISOString().slice(0, 10);
+    const monthKey = now.toISOString().slice(0, 7);
+
+    if (budget.dayKey !== dayKey) {
+      budget.dayKey = dayKey;
+      budget.spentDaily = 0;
+    }
+    if (budget.monthKey !== monthKey) {
+      budget.monthKey = monthKey;
+      budget.spentMonthly = 0;
+    }
+
+    const nextDaily = budget.spentDaily + amount;
+    const nextMonthly = budget.spentMonthly + amount;
+
+    if (nextDaily > budget.dailyLimit || nextMonthly > budget.monthlyLimit) {
+      return {
+        allowed: false,
+        spentDaily: budget.spentDaily,
+        spentMonthly: budget.spentMonthly,
+        dailyLimit: budget.dailyLimit,
+        monthlyLimit: budget.monthlyLimit
+      };
+    }
+
+    budget.spentDaily = nextDaily;
+    budget.spentMonthly = nextMonthly;
+    this.budgetsByAgent.set(agentId, budget);
+
+    return {
+      allowed: true,
+      spentDaily: budget.spentDaily,
+      spentMonthly: budget.spentMonthly,
+      dailyLimit: budget.dailyLimit,
+      monthlyLimit: budget.monthlyLimit
+    };
+  }
+
+  getBudget(agentId: string) {
+    return this.budgetsByAgent.get(agentId) ?? null;
   }
 }
 
