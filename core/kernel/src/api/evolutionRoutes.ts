@@ -128,4 +128,116 @@ export const evolutionRoutes: FastifyPluginAsync = async (server) => {
     const { id } = request.params as { id: string };
     return { agentId: id, budget: agentEvolutionService.getBudget(id) };
   });
+
+  server.get('/dashboard/costs/data', async () => {
+    return agentEvolutionService.getCostDashboardData();
+  });
+
+  server.get('/dashboard/costs', async (_request, reply) => {
+    const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Andromeda Cost Dashboard</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <style>
+      body { font-family: 'Segoe UI', sans-serif; margin: 0; background: linear-gradient(135deg, #f6f8fb, #e8edf7); color: #1f2937; }
+      .app { max-width: 980px; margin: 2rem auto; padding: 1.5rem; background: #ffffffcc; border-radius: 14px; box-shadow: 0 8px 30px rgba(31,41,55,.1); }
+      h1 { margin-top: 0; font-size: 1.6rem; }
+      table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+      th, td { border-bottom: 1px solid #e5e7eb; text-align: left; padding: .6rem; }
+      th { font-size: .86rem; text-transform: uppercase; color: #4b5563; }
+      .small { color: #6b7280; font-size: .9rem; }
+      .toolbar { margin-top: 1rem; display: flex; gap: .7rem; }
+      button { border: 0; background: #0f766e; color: white; padding: .55rem .9rem; border-radius: 8px; cursor: pointer; }
+      pre { background: #111827; color: #d1fae5; padding: .8rem; border-radius: 10px; overflow-x: auto; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const e = React.createElement;
+      function App() {
+        const [data, setData] = React.useState({ agents: [], trend: [], generatedAt: '' });
+        React.useEffect(() => {
+          fetch('/dashboard/costs/data').then((r) => r.json()).then(setData);
+        }, []);
+
+        const exportCsv = () => {
+          const lines = ['agentId,spentDaily,spentMonthly,remainingDaily,remainingMonthly'];
+          for (const row of data.agents) {
+            lines.push([row.agentId, row.spentDaily, row.spentMonthly, row.remainingDaily, row.remainingMonthly].join(','));
+          }
+          const blob = new Blob([lines.join('\\n')], { type: 'text/csv' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'andromeda-costs.csv';
+          a.click();
+          URL.revokeObjectURL(a.href);
+        };
+
+        return e('div', { className: 'app' },
+          e('h1', null, 'Andromeda Cost Dashboard'),
+          e('div', { className: 'small' }, 'Generated at: ' + (data.generatedAt || '-')),
+          e('table', null,
+            e('thead', null,
+              e('tr', null,
+                e('th', null, 'Agent'),
+                e('th', null, 'Spent (Daily)'),
+                e('th', null, 'Spent (Monthly)'),
+                e('th', null, 'Remaining (Daily)'),
+                e('th', null, 'Remaining (Monthly)')
+              )
+            ),
+            e('tbody', null,
+              data.agents.map((row) => e('tr', { key: row.agentId },
+                e('td', null, row.agentId),
+                e('td', null, row.spentDaily),
+                e('td', null, row.spentMonthly),
+                e('td', null, row.remainingDaily),
+                e('td', null, row.remainingMonthly)
+              ))
+            )
+          ),
+          e('div', { className: 'toolbar' },
+            e('button', { onClick: exportCsv }, 'Export CSV')
+          ),
+          e('h2', null, 'Monthly Trend'),
+          e('pre', null, JSON.stringify(data.trend, null, 2))
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(e(App));
+    </script>
+  </body>
+</html>`;
+
+    reply.type('text/html').send(html);
+  });
+
+  server.post('/tasks/:id/feedback', async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const body = request.body as {
+      agentId?: string;
+      capability?: string;
+      thumbs?: 'up' | 'down';
+      note?: string;
+    };
+
+    if (!body?.agentId || !body?.capability || (body.thumbs !== 'up' && body.thumbs !== 'down')) {
+      return reply.status(400).send({ error: 'agentId, capability and thumbs are required' });
+    }
+
+    const feedback = agentEvolutionService.recordTaskFeedback({
+      taskId: id,
+      agentId: body.agentId,
+      capability: body.capability,
+      thumbs: body.thumbs,
+      note: body.note
+    });
+
+    return { feedback };
+  });
 };

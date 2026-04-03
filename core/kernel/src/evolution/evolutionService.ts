@@ -29,11 +29,21 @@ type AgentBudget = {
   monthKey: string;
 };
 
+type TaskFeedback = {
+  taskId: string;
+  agentId: string;
+  capability: string;
+  thumbs: 'up' | 'down';
+  note?: string;
+  createdAt: string;
+};
+
 export class AgentEvolutionService {
   private readonly versionsByAgent = new Map<string, AgentVersionSnapshot[]>();
   private readonly performanceByAgent = new Map<string, AgentPerformanceRecord[]>();
   private readonly feedbackByAgent = new Map<string, Map<string, ReputationFeedback[]>>();
   private readonly budgetsByAgent = new Map<string, AgentBudget>();
+  private readonly taskFeedbacks: TaskFeedback[] = [];
 
   snapshotVersion(agentId: string, payload: { gitCommit: string; manifest: JsonRecord }): AgentVersionSnapshot {
     const current = this.versionsByAgent.get(agentId) ?? [];
@@ -210,6 +220,46 @@ export class AgentEvolutionService {
 
   getBudget(agentId: string) {
     return this.budgetsByAgent.get(agentId) ?? null;
+  }
+
+  recordTaskFeedback(payload: Omit<TaskFeedback, 'createdAt'>) {
+    const feedback: TaskFeedback = {
+      ...payload,
+      createdAt: new Date().toISOString()
+    };
+    this.taskFeedbacks.push(feedback);
+    this.addCapabilityFeedback(payload.agentId, payload.capability, payload.thumbs === 'up' ? 1 : 0);
+    return feedback;
+  }
+
+  getTaskFeedbacks() {
+    return [...this.taskFeedbacks];
+  }
+
+  getCostDashboardData() {
+    const agents = [...this.budgetsByAgent.entries()].map(([agentId, budget]) => {
+      const remainingDaily = Math.max(0, budget.dailyLimit - budget.spentDaily);
+      const remainingMonthly = Math.max(0, budget.monthlyLimit - budget.spentMonthly);
+      return {
+        agentId,
+        spentDaily: budget.spentDaily,
+        spentMonthly: budget.spentMonthly,
+        remainingDaily,
+        remainingMonthly
+      };
+    });
+
+    const trend = [...this.budgetsByAgent.entries()].map(([agentId, budget]) => ({
+      agentId,
+      month: budget.monthKey,
+      spent: budget.spentMonthly
+    }));
+
+    return {
+      generatedAt: new Date().toISOString(),
+      agents,
+      trend
+    };
   }
 }
 
