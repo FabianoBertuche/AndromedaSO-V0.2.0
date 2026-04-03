@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import pino from 'pino';
+const logger = pino({ name: 'contractValidator' });
 export class ContractValidationError extends Error {
     constructor(message) {
         super(message);
@@ -12,16 +14,20 @@ const contractPathsSchema = z.object({
     version: z.string().optional()
 });
 export function validateContract(contracts) {
+    logger.debug({ contracts }, 'Validating contract');
     const errors = [];
     try {
         contractPathsSchema.parse(contracts);
+        logger.debug('Contract validation successful');
     }
     catch (err) {
         if (err instanceof z.ZodError) {
             errors.push(...err.errors.map(e => `${e.path.join('.')}: ${e.message}`));
+            logger.warn({ errors }, 'Contract validation failed');
         }
         else {
             errors.push(`Invalid contracts: ${err}`);
+            logger.error({ error: err.message }, 'Contract validation error');
         }
     }
     return {
@@ -32,6 +38,7 @@ export function validateContract(contracts) {
 export function ensureContractValid(contracts) {
     const result = validateContract(contracts);
     if (!result.valid) {
+        logger.error({ errors: result.errors }, 'Contract validation failed, throwing error');
         throw new ContractValidationError(result.errors.join('; '));
     }
 }

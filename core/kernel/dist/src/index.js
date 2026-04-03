@@ -1,4 +1,4 @@
-import { config } from './config';
+import { config } from './config/index';
 import { buildServer } from './server';
 const server = buildServer();
 const start = async () => {
