@@ -1,0 +1,20 @@
+# Dependencies and build artifacts
+node_modules/
+dist/
+build/
+coverage/
+
+# VCS and editor
+.git/
+.vscode/
+.idea/
+
+# Runtime/logs/env
+*.log
+*.log*
+.env
+.env.*
+
+# Docker context noise
+Dockerfile*
+.dockerignore
