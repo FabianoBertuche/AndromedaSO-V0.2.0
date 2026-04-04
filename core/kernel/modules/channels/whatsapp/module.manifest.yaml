@@ -1,0 +1,15 @@
+id: channel-whatsapp
+name: whatsapp
+group: channels
+variant: whatsapp
+version: 1.0.0
+entrypoint: adapters/channels/whatsapp
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - messaging
+status: active
+critical: false
+dependencies:
+  - provider-openai-api

@@ -1,0 +1,7 @@
+[
+  { "agentId": "agent-planner",  "role": "planner",     "capabilities": ["planning", "review"] },
+  { "agentId": "agent-design",   "role": "designer",    "capabilities": ["design", "ux"] },
+  { "agentId": "agent-copy",     "role": "copywriter",  "capabilities": ["copy", "content"] },
+  { "agentId": "agent-code",     "role": "coder",       "capabilities": ["code", "integration"] },
+  { "agentId": "agent-review",   "role": "reviewer",    "capabilities": ["review", "qa"] }
+]

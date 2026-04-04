@@ -309,6 +309,13 @@ export class AgentEvolutionService {
     return this.suggestionsByAgent.get(agentId) ?? [];
   }
 
+  /**
+   * Executa uma avaliação golden set sintética para o agente especificado.
+   *
+   * ATENÇÃO: Os resultados são GERADOS SINTETICAMENTE — nenhuma tarefa real é executada.
+   * Os scores são calculados com base na taxa de sucesso histórica do agente com variância artificial.
+   * Este método serve como placeholder para uma futura integração com um dataset de avaliação real.
+   */
   runGoldenEval(agentId: string) {
     const records = this.getPerformance(agentId);
     const baseScore = records.length > 0

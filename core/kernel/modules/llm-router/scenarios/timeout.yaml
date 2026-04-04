@@ -1,0 +1,6 @@
+id: timeout-routing
+taskType: coding
+simulate:
+  timeoutMs: 3000
+expect:
+  fallbackTriggered: true

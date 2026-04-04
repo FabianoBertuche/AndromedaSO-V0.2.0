@@ -1,0 +1,172 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e124]:
+    - generic [ref=e125]:
+      - heading "Model Providers" [level=2] [ref=e126]
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - textbox "Search provider type" [ref=e129]
+          - combobox [ref=e130]:
+            - option "openai" [selected]
+            - option "anthropic"
+            - option "google"
+            - option "xai"
+            - option "mistral"
+            - option "groq"
+            - option "together"
+            - option "fireworks"
+            - option "deepinfra"
+            - option "novita"
+            - option "ollama"
+            - option "lmstudio"
+            - option "vllm"
+            - option "openrouter"
+            - option "hyperbolic"
+            - option "replicate"
+            - option "aws-bedrock"
+            - option "azure-openai"
+            - option "google-vertex"
+            - option "cohere"
+        - textbox "provider name" [ref=e131]: openai
+        - textbox "apiKey (optional)" [ref=e132]
+        - textbox "baseUrl (optional)" [ref=e133]
+        - button "Add Provider" [ref=e134] [cursor=pointer]
+      - table [ref=e136]:
+        - rowgroup [ref=e137]:
+          - row "Provider Type Health Models Actions" [ref=e138]:
+            - columnheader "Provider" [ref=e139]
+            - columnheader "Type" [ref=e140]
+            - columnheader "Health" [ref=e141]
+            - columnheader "Models" [ref=e142]
+            - columnheader "Actions" [ref=e143]
+        - rowgroup [ref=e161]:
+          - row "openai openai OK 110ms 12 Catalog Sync Test" [ref=e173]:
+            - cell "openai" [ref=e163]
+            - cell "openai" [ref=e164]
+            - cell "OK 110ms" [ref=e174]
+            - cell "12" [ref=e175]
+            - cell "Catalog Sync Test" [ref=e167]:
+              - button "Catalog" [ref=e168] [cursor=pointer]
+              - button "Sync" [ref=e169] [cursor=pointer]
+              - button "Test" [ref=e170] [cursor=pointer]
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - heading "Available Models Catalog" [level=3] [ref=e146]
+          - generic [ref=e147]:
+            - button "All" [ref=e148] [cursor=pointer]
+            - button "None" [ref=e149] [cursor=pointer]
+            - button "Save Selected" [ref=e150] [cursor=pointer]
+        - table [ref=e152]:
+          - rowgroup [ref=e153]:
+            - row "Select Model Context Capabilities Price Score" [ref=e154]:
+              - columnheader "Select" [ref=e155]
+              - columnheader "Model" [ref=e156]
+              - columnheader "Context" [ref=e157]
+              - columnheader "Capabilities" [ref=e158]
+              - columnheader "Price" [ref=e159]
+              - columnheader "Score" [ref=e160]
+          - rowgroup [ref=e176]:
+            - row "GPT-4o 128k coding, chat, analysis, reasoning $0.02 9.4" [ref=e177]:
+              - cell [ref=e178]:
+                - checkbox [ref=e179]
+              - cell "GPT-4o" [ref=e180]
+              - cell "128k" [ref=e181]
+              - cell "coding, chat, analysis, reasoning" [ref=e182]
+              - cell "$0.02" [ref=e183]
+              - cell "9.4" [ref=e184]
+            - row "GPT-4.1 128k coding, chat, analysis $0.03 9.1" [ref=e185]:
+              - cell [ref=e186]:
+                - checkbox [ref=e187]
+              - cell "GPT-4.1" [ref=e188]
+              - cell "128k" [ref=e189]
+              - cell "coding, chat, analysis" [ref=e190]
+              - cell "$0.03" [ref=e191]
+              - cell "9.1" [ref=e192]
+            - row "GPT-4.1 mini 128k coding, chat $0.01 8.6" [ref=e193]:
+              - cell [ref=e194]:
+                - checkbox [ref=e195]
+              - cell "GPT-4.1 mini" [ref=e196]
+              - cell "128k" [ref=e197]
+              - cell "coding, chat" [ref=e198]
+              - cell "$0.01" [ref=e199]
+              - cell "8.6" [ref=e200]
+            - row "GPT-4o mini 128k chat, analysis $0.005 8.3" [ref=e201]:
+              - cell [ref=e202]:
+                - checkbox [ref=e203]
+              - cell "GPT-4o mini" [ref=e204]
+              - cell "128k" [ref=e205]
+              - cell "chat, analysis" [ref=e206]
+              - cell "$0.005" [ref=e207]
+              - cell "8.3" [ref=e208]
+            - row "o3 200k coding, reasoning $0.04 9.2" [ref=e209]:
+              - cell [ref=e210]:
+                - checkbox [ref=e211]
+              - cell "o3" [ref=e212]
+              - cell "200k" [ref=e213]
+              - cell "coding, reasoning" [ref=e214]
+              - cell "$0.04" [ref=e215]
+              - cell "9.2" [ref=e216]
+            - row "o3-mini 200k coding, reasoning $0.015 8.7" [ref=e217]:
+              - cell [ref=e218]:
+                - checkbox [ref=e219]
+              - cell "o3-mini" [ref=e220]
+              - cell "200k" [ref=e221]
+              - cell "coding, reasoning" [ref=e222]
+              - cell "$0.015" [ref=e223]
+              - cell "8.7" [ref=e224]
+            - row "o4-mini 200k coding, reasoning $0.02 8.9" [ref=e225]:
+              - cell [ref=e226]:
+                - checkbox [ref=e227]
+              - cell "o4-mini" [ref=e228]
+              - cell "200k" [ref=e229]
+              - cell "coding, reasoning" [ref=e230]
+              - cell "$0.02" [ref=e231]
+              - cell "8.9" [ref=e232]
+            - row "GPT-4 Turbo 128k coding, chat $0.03 8.8" [ref=e233]:
+              - cell [ref=e234]:
+                - checkbox [ref=e235]
+              - cell "GPT-4 Turbo" [ref=e236]
+              - cell "128k" [ref=e237]
+              - cell "coding, chat" [ref=e238]
+              - cell "$0.03" [ref=e239]
+              - cell "8.8" [ref=e240]
+            - row "GPT-3.5 Turbo 16k chat $0.002 7.4" [ref=e241]:
+              - cell [ref=e242]:
+                - checkbox [ref=e243]
+              - cell "GPT-3.5 Turbo" [ref=e244]
+              - cell "16k" [ref=e245]
+              - cell "chat" [ref=e246]
+              - cell "$0.002" [ref=e247]
+              - cell "7.4" [ref=e248]
+            - row "Embedding 3 Large 8k analysis $0.01 8.1" [ref=e249]:
+              - cell [ref=e250]:
+                - checkbox [ref=e251]
+              - cell "Embedding 3 Large" [ref=e252]
+              - cell "8k" [ref=e253]
+              - cell "analysis" [ref=e254]
+              - cell "$0.01" [ref=e255]
+              - cell "8.1" [ref=e256]
+            - row "Embedding 3 Small 8k analysis $0.005 7.6" [ref=e257]:
+              - cell [ref=e258]:
+                - checkbox [ref=e259]
+              - cell "Embedding 3 Small" [ref=e260]
+              - cell "8k" [ref=e261]
+              - cell "analysis" [ref=e262]
+              - cell "$0.005" [ref=e263]
+              - cell "7.6" [ref=e264]
+            - row "GPT Image 1 32k analysis $0.03 7.8" [ref=e265]:
+              - cell [ref=e266]:
+                - checkbox [ref=e267]
+              - cell "GPT Image 1" [ref=e268]
+              - cell "32k" [ref=e269]
+              - cell "analysis" [ref=e270]
+              - cell "$0.03" [ref=e271]
+              - cell "7.8" [ref=e272]

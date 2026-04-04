@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Contract",
+  "type": "object",
+  "required": ["id", "type", "name", "capabilities"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string" },
+    "name": { "type": "string" },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "baseUrl": { "type": "string" },
+    "health": { "type": "string", "enum": ["ok", "warning", "error"] }
+  }
+}

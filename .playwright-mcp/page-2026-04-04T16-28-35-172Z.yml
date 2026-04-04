@@ -1,0 +1,80 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [active] [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e127]:
+    - generic [ref=e128]:
+      - heading "Model Providers" [level=2] [ref=e129]
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - textbox "Search provider type" [ref=e132]
+          - combobox [ref=e133]:
+            - option "openai" [selected]
+            - option "anthropic"
+            - option "google"
+            - option "xai"
+            - option "mistral"
+            - option "groq"
+            - option "together"
+            - option "fireworks"
+            - option "deepinfra"
+            - option "novita"
+            - option "ollama"
+            - option "lmstudio"
+            - option "vllm"
+            - option "openrouter"
+            - option "hyperbolic"
+            - option "replicate"
+            - option "aws-bedrock"
+            - option "azure-openai"
+            - option "google-vertex"
+            - option "cohere"
+        - textbox "provider name" [ref=e134]: openai
+        - generic [ref=e135]:
+          - button "API Key" [ref=e136] [cursor=pointer]
+          - button "OAuth" [ref=e137] [cursor=pointer]
+        - textbox "apiKey (optional)" [ref=e138]
+        - textbox "baseUrl (optional)" [ref=e139]
+        - button "Add Provider" [ref=e140] [cursor=pointer]
+      - table [ref=e142]:
+        - rowgroup [ref=e143]:
+          - row "Provider Type Health Models Actions" [ref=e144]:
+            - columnheader "Provider" [ref=e145]
+            - columnheader "Type" [ref=e146]
+            - columnheader "Health" [ref=e147]
+            - columnheader "Models" [ref=e148]
+            - columnheader "Actions" [ref=e149]
+        - rowgroup [ref=e150]:
+          - row "test-delete openai OK 110ms 0 Catalog Sync Test Deletar" [ref=e151]:
+            - cell "test-delete" [ref=e152]
+            - cell "openai" [ref=e153]
+            - cell "OK 110ms" [ref=e154]
+            - cell "0" [ref=e155]
+            - cell "Catalog Sync Test Deletar" [ref=e156]:
+              - button "Catalog" [ref=e157] [cursor=pointer]
+              - button "Sync" [ref=e158] [cursor=pointer]
+              - button "Test" [ref=e159] [cursor=pointer]
+              - button "Deletar" [ref=e160] [cursor=pointer]
+      - generic [ref=e161]:
+        - generic [ref=e162]:
+          - heading "Available Models Catalog" [level=3] [ref=e163]
+          - generic [ref=e164]:
+            - button "All" [ref=e165] [cursor=pointer]
+            - button "None" [ref=e166] [cursor=pointer]
+            - button "Save Selected" [ref=e167] [cursor=pointer]
+        - table [ref=e169]:
+          - rowgroup [ref=e170]:
+            - row "Select Model Context Capabilities Price Score" [ref=e171]:
+              - columnheader "Select" [ref=e172]
+              - columnheader "Model" [ref=e173]
+              - columnheader "Context" [ref=e174]
+              - columnheader "Capabilities" [ref=e175]
+              - columnheader "Price" [ref=e176]
+              - columnheader "Score" [ref=e177]
+          - rowgroup

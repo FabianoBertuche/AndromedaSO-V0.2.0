@@ -1,0 +1,15 @@
+id: channel-telegram
+name: telegram
+group: channels
+variant: telegram
+version: 1.0.0
+entrypoint: adapters/channels/telegram
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - messaging
+status: active
+critical: false
+dependencies:
+  - provider-openai-api

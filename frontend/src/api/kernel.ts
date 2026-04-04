@@ -1,6 +1,6 @@
 import type { Agent, CostData } from '../types/kernel';
 import type { MultiTaskResponse, OrchestrationDetail, OrchestratorStatus } from '../types/kernel';
-import type { ModelBenchmark, Provider } from '../types/model';
+import type { CatalogModel, ModelBenchmark, Provider, ProviderConfig } from '../types/model';
 
 export type KernelStatus = {
   status: 'healthy' | 'ok' | 'degraded' | string;
@@ -92,22 +92,11 @@ export async function fetchAgentBudget(agentId: string): Promise<AgentBudgetResp
 }
 
 export async function fetchAgents(): Promise<string[]> {
-  const directResponse = await fetch('/agents');
-  if (directResponse.ok) {
-    const payload = await directResponse.json() as unknown;
-    if (Array.isArray(payload)) {
-      return payload.map((value) => typeof value === 'string' ? value : String((value as any)?.id)).filter(Boolean);
-    }
-    if (Array.isArray((payload as any)?.agents)) {
-      return (payload as any).agents
-        .map((value: any) => typeof value === 'string' ? value : String(value?.id))
-        .filter(Boolean);
-    }
-  }
-
-  const fallbackResponse = await fetch('/api/modules');
-  const fallbackPayload = await parseJson<{ modules: Array<{ id: string }> }>(fallbackResponse);
-  return fallbackPayload.modules.map((item) => item.id);
+  // /agents list endpoint does not exist — use /api/modules as the source of agent IDs
+  const response = await fetch('/api/modules');
+  if (!response.ok) return [];
+  const payload = await response.json() as { modules?: Array<{ id: string }> };
+  return (payload.modules ?? []).map((item) => item.id);
 }
 
 export async function fetchAgent(agentId: string): Promise<Agent> {
@@ -205,7 +194,7 @@ export function openOrchestratorStream(taskId: string): EventSource {
   return new EventSource(`/orchestrator/${encodeURIComponent(taskId)}/stream`);
 }
 
-export async function createProvider(payload: { name: string; displayName?: string; apiBase?: string; apiKey?: string }): Promise<Provider> {
+export async function createProvider(payload: ProviderConfig): Promise<Provider> {
   const response = await fetch('/api/providers', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -219,13 +208,13 @@ export async function listProviders(): Promise<{ providers: Provider[] }> {
   return parseJson<{ providers: Provider[] }>(response);
 }
 
-export async function syncProviderModels(providerId: string): Promise<{ providerId: string; models: Array<{ modelId: string }> }> {
+export async function syncProviderModels(providerId: string): Promise<{ providerId: string; models: CatalogModel[] }> {
   const response = await fetch(`/api/providers/${encodeURIComponent(providerId)}/sync`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({})
   });
-  return parseJson<{ providerId: string; models: Array<{ modelId: string }> }>(response);
+  return parseJson<{ providerId: string; models: CatalogModel[] }>(response);
 }
 
 export async function getProviderHealth(providerId: string): Promise<{ providerId: string; health: string; latencyMs: number }> {
@@ -233,17 +222,31 @@ export async function getProviderHealth(providerId: string): Promise<{ providerI
   return parseJson<{ providerId: string; health: string; latencyMs: number }>(response);
 }
 
-export async function benchmarkModel(modelId: string, taskType: 'coding' | 'chat' | 'analysis'): Promise<{ result: ModelBenchmark & { success: boolean } }> {
-  const response = await fetch(`/api/models/${encodeURIComponent(modelId)}/benchmark`, {
+export async function getProviderCatalog(providerId: string): Promise<{ providerId: string; selectedModelIds: string[]; models: CatalogModel[] }> {
+  const response = await fetch(`/api/providers/${encodeURIComponent(providerId)}/models`);
+  return parseJson<{ providerId: string; selectedModelIds: string[]; models: CatalogModel[] }>(response);
+}
+
+export async function saveProviderSelectedModels(providerId: string, modelIds: string[]) {
+  const response = await fetch(`/api/providers/${encodeURIComponent(providerId)}/models/select`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ taskType })
+    body: JSON.stringify({ modelIds })
+  });
+  return parseJson<{ providerId: string; selectedModelIds: string[] }>(response);
+}
+
+export async function benchmarkModel(modelId: string, taskType: 'coding' | 'chat'): Promise<{ result: ModelBenchmark & { success: boolean } }> {
+  const response = await fetch('/api/llm-router/benchmark', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ modelId, taskType })
   });
   return parseJson<{ result: ModelBenchmark & { success: boolean } }>(response);
 }
 
-export async function inferRouting(taskType: 'coding' | 'chat' | 'analysis'): Promise<{ decision: { selectedModel: string; score: number } }> {
-  const response = await fetch('/api/router/infer', {
+export async function inferRouting(taskType: 'coding' | 'chat'): Promise<{ decision: { selectedModel: string; score: number } }> {
+  const response = await fetch('/api/llm-router/infer', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ taskType })
@@ -252,8 +255,25 @@ export async function inferRouting(taskType: 'coding' | 'chat' | 'analysis'): Pr
 }
 
 export async function listRoutingDecisions(): Promise<{ decisions: Array<{ taskType: string; selectedModel: string; score: number }> }> {
-  const response = await fetch('/api/router/decisions');
+  const response = await fetch('/api/llm-router/decisions');
   return parseJson<{ decisions: Array<{ taskType: string; selectedModel: string; score: number }> }>(response);
 }
 
+export async function listRouterRankings() {
+  const response = await fetch('/api/llm-router/rankings');
+  return parseJson<{ ranked: Array<{ modelId: string; displayName: string; contextWindow: string; capabilities: string[]; priceLabel: string; score: number; latencyMs: number }> }>(response);
+}
 
+export function openProviderHealthStream(providerId: string): EventSource {
+  return new EventSource(`/api/providers/${encodeURIComponent(providerId)}/health/stream`);
+}
+
+export async function deleteProvider(id: string): Promise<void> {
+  const response = await fetch(`/api/providers/${encodeURIComponent(id)}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) {
+    const body = await response.json() as { error?: string };
+    throw new Error(body.error ?? `Delete failed: ${response.status}`);
+  }
+}

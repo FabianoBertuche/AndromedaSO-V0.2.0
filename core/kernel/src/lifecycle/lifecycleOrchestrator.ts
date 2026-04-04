@@ -1,6 +1,7 @@
 import { LifecycleStateMachine } from './stateMachine';
 import { ModuleRegistryRecord } from '../registry/inMemoryRegistry';
 import { persistLifecycleEvent } from '../store/postgresRegistry';
+import { validateAndLoadModule } from './loadModule.js';
 import pino from 'pino';
 import { SAFETY } from '../config/safety';
 
@@ -16,11 +17,20 @@ export class LifecycleOrchestratorError extends Error {
 export class LifecycleOrchestrator {
   constructor(private stateMachine: LifecycleStateMachine) {}
 
-  async start(module: ModuleRegistryRecord): Promise<{ state: string }> {
+  async start(module: ModuleRegistryRecord, allModules: ModuleRegistryRecord[] = []): Promise<{ state: string }> {
     const startTime = Date.now();
     const fromState = this.stateMachine.current();
     logger.info({ moduleId: module.id, fromState }, 'Starting module lifecycle');
     try {
+      const validation = await validateAndLoadModule(module, allModules);
+      if (!validation.valid) {
+        if (validation.error?.includes('Circular')) {
+          logger.error({ moduleId: module.id, allModuleIds: allModules.map(m => m.id) }, 'Dependências circulares detectadas');
+        }
+        logger.error({ moduleId: module.id, reason: validation.error }, 'Módulo rejeitado na validação de dependências');
+        throw new LifecycleOrchestratorError(module.id, validation.error ?? 'Validation failed');
+      }
+
       // Initialize: allocate resources
       this.stateMachine.transition('initialized');
       logger.debug({ moduleId: module.id, state: 'initialized' }, 'Module initialized');

@@ -1,0 +1,9 @@
+group: llm-hosted
+description: Providers hosted by external APIs
+capabilities:
+  - coding
+  - chat
+  - analysis
+variants:
+  - openai-api
+  - openai-oauth

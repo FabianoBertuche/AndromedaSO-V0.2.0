@@ -1,0 +1,25 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [active] [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e127]:
+    - generic [ref=e128]:
+      - generic [ref=e129]:
+        - heading "Agent Table" [level=3] [ref=e130]
+        - generic [ref=e131]: Real-time
+      - table [ref=e133]:
+        - rowgroup [ref=e134]:
+          - row "id Performance P95 Reputation Score Budget (spent/limit) Status" [ref=e135]:
+            - columnheader "id" [ref=e136]
+            - columnheader "Performance P95" [ref=e137]
+            - columnheader "Reputation Score" [ref=e138]
+            - columnheader "Budget (spent/limit)" [ref=e139]
+            - columnheader "Status" [ref=e140]
+        - rowgroup
+      - paragraph [ref=e141]: Nenhum agente para exibir. Rode o discovery para popular a tabela.

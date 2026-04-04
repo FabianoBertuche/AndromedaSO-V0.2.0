@@ -1,0 +1,13 @@
+name: llm-router
+version: 1.0.0
+strategy:
+  default: weighted-score
+  fallback: cheapest-healthy
+weights:
+  score: 0.6
+  latency: 0.3
+  price: 0.1
+scenarios:
+  - core/kernel/modules/llm-router/scenarios/basic.yaml
+  - core/kernel/modules/llm-router/scenarios/fallback.yaml
+  - core/kernel/modules/llm-router/scenarios/timeout.yaml

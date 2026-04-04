@@ -1,0 +1,15 @@
+id: provider-openai-oauth
+name: openai-oauth
+group: providers
+variant: openai-oauth
+version: 1.0.0
+entrypoint: src/modules/providers/infrastructure/adapters/openai.adapter.ts
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - coding
+  - chat
+status: active
+critical: false
+dependencies: []

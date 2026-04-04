@@ -1,5 +1,8 @@
 {
   "scripts": {
+    "dev": "node scripts/dev-all.mjs",
+    "dev:stop": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-stop.ps1",
+    "dev:restart": "npm run dev:stop && npm run dev",
     "benchmark": "autocannon -c 10 -d 20 http://localhost:3000/metrics",
     "benchmark:full": "npm run benchmark"
   },

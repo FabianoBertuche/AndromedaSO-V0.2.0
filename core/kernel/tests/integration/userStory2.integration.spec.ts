@@ -8,7 +8,7 @@ import { buildServer } from '../../src/server';
 let server: any;
 
 beforeEach(async () => {
-  server = buildServer();
+  server = await buildServer();
   await server.ready();
 });
 

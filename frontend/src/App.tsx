@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AgentTable } from './components/AgentTable';
 import { ModuleDiscover } from './components/ModuleDiscover';
 import { StatusCard } from './components/StatusCard';
@@ -7,8 +8,9 @@ import { CostDashboard } from './pages/CostDashboard';
 import { Orchestrator } from './pages/Orchestrator';
 import { ModelProviders } from './pages/ModelProviders';
 import { RouterIntelligence } from './pages/RouterIntelligence';
+import { OAuthCallbackHandler } from './pages/OAuthCallbackHandler';
 
-function App() {
+function MainApp() {
   const [discoveredAgentIds, setDiscoveredAgentIds] = useState<string[]>([]);
   const [tab, setTab] = useState<'dashboard' | 'agents' | 'costs' | 'models' | 'router'>('dashboard');
   const { data, isLoading, error, isFetching } = useStatus();
@@ -18,7 +20,7 @@ function App() {
     { key: 'agents', label: 'Agents' },
     { key: 'costs', label: 'Costs' },
     { key: 'models', label: 'Models' },
-    { key: 'router', label: 'Router' }
+    { key: 'router', label: 'Router Intelligence' }
   ];
 
   return (
@@ -52,7 +54,7 @@ function App() {
 
           <div className="transition-all hover:scale-[1.01]">
             <ModuleDiscover
-              defaultRootPath="C:\\FB\\Andromeda SO V0.2.0\\core\\kernel\\test-modules"
+              defaultRootPath="C:\FB\Andromeda SO V0.2.0\core\kernel\test-modules"
               onDiscoveredAgentIds={setDiscoveredAgentIds}
             />
           </div>
@@ -95,6 +97,17 @@ function App() {
         </main>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/oauth/callback" element={<OAuthCallbackHandler />} />
+        <Route path="*" element={<MainApp />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

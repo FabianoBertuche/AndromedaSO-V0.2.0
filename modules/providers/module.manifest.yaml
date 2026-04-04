@@ -1,0 +1,14 @@
+id: providers-catalog
+name: providers-catalog
+group: providers
+variant: declarative-root
+version: 1.0.0
+entrypoint: modules/providers
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - catalog
+status: active
+critical: true
+dependencies: []

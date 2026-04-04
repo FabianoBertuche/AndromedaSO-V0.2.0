@@ -1,0 +1,15 @@
+id: provider-ollama
+name: ollama
+group: providers
+variant: ollama
+version: 1.0.0
+entrypoint: src/modules/providers/infrastructure/adapters/ollama.adapter.ts
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - chat
+  - coding
+status: active
+critical: false
+dependencies: []

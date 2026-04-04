@@ -1,0 +1,91 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [active] [ref=e12] [cursor=pointer]
+  - main [ref=e281]:
+    - generic [ref=e282]:
+      - generic [ref=e283]:
+        - heading "Router Intelligence" [level=2] [ref=e284]
+        - paragraph [ref=e285]: "Coding ranking: GPT-4o 9.4 > Claude 8.8"
+        - generic [ref=e286]:
+          - article [ref=e287]:
+            - paragraph [ref=e288]: GPT-4o
+            - paragraph [ref=e289]: 128k | $0.02
+            - paragraph [ref=e290]: "10.1"
+          - article [ref=e291]:
+            - paragraph [ref=e292]: o3
+            - paragraph [ref=e293]: 200k | $0.04
+            - paragraph [ref=e294]: "9.9"
+          - article [ref=e295]:
+            - paragraph [ref=e296]: GPT-4.1
+            - paragraph [ref=e297]: 128k | $0.03
+            - paragraph [ref=e298]: "9.8"
+          - article [ref=e299]:
+            - paragraph [ref=e300]: o4-mini
+            - paragraph [ref=e301]: 200k | $0.02
+            - paragraph [ref=e302]: "9.6"
+          - article [ref=e303]:
+            - paragraph [ref=e304]: GPT-4 Turbo
+            - paragraph [ref=e305]: 128k | $0.03
+            - paragraph [ref=e306]: "9.5"
+          - article [ref=e307]:
+            - paragraph [ref=e308]: o3-mini
+            - paragraph [ref=e309]: 200k | $0.015
+            - paragraph [ref=e310]: "9.4"
+          - article [ref=e311]:
+            - paragraph [ref=e312]: GPT-4.1 mini
+            - paragraph [ref=e313]: 128k | $0.01
+            - paragraph [ref=e314]: "9.3"
+          - article [ref=e315]:
+            - paragraph [ref=e316]: GPT-4o mini
+            - paragraph [ref=e317]: 128k | $0.005
+            - paragraph [ref=e318]: "8.3"
+          - article [ref=e319]:
+            - paragraph [ref=e320]: Embedding 3 Large
+            - paragraph [ref=e321]: 8k | $0.01
+            - paragraph [ref=e322]: "8.1"
+          - article [ref=e323]:
+            - paragraph [ref=e324]: GPT Image 1
+            - paragraph [ref=e325]: 32k | $0.03
+            - paragraph [ref=e326]: "7.8"
+      - generic [ref=e327]:
+        - heading "Benchmark Lab" [level=3] [ref=e328]
+        - generic [ref=e330]:
+          - combobox [ref=e331]:
+            - option "Selecione um modelo..." [disabled]
+            - option "GPT-4o" [selected]
+            - option "GPT-4.1"
+            - option "GPT-4.1 mini"
+            - option "GPT-4o mini"
+            - option "o3"
+            - option "o3-mini"
+            - option "o4-mini"
+            - option "GPT-4 Turbo"
+            - option "GPT-3.5 Turbo"
+            - option "Embedding 3 Large"
+            - option "Embedding 3 Small"
+            - option "GPT Image 1"
+          - combobox [ref=e332]:
+            - option "Coding" [selected]
+            - option "Chat"
+          - button "Executar Benchmark" [ref=e333] [cursor=pointer]
+      - generic [ref=e334]:
+        - heading "LLM Testbed" [level=3] [ref=e335]
+        - generic [ref=e336]:
+          - combobox [ref=e337]:
+            - option "Select provider" [selected]
+            - option "openai"
+          - combobox [ref=e338]:
+            - option "coding"
+            - option "chat" [selected]
+          - textbox [ref=e339]: Route this prompt for best model.
+          - button "Run Routing Decision" [ref=e340] [cursor=pointer]
+      - generic [ref=e341]:
+        - heading "Routing History" [level=3] [ref=e342]
+        - list

@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Update Internal Docs on Code Change",
+  "description": "Whenever a source code file is edited, asks the agent to review and update the relevant internal documentation (docs/, .kiro/specs/, steering files) to reflect the changes.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "core/kernel/src/**/*.ts",
+      "frontend/src/**/*.ts",
+      "frontend/src/**/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A source code file was just edited. Review the change and update any relevant internal documentation to keep it in sync. This includes:\n- `docs/implemented-features.md` — if a feature was added, changed, or removed\n- `docs/architecture.md` — if the architecture or module structure changed\n- `.kiro/specs/*/tasks.md` — mark tasks as completed (`[x]`) if the implementation matches\n- `.kiro/steering/structure.md` — if new folders, files, or conventions were introduced\n\nOnly update docs that are directly affected by the code change. Do not create new documentation files unless explicitly needed."
+  }
+}

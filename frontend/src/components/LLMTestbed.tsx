@@ -1,13 +1,13 @@
 import { FormEvent, useState } from 'react';
 
 type Props = {
-  providers: Array<{ id: string; name: string; displayName: string }>;
-  onInfer: (taskType: 'coding' | 'chat' | 'analysis') => Promise<{ selectedModel: string; score: number }>;
+  providers: Array<{ id: string; name: string; displayName?: string }>;
+  onInfer: (taskType: 'coding' | 'chat') => Promise<{ selectedModel: string; score: number }>;
 };
 
 export function LLMTestbed({ providers, onInfer }: Props) {
   const [providerId, setProviderId] = useState('');
-  const [taskType, setTaskType] = useState<'coding' | 'chat' | 'analysis'>('chat');
+  const [taskType, setTaskType] = useState<'coding' | 'chat'>('chat');
   const [chatInput, setChatInput] = useState('Route this prompt for best model.');
   const [decision, setDecision] = useState<string>('');
   const [loading, setLoading] = useState(false);
@@ -34,18 +34,17 @@ export function LLMTestbed({ providers, onInfer }: Props) {
         >
           <option value="">Select provider</option>
           {providers.map((provider) => (
-            <option key={provider.id} value={provider.id}>{provider.displayName}</option>
+            <option key={provider.id} value={provider.id}>{provider.displayName || provider.name}</option>
           ))}
         </select>
 
         <select
           value={taskType}
-          onChange={(event) => setTaskType(event.target.value as 'coding' | 'chat' | 'analysis')}
+          onChange={(event) => setTaskType(event.target.value as 'coding' | 'chat')}
           className="rounded bg-slate-900/80 p-2 font-mono text-cyan-100"
         >
           <option value="coding">coding</option>
           <option value="chat">chat</option>
-          <option value="analysis">analysis</option>
         </select>
 
         <textarea

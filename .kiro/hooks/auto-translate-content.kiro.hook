@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Auto-Translate Content Changes",
+  "description": "Monitors changes to user-facing text files (.json, .yaml) and automatically generates translations for all configured target languages when new or modified text is detected.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.json",
+      "**/*.yaml",
+      "**/*.yml"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A localization or content file has been modified. Please:\n1. Identify any new or changed user-facing text strings in the file.\n2. For each changed string, generate translations for all configured target languages (check for language config in the project, e.g. i18n config files, locale folders, or similar).\n3. Write the translations to the appropriate target language files, maintaining the same file structure and key naming conventions.\n4. Ensure translations preserve the original meaning and context, and follow locale-specific conventions (date formats, pluralization rules, punctuation, etc.).\n5. Do not translate technical keys, variable placeholders (e.g. {{name}}, %s), or HTML tags — only the human-readable text values."
+  }
+}

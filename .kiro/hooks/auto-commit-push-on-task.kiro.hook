@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Auto Commit & Push on Task Complete",
+  "description": "Whenever a spec task is completed (new function implemented and tested), automatically stages all changes, commits with a descriptive message, and pushes to git.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "git add -A && git commit -m \"feat: task completed - auto commit\" && git push"
+  }
+}

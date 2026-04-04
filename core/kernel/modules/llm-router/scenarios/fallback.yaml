@@ -1,0 +1,6 @@
+id: fallback-routing
+taskType: chat
+simulate:
+  primaryUnhealthy: true
+expect:
+  strategy: cheapest-healthy

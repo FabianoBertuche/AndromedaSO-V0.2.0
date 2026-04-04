@@ -1,0 +1,141 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e163]:
+    - generic [ref=e164]:
+      - heading "Model Providers" [level=2] [ref=e165]
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - textbox "Search provider type" [ref=e168]
+          - combobox [ref=e169]:
+            - option "openai"
+            - option "anthropic"
+            - option "google"
+            - option "xai"
+            - option "mistral"
+            - option "groq"
+            - option "together"
+            - option "fireworks"
+            - option "deepinfra"
+            - option "novita"
+            - option "ollama" [selected]
+            - option "lmstudio"
+            - option "vllm"
+            - option "openrouter"
+            - option "hyperbolic"
+            - option "replicate"
+            - option "aws-bedrock"
+            - option "azure-openai"
+            - option "google-vertex"
+            - option "cohere"
+        - textbox "provider name" [ref=e170]: ollama
+        - textbox "apiKey (optional)" [ref=e171]
+        - textbox "baseUrl (optional)" [ref=e172]
+        - button "Add Provider" [ref=e173] [cursor=pointer]
+      - table [ref=e175]:
+        - rowgroup [ref=e176]:
+          - row "Provider Type Health Models Actions" [ref=e177]:
+            - columnheader "Provider" [ref=e178]
+            - columnheader "Type" [ref=e179]
+            - columnheader "Health" [ref=e180]
+            - columnheader "Models" [ref=e181]
+            - columnheader "Actions" [ref=e182]
+        - rowgroup [ref=e183]:
+          - row "openai openai OK 110ms 12 Catalog Sync Test" [ref=e284]:
+            - cell "openai" [ref=e185]
+            - cell "openai" [ref=e186]
+            - cell "OK 110ms" [ref=e285]
+            - cell "12" [ref=e188]
+            - cell "Catalog Sync Test" [ref=e189]:
+              - button "Catalog" [ref=e190] [cursor=pointer]
+              - button "Sync" [ref=e191] [cursor=pointer]
+              - button "Test" [ref=e192] [cursor=pointer]
+          - row "ollama ollama Warning 210ms 7 Catalog Sync Test" [ref=e225]:
+            - cell "ollama" [ref=e215]
+            - cell "ollama" [ref=e216]
+            - cell "Warning 210ms" [ref=e217]
+            - cell "7" [ref=e226]
+            - cell "Catalog Sync Test" [ref=e219]:
+              - button "Catalog" [ref=e220] [cursor=pointer]
+              - button "Sync" [ref=e221] [cursor=pointer]
+              - button "Test" [ref=e222] [cursor=pointer]
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - heading "Available Models Catalog" [level=3] [ref=e195]
+          - generic [ref=e196]:
+            - button "All" [ref=e197] [cursor=pointer]
+            - button "None" [ref=e198] [cursor=pointer]
+            - button "Save Selected" [ref=e199] [cursor=pointer]
+        - table [ref=e201]:
+          - rowgroup [ref=e202]:
+            - row "Select Model Context Capabilities Price Score" [ref=e203]:
+              - columnheader "Select" [ref=e204]
+              - columnheader "Model" [ref=e205]
+              - columnheader "Context" [ref=e206]
+              - columnheader "Capabilities" [ref=e207]
+              - columnheader "Price" [ref=e208]
+              - columnheader "Score" [ref=e209]
+          - rowgroup [ref=e227]:
+            - row "Llama 3.2 Local 8k chat, coding FREE 7.6" [ref=e228]:
+              - cell [ref=e229]:
+                - checkbox [ref=e230]
+              - cell "Llama 3.2 Local" [ref=e231]
+              - cell "8k" [ref=e232]
+              - cell "chat, coding" [ref=e233]
+              - cell "FREE" [ref=e234]
+              - cell "7.6" [ref=e235]
+            - row "Qwen 2.5 14B Local 32k chat, coding, analysis FREE 7.7" [ref=e236]:
+              - cell [ref=e237]:
+                - checkbox [ref=e238]
+              - cell "Qwen 2.5 14B Local" [ref=e239]
+              - cell "32k" [ref=e240]
+              - cell "chat, coding, analysis" [ref=e241]
+              - cell "FREE" [ref=e242]
+              - cell "7.7" [ref=e243]
+            - row "DeepSeek R1 8B Local 32k coding, reasoning FREE 7.8" [ref=e244]:
+              - cell [ref=e245]:
+                - checkbox [ref=e246]
+              - cell "DeepSeek R1 8B Local" [ref=e247]
+              - cell "32k" [ref=e248]
+              - cell "coding, reasoning" [ref=e249]
+              - cell "FREE" [ref=e250]
+              - cell "7.8" [ref=e251]
+            - row "GPT-4o Mini (Routed Cloud) 128k chat, analysis $0.005 8.5" [ref=e252]:
+              - cell [ref=e253]:
+                - checkbox [ref=e254]
+              - cell "GPT-4o Mini (Routed Cloud)" [ref=e255]
+              - cell "128k" [ref=e256]
+              - cell "chat, analysis" [ref=e257]
+              - cell "$0.005" [ref=e258]
+              - cell "8.5" [ref=e259]
+            - row "Claude 3.5 Sonnet (Routed Cloud) 200k coding, chat, analysis $0.03 9" [ref=e260]:
+              - cell [ref=e261]:
+                - checkbox [ref=e262]
+              - cell "Claude 3.5 Sonnet (Routed Cloud)" [ref=e263]
+              - cell "200k" [ref=e264]
+              - cell "coding, chat, analysis" [ref=e265]
+              - cell "$0.03" [ref=e266]
+              - cell "9" [ref=e267]
+            - row "Gemini 2.0 Pro (Routed Cloud) 1M coding, chat, analysis $0.02 8.8" [ref=e268]:
+              - cell [ref=e269]:
+                - checkbox [ref=e270]
+              - cell "Gemini 2.0 Pro (Routed Cloud)" [ref=e271]
+              - cell "1M" [ref=e272]
+              - cell "coding, chat, analysis" [ref=e273]
+              - cell "$0.02" [ref=e274]
+              - cell "8.8" [ref=e275]
+            - row "Llama 3.1 405B (Routed Cloud) 128k coding, chat $0.01 8.7" [ref=e276]:
+              - cell [ref=e277]:
+                - checkbox [ref=e278]
+              - cell "Llama 3.1 405B (Routed Cloud)" [ref=e279]
+              - cell "128k" [ref=e280]
+              - cell "coding, chat" [ref=e281]
+              - cell "$0.01" [ref=e282]
+              - cell "8.7" [ref=e283]

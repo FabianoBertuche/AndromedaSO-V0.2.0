@@ -15,7 +15,7 @@ async function runInBatches<T>(items: T[], batchSize: number, worker: (item: T) 
 }
 
 beforeEach(async () => {
-  server = buildServer(false);
+  server = await buildServer(false);
   await server.ready();
 });
 

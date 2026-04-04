@@ -1,0 +1,14 @@
+id: providers-ollama
+name: ollama
+group: llm-hosted
+variant: ollama
+version: 1.0.0
+entrypoint: core/kernel/modules/providers/variants/ollama/module.manifest.yaml
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - chat
+status: active
+critical: false
+dependencies: []

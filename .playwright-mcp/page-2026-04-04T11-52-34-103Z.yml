@@ -1,0 +1,67 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [active] [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e127]:
+    - generic [ref=e128]:
+      - heading "Model Providers" [level=2] [ref=e129]
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - textbox "Search provider type" [ref=e132]
+          - combobox [ref=e133]:
+            - option "openai" [selected]
+            - option "anthropic"
+            - option "google"
+            - option "xai"
+            - option "mistral"
+            - option "groq"
+            - option "together"
+            - option "fireworks"
+            - option "deepinfra"
+            - option "novita"
+            - option "ollama"
+            - option "lmstudio"
+            - option "vllm"
+            - option "openrouter"
+            - option "hyperbolic"
+            - option "replicate"
+            - option "aws-bedrock"
+            - option "azure-openai"
+            - option "google-vertex"
+            - option "cohere"
+        - textbox "provider name" [ref=e134]: openai
+        - textbox "apiKey (optional)" [ref=e135]
+        - textbox "baseUrl (optional)" [ref=e136]
+        - button "Add Provider" [ref=e137] [cursor=pointer]
+      - table [ref=e139]:
+        - rowgroup [ref=e140]:
+          - row "Provider Type Health Models Actions" [ref=e141]:
+            - columnheader "Provider" [ref=e142]
+            - columnheader "Type" [ref=e143]
+            - columnheader "Health" [ref=e144]
+            - columnheader "Models" [ref=e145]
+            - columnheader "Actions" [ref=e146]
+        - rowgroup
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - heading "Available Models Catalog" [level=3] [ref=e149]
+          - generic [ref=e150]:
+            - button "All" [ref=e151] [cursor=pointer]
+            - button "None" [ref=e152] [cursor=pointer]
+            - button "Save Selected" [ref=e153] [cursor=pointer]
+        - table [ref=e155]:
+          - rowgroup [ref=e156]:
+            - row "Select Model Context Capabilities Price Score" [ref=e157]:
+              - columnheader "Select" [ref=e158]
+              - columnheader "Model" [ref=e159]
+              - columnheader "Context" [ref=e160]
+              - columnheader "Capabilities" [ref=e161]
+              - columnheader "Price" [ref=e162]
+              - columnheader "Score" [ref=e163]
+          - rowgroup

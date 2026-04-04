@@ -1,0 +1,85 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e163]:
+    - generic [ref=e164]:
+      - heading "Model Providers" [level=2] [ref=e165]
+      - generic [ref=e166]:
+        - generic [ref=e167]:
+          - textbox "Search provider type" [ref=e168]
+          - combobox [ref=e169]:
+            - option "openai"
+            - option "anthropic"
+            - option "google"
+            - option "xai"
+            - option "mistral"
+            - option "groq"
+            - option "together"
+            - option "fireworks"
+            - option "deepinfra"
+            - option "novita"
+            - option "ollama" [selected]
+            - option "lmstudio"
+            - option "vllm"
+            - option "openrouter"
+            - option "hyperbolic"
+            - option "replicate"
+            - option "aws-bedrock"
+            - option "azure-openai"
+            - option "google-vertex"
+            - option "cohere"
+        - textbox "provider name" [ref=e170]: ollama
+        - textbox "apiKey (optional)" [ref=e171]
+        - textbox "baseUrl (optional)" [ref=e172]
+        - button "Add Provider" [ref=e173] [cursor=pointer]
+      - table [ref=e175]:
+        - rowgroup [ref=e176]:
+          - row "Provider Type Health Models Actions" [ref=e177]:
+            - columnheader "Provider" [ref=e178]
+            - columnheader "Type" [ref=e179]
+            - columnheader "Health" [ref=e180]
+            - columnheader "Models" [ref=e181]
+            - columnheader "Actions" [ref=e182]
+        - rowgroup [ref=e183]:
+          - row "openai openai OK 110ms 12 Catalog Sync Test" [ref=e212]:
+            - cell "openai" [ref=e185]
+            - cell "openai" [ref=e186]
+            - cell "OK 110ms" [ref=e213]
+            - cell "12" [ref=e188]
+            - cell "Catalog Sync Test" [ref=e189]:
+              - button "Catalog" [ref=e190] [cursor=pointer]
+              - button "Sync" [ref=e191] [cursor=pointer]
+              - button "Test" [ref=e192] [cursor=pointer]
+          - row "ollama ollama Warning 210ms 0 Catalog Sync Test" [ref=e214]:
+            - cell "ollama" [ref=e215]
+            - cell "ollama" [ref=e216]
+            - cell "Warning 210ms" [ref=e217]
+            - cell "0" [ref=e218]
+            - cell "Catalog Sync Test" [ref=e219]:
+              - button "Catalog" [ref=e220] [cursor=pointer]
+              - button "Sync" [ref=e221] [cursor=pointer]
+              - button "Test" [ref=e222] [cursor=pointer]
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - heading "Available Models Catalog" [level=3] [ref=e195]
+          - generic [ref=e196]:
+            - button "All" [ref=e197] [cursor=pointer]
+            - button "None" [ref=e198] [cursor=pointer]
+            - button "Save Selected" [ref=e199] [cursor=pointer]
+        - table [ref=e201]:
+          - rowgroup [ref=e202]:
+            - row "Select Model Context Capabilities Price Score" [ref=e203]:
+              - columnheader "Select" [ref=e204]
+              - columnheader "Model" [ref=e205]
+              - columnheader "Context" [ref=e206]
+              - columnheader "Capabilities" [ref=e207]
+              - columnheader "Price" [ref=e208]
+              - columnheader "Score" [ref=e209]
+          - rowgroup

@@ -1,0 +1,4 @@
+id: basic-routing
+taskType: coding
+expect:
+  selectedModel: gpt-4o

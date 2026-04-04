@@ -12,7 +12,7 @@ let server: any;
 beforeEach(async () => {
   metrics.reset();
   safetyMonitor.reset();
-  server = buildServer(false);
+  server = await buildServer(false);
   await server.ready();
 });
 

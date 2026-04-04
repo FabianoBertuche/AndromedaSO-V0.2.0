@@ -1,0 +1,15 @@
+id: providers-openai-api
+name: openai-api
+group: llm-hosted
+variant: openai-api
+version: 1.0.0
+entrypoint: core/kernel/modules/providers/variants/openai-api/module.manifest.yaml
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - coding
+  - chat
+status: active
+critical: true
+dependencies: []

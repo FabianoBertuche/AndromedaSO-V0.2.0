@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Code Quality Reviewer",
+  "description": "Analyzes modified source files for code smells, design pattern opportunities, and best practices. Generates suggestions for readability, maintainability, and performance improvements.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "core/kernel/src/**/*.ts",
+      "frontend/src/**/*.ts",
+      "frontend/src/**/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A source file was just modified. Analyze the changes for potential improvements across these dimensions:\n\n1. Code smells (duplicated logic, long functions, deep nesting, magic numbers, etc.)\n2. Design pattern opportunities (where a pattern would simplify or clarify the code)\n3. Best practices for the tech stack (TypeScript strict mode, Fastify conventions, Zod validation, Pino logging, Drizzle ORM patterns, React hooks rules, etc.)\n4. Readability (naming clarity, comment quality, function decomposition)\n5. Maintainability (coupling, cohesion, single responsibility)\n6. Performance (unnecessary re-renders, N+1 queries, missing indexes, unoptimized loops)\n\nBe concise and actionable. Only flag real issues — avoid nitpicking style that's already consistent with the codebase. Do not rewrite the file unless asked."
+  },
+  "workspaceFolderName": "Andromeda SO V0.2.0",
+  "shortName": "code-quality-review"
+}

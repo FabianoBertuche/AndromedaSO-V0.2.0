@@ -94,6 +94,15 @@
 - [x] T069 Implement frontend pages (`ModelProviders`, `RouterIntelligence`) and `LLMTestbed` component with neon matrix UI.
 - [x] T070 Add integration tests for provider flow (`POST /providers -> sync -> infer -> benchmark`) and router coding selection.
 
+## Phase 12: Architectural Realignment (Providers/Channels/LLM Router)
+
+- [x] T071 Replace duplicate model-center stacks with a single modular runtime under `core/kernel/src/modules/providers`.
+- [x] T072 Register only canonical routes (`/api/providers`, `/api/llm-router`) in server bootstrap and remove legacy mounts.
+- [x] T073 Create operational module tree in `core/kernel/modules/{providers,channels,llm-router}` with manifests, contracts and scenarios.
+- [x] T074 Create declarative provider tree under `modules/providers` for groups and variants.
+- [x] T075 Update frontend API client to canonical providers/router endpoints.
+- [x] T076 Consolidate MVP04 integration tests into the canonical route contract and remove legacy test suite.
+
 ## Dependencies & Execution Order
 
 - Phase 1 must complete before all other phases.

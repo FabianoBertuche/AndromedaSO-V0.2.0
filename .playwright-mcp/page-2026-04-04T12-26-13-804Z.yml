@@ -1,0 +1,109 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [active] [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [ref=e12] [cursor=pointer]
+  - main [ref=e286]:
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - heading "Kernel Runtime" [level=2] [ref=e290]
+        - generic [ref=e291]: healthy
+      - generic [ref=e292]:
+        - article [ref=e293]:
+          - paragraph [ref=e294]: Registry Size
+          - paragraph [ref=e295]: "0"
+        - article [ref=e296]:
+          - paragraph [ref=e297]: Active Modules
+          - paragraph [ref=e298]: "0"
+        - article [ref=e299]:
+          - paragraph [ref=e300]: Retry Storm
+          - paragraph [ref=e301]: "0"
+      - generic [ref=e302]:
+        - paragraph [ref=e303]: Active Module IDs
+        - paragraph [ref=e304]: Nenhum modulo rodando.
+    - generic [ref=e306]:
+      - generic [ref=e307]:
+        - generic [ref=e308]:
+          - heading "Module Discover" [level=3] [ref=e309]
+          - paragraph [ref=e310]: POST /api/modules/discover
+        - link "Ir para AgentTable" [ref=e311] [cursor=pointer]:
+          - /url: "#agent-table"
+      - generic [ref=e312]:
+        - textbox "C:\\\\path\\\\to\\\\modules" [ref=e313]: C:\\FB\\Andromeda SO V0.2.0\\core\\kernel\\test-modules
+        - button "Discover" [ref=e314] [cursor=pointer]
+    - generic [ref=e316]:
+      - generic [ref=e317]:
+        - heading "Agent Table" [level=3] [ref=e318]
+        - generic [ref=e319]: Real-time
+      - table [ref=e321]:
+        - rowgroup [ref=e322]:
+          - row "id Performance P95 Reputation Score Budget (spent/limit) Status" [ref=e323]:
+            - columnheader "id" [ref=e324]
+            - columnheader "Performance P95" [ref=e325]
+            - columnheader "Reputation Score" [ref=e326]
+            - columnheader "Budget (spent/limit)" [ref=e327]
+            - columnheader "Status" [ref=e328]
+        - rowgroup
+      - paragraph [ref=e329]: Nenhum agente para exibir. Rode o discovery para popular a tabela.
+    - generic [ref=e331]:
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - heading "Cost Dashboard" [level=3] [ref=e334]
+          - paragraph [ref=e335]: GET /dashboard/costs
+        - button "Export CSV" [ref=e336] [cursor=pointer]
+      - application [ref=e340]
+      - table [ref=e343]:
+        - rowgroup [ref=e344]:
+          - row "agent spent (day) remaining (day) spent (month) remaining (month)" [ref=e345]:
+            - columnheader "agent" [ref=e346]
+            - columnheader "spent (day)" [ref=e347]
+            - columnheader "remaining (day)" [ref=e348]
+            - columnheader "spent (month)" [ref=e349]
+            - columnheader "remaining (month)" [ref=e350]
+        - rowgroup
+    - generic [ref=e352]:
+      - heading "MVP11 Orchestrator Matrix" [level=2] [ref=e353]
+      - generic [ref=e354]:
+        - generic [ref=e355]: Task Input
+        - textbox "Criar landing page" [ref=e356]
+        - button "Orchestrate Agents" [ref=e357] [cursor=pointer]
+      - generic [ref=e358]:
+        - generic [ref=e359]:
+          - paragraph [ref=e360]: Team Status
+          - paragraph [ref=e361]: "Active Teams: 0"
+          - paragraph [ref=e362]: "Pending Subtasks: 0"
+          - paragraph [ref=e363]: "Task ID: -"
+        - generic [ref=e364]:
+          - paragraph [ref=e365]: Human Fallback
+          - paragraph [ref=e366]: Sem conflitos bloqueantes
+      - application [ref=e368]:
+        - img "Mini Map" [ref=e372]
+        - generic "Control Panel" [ref=e373]:
+          - button "Zoom In" [ref=e374] [cursor=pointer]:
+            - img [ref=e375]
+          - button "Zoom Out" [ref=e377] [cursor=pointer]:
+            - img [ref=e378]
+          - button "Fit View" [ref=e380] [cursor=pointer]:
+            - img [ref=e381]
+          - button "Toggle Interactivity" [ref=e383] [cursor=pointer]:
+            - img [ref=e384]
+        - img
+        - link "React Flow attribution" [ref=e387] [cursor=pointer]:
+          - /url: https://reactflow.dev
+          - text: React Flow
+      - generic [ref=e389]:
+        - paragraph [ref=e390]: Agent Chat
+        - generic [ref=e391]:
+          - textbox "from agent" [ref=e392]: agent-design
+          - textbox "to agent" [ref=e393]: agent-code
+        - textbox "message" [ref=e394]: Sincronizar spacing tokens e hero copy.
+        - button "Send Agent Message" [ref=e395] [cursor=pointer]
+      - generic [ref=e396]:
+        - paragraph [ref=e397]: Realtime Stream
+        - list [ref=e398]:
+          - listitem [ref=e399]: No stream events yet.

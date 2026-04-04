@@ -1,10 +1,10 @@
 import type { Config } from 'drizzle-kit';
 
 export default {
-  schema: './core/kernel/src/store/schema.ts',
-  out: './core/kernel/drizzle',
-  driver: 'pg',
+  dialect: 'postgresql',
+  schema: './src/store/schema.ts',
+  out: './drizzle',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL || 'postgres://andromeda:andromeda@localhost:5432/andromeda'
+    url: process.env.DATABASE_URL || 'postgres://andromeda:andromeda@localhost:5432/andromeda'
   }
 } satisfies Config;

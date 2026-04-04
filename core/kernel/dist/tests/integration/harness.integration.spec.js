@@ -2,6 +2,19 @@ import { describe, it, expect } from 'vitest';
 import { GenericContainer } from 'testcontainers';
 import { Pool } from 'pg';
 import Redis from 'ioredis';
+async function retry(fn, attempts = 10, delayMs = 500) {
+    let lastError;
+    for (let index = 0; index < attempts; index += 1) {
+        try {
+            return await fn();
+        }
+        catch (error) {
+            lastError = error;
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+    }
+    throw lastError;
+}
 describe('integration harness', () => {
     it('starts PostgreSQL container and executes a query', async () => {
         const postgresContainer = await new GenericContainer('postgres:15-alpine')
@@ -16,7 +29,7 @@ describe('integration harness', () => {
             password: 'andromeda',
             database: 'andromeda'
         });
-        const result = await client.query('SELECT 1 AS ok');
+        const result = await retry(() => client.query('SELECT 1 AS ok'));
         await client.end();
         await postgresContainer.stop();
         expect(result.rows[0].ok).toBe(1);

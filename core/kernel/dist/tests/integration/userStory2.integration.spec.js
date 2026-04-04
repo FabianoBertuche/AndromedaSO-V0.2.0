@@ -6,7 +6,7 @@ import { promises as fs } from 'fs';
 import { buildServer } from '../../src/server';
 let server;
 beforeEach(async () => {
-    server = buildServer();
+    server = await buildServer();
     await server.ready();
 });
 afterEach(async () => {

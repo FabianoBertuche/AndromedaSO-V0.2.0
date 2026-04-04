@@ -1,0 +1,16 @@
+id: providers-openai-oauth
+name: openai-oauth
+group: llm-hosted
+variant: openai-oauth
+version: 1.0.0
+entrypoint: core/kernel/modules/providers/variants/openai-oauth/module.manifest.yaml
+contracts:
+  input: core/kernel/modules/providers/contracts/provider.contract.json
+  output: core/kernel/modules/providers/contracts/provider.contract.json
+capabilities:
+  - coding
+  - chat
+status: active
+critical: false
+dependencies:
+  - providers-openai-api

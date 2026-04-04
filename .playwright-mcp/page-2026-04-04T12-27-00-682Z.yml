@@ -1,0 +1,102 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - heading "Andromeda OS" [level=1] [ref=e5]
+    - paragraph [ref=e6]: Model Providers Management v2.0 + Router Intelligence
+    - navigation [ref=e7]:
+      - button "Dashboard" [ref=e8] [cursor=pointer]
+      - button "Agents" [ref=e9] [cursor=pointer]
+      - button "Costs" [ref=e10] [cursor=pointer]
+      - button "Models" [ref=e11] [cursor=pointer]
+      - button "Router Intelligence" [active] [ref=e12] [cursor=pointer]
+  - main [ref=e422]:
+    - generic [ref=e423]:
+      - generic [ref=e424]:
+        - heading "Router Intelligence" [level=2] [ref=e425]
+        - paragraph [ref=e426]: "Coding ranking: GPT-4o 9.4 > Claude 8.8"
+        - generic [ref=e427]:
+          - article [ref=e428]:
+            - paragraph [ref=e429]: GPT-4o
+            - paragraph [ref=e430]: 128k | $0.02
+            - paragraph [ref=e431]: "10.1"
+          - article [ref=e432]:
+            - paragraph [ref=e433]: o3
+            - paragraph [ref=e434]: 200k | $0.04
+            - paragraph [ref=e435]: "9.9"
+          - article [ref=e436]:
+            - paragraph [ref=e437]: GPT-4.1
+            - paragraph [ref=e438]: 128k | $0.03
+            - paragraph [ref=e439]: "9.8"
+          - article [ref=e440]:
+            - paragraph [ref=e441]: Claude 3.5 Sonnet (Routed Cloud)
+            - paragraph [ref=e442]: 200k | $0.03
+            - paragraph [ref=e443]: "9.7"
+          - article [ref=e444]:
+            - paragraph [ref=e445]: o4-mini
+            - paragraph [ref=e446]: 200k | $0.02
+            - paragraph [ref=e447]: "9.6"
+          - article [ref=e448]:
+            - paragraph [ref=e449]: GPT-4 Turbo
+            - paragraph [ref=e450]: 128k | $0.03
+            - paragraph [ref=e451]: "9.5"
+          - article [ref=e452]:
+            - paragraph [ref=e453]: Gemini 2.0 Pro (Routed Cloud)
+            - paragraph [ref=e454]: 1M | $0.02
+            - paragraph [ref=e455]: "9.5"
+          - article [ref=e456]:
+            - paragraph [ref=e457]: o3-mini
+            - paragraph [ref=e458]: 200k | $0.015
+            - paragraph [ref=e459]: "9.4"
+          - article [ref=e460]:
+            - paragraph [ref=e461]: Llama 3.1 405B (Routed Cloud)
+            - paragraph [ref=e462]: 128k | $0.01
+            - paragraph [ref=e463]: "9.4"
+          - article [ref=e464]:
+            - paragraph [ref=e465]: GPT-4.1 mini
+            - paragraph [ref=e466]: 128k | $0.01
+            - paragraph [ref=e467]: "9.3"
+      - generic [ref=e468]:
+        - heading "Benchmark Lab" [level=3] [ref=e469]
+        - generic [ref=e471]:
+          - combobox [ref=e472]:
+            - option "Selecione um modelo..." [disabled] [selected]
+            - option "GPT-4o"
+            - option "GPT-4.1"
+            - option "GPT-4.1 mini"
+            - option "GPT-4o mini"
+            - option "o3"
+            - option "o3-mini"
+            - option "o4-mini"
+            - option "GPT-4 Turbo"
+            - option "GPT-3.5 Turbo"
+            - option "Embedding 3 Large"
+            - option "Embedding 3 Small"
+            - option "GPT Image 1"
+            - option "Llama 3.2 Local"
+            - option "Qwen 2.5 14B Local"
+            - option "DeepSeek R1 8B Local"
+            - option "GPT-4o Mini (Routed Cloud)"
+            - option "Claude 3.5 Sonnet (Routed Cloud)"
+            - option "Gemini 2.0 Pro (Routed Cloud)"
+            - option "Llama 3.1 405B (Routed Cloud)"
+          - combobox [ref=e473]:
+            - option "Coding" [selected]
+            - option "Chat"
+          - button "Executar Benchmark" [disabled] [ref=e474]
+      - generic [ref=e475]:
+        - heading "LLM Testbed" [level=3] [ref=e476]
+        - generic [ref=e477]:
+          - combobox [ref=e478]:
+            - option "Select provider" [selected]
+            - option "openai"
+            - option "ollama"
+          - combobox [ref=e479]:
+            - option "coding"
+            - option "chat" [selected]
+          - textbox [ref=e480]: Route this prompt for best model.
+          - button "Run Routing Decision" [ref=e481] [cursor=pointer]
+      - generic [ref=e482]:
+        - heading "Routing History" [level=3] [ref=e483]
+        - list [ref=e484]:
+          - listitem [ref=e485]: coding -> gpt-4o (10.1)
+          - listitem [ref=e486]: coding -> gpt-4o (10.1)
+          - listitem [ref=e487]: coding -> gpt-4o (10.1)
