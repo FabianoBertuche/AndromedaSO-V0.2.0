@@ -1,0 +1,10 @@
+variantId: base
+name: Base Variant
+group: default
+description: Base variant with standard agent configurations
+version: 1.0.0
+status: active
+constraints:
+  - Standard operational parameters
+  - Default security rules
+  - Standard channel support

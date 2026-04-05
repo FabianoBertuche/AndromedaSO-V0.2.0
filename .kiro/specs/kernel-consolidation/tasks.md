@@ -21,7 +21,7 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
     - Adicionar campo `simulated boolean NOT NULL DEFAULT true` em `model_benchmark_results`
     - _Requisitos: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-  - [-] 2.2 Escrever teste unitário para validar que o schema exporta todas as tabelas esperadas
+  - [x] 2.2 Escrever teste unitário para validar que o schema exporta todas as tabelas esperadas
     - Verificar que `providers`, `model_catalog_items`, `model_benchmark_results`, `routing_decisions`, `modules_registry` e `lifecycle_events` são exportados
     - _Requisitos: 2.1, 2.2, 2.3, 2.4, 2.5_
 
@@ -59,19 +59,19 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
     - Manter `AGENT_PROFILES` hardcoded como constante de fallback
     - _Requisitos: 5.1, 5.2, 5.3, 5.4_
 
-  - [ ] 5.3 Escrever teste de propriedade para validação de AgentProfile (Propriedade 1)
+  - [x] 5.3 Escrever teste de propriedade para validação de AgentProfile (Propriedade 1)
     - **Propriedade 1: Validação de AgentProfile rejeita perfis incompletos**
     - Usar `fast-check` para gerar objetos arbitrários com campos faltando ou incorretos
     - Verificar que `AgentProfileSchema.safeParse(x).success === false` para todos os inputs inválidos
     - **Valida: Requisito 5.3**
 
-  - [ ] 5.4 Escrever teste de propriedade para filtragem de perfis inválidos (Propriedade 2)
+  - [x] 5.4 Escrever teste de propriedade para filtragem de perfis inválidos (Propriedade 2)
     - **Propriedade 2: Filtragem de perfis inválidos preserva apenas os válidos**
     - Usar `fast-check` para gerar listas mistas de perfis válidos e inválidos
     - Verificar que o número de perfis carregados no pool é exatamente igual ao número de perfis válidos na lista
     - **Valida: Requisito 5.4**
 
-  - [ ] 5.5 Escrever testes unitários para AgentPool
+  - [x] 5.5 Escrever testes unitários para AgentPool
     - Testar atribuição de agente por capacidade existente
     - Testar fallback para qualquer agente quando capacidade não existe
     - Testar carregamento de perfis de `agentProfiles.json`
@@ -86,7 +86,7 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
   - Atualizar o tipo `ModelBenchmarkResult` em `src/modules/providers/domain/entities/provider.entity.ts` para incluir o campo `simulated: boolean`
   - _Requisitos: 6.1, 6.2, 6.3_
 
-  - [ ] 6.1 Escrever teste de propriedade para campo `simulated` (Propriedade 3)
+  - [x] 6.1 Escrever teste de propriedade para campo `simulated` (Propriedade 3)
     - **Propriedade 3: Resultado de benchmark sempre contém `simulated: true`**
     - Usar `fast-check` para gerar `modelId` e `taskType` arbitrários válidos
     - Verificar que `result.simulated === true` para todos os inputs
@@ -103,7 +103,7 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
     - Chamar `await validateEnvironment()` como primeira instrução dentro de `buildServer()` antes de registrar rotas
     - _Requisitos: 7.3_
 
-  - [ ] 7.3 Escrever testes unitários para `validateEnvironment`
+  - [x] 7.3 Escrever testes unitários para `validateEnvironment`
     - Testar `PG_REQUIRED=true` + `DATABASE_URL` ausente → `process.exit(1)` chamado
     - Testar `PG_REQUIRED=true` + timeout de conexão → `process.exit(1)` chamado
     - Testar `PG_REQUIRED=false` + `DATABASE_URL` ausente → log `warn` + retorno normal
@@ -116,13 +116,13 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
   - Se dependências circulares forem detectadas: logar os módulos envolvidos no ciclo
   - _Requisitos: 8.1, 8.2, 8.3, 8.4_
 
-  - [ ] 8.1 Escrever teste de propriedade para módulo inválido (Propriedade 4)
+  - [x] 8.1 Escrever teste de propriedade para módulo inválido (Propriedade 4)
     - **Propriedade 4: Módulo inválido nunca executa transição de estado**
     - Usar `fast-check` para gerar módulos com contratos inválidos
     - Verificar que o estado da máquina de estados permanece inalterado após o erro
     - **Valida: Requisito 8.2**
 
-  - [ ] 8.2 Escrever testes unitários para `LifecycleOrchestrator`
+  - [x] 8.2 Escrever testes unitários para `LifecycleOrchestrator`
     - Testar transição `registered → initialized → running` com módulo válido
     - Testar transição `running → stopped`
     - Testar rejeição de módulo quando `validateAndLoadModule()` retorna `valid: false`
@@ -154,19 +154,19 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
     - Adicionar `server.register(correlationIdPlugin)` antes de qualquer outra chamada `server.register()`
     - _Requisitos: 11.3_
 
-  - [ ] 11.3 Escrever teste de propriedade para correlation ID preservado (Propriedade 6)
+  - [x] 11.3 Escrever teste de propriedade para correlation ID preservado (Propriedade 6)
     - **Propriedade 6: Correlation ID válido é preservado na resposta**
     - Usar `fast-check` para gerar strings de 1–128 caracteres
     - Verificar que `response.headers['x-correlation-id'] === sentHeader` para todos os inputs
     - **Valida: Requisitos 11.2, 11.4**
 
-  - [ ] 11.4 Escrever teste de propriedade para UUID gerado (Propriedade 7)
+  - [x] 11.4 Escrever teste de propriedade para UUID gerado (Propriedade 7)
     - **Propriedade 7: Requisição sem correlation ID sempre recebe UUID v4 válido**
     - Usar `fast-check` para gerar requisições sem o header `x-correlation-id`
     - Verificar que o header da resposta corresponde ao regex UUID v4 `^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`
     - **Valida: Requisitos 11.1, 11.4**
 
-  - [ ] 11.5 Escrever testes unitários para `correlationIdPlugin`
+  - [x] 11.5 Escrever testes unitários para `correlationIdPlugin`
     - Testar requisição sem header → UUID v4 gerado na resposta
     - Testar requisição com header válido (≤128 chars) → mesmo valor na resposta
     - Testar header com 129+ caracteres → novo UUID gerado + log `warn`
@@ -182,7 +182,7 @@ Consolidação do `andromeda-core-kernel`: remoção do Prisma, expansão do sch
     - Testar erro quando nenhum modelo está sincronizado
     - _Requisitos: 10.2_
 
-  - [ ] 12.2 Escrever teste de propriedade para `inferRoute()` (Propriedade 5)
+  - [x] 12.2 Escrever teste de propriedade para `inferRoute()` (Propriedade 5)
     - **Propriedade 5: `inferRoute()` sempre retorna score não-negativo**
     - Usar `fast-check` para gerar listas não-vazias de modelos com scores aleatórios (incluindo zero)
     - Verificar que `decision.score >= 0` para todos os inputs

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structured Provider Health",
+  "type": "object",
+  "required": ["status", "message"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["ok", "warning", "degraded", "error", "unknown"]
+    },
+    "message": { "type": "string" },
+    "latencyMs": { "type": "number" },
+    "checkedAt": { "type": "string", "format": "date-time" },
+    "details": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

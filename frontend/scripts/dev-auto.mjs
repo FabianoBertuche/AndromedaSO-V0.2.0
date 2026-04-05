@@ -53,6 +53,38 @@ function requestHealth(port) {
   });
 }
 
+function requestProviderChatRoute(port) {
+  return new Promise((resolve) => {
+    const payload = JSON.stringify({});
+    const req = http.request(
+      {
+        host: '127.0.0.1',
+        port,
+        path: '/api/providers/chat',
+        method: 'POST',
+        timeout: 800,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload)
+        }
+      },
+      (res) => {
+        res.resume();
+        resolve(res.statusCode === 400);
+      }
+    );
+
+    req.on('error', () => resolve(false));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(false);
+    });
+
+    req.write(payload);
+    req.end();
+  });
+}
+
 async function pickUiPort(candidates) {
   for (const port of candidates) {
     // eslint-disable-next-line no-await-in-loop
@@ -70,9 +102,12 @@ async function pickApiTarget(candidates, fallbackPort) {
   }
 
   for (const port of candidates) {
-    // eslint-disable-next-line no-await-in-loop
-    const healthy = await requestHealth(port);
-    if (healthy) {
+    const [healthy, hasProviderChatRoute] = await Promise.all([
+      requestHealth(port),
+      requestProviderChatRoute(port)
+    ]);
+
+    if (healthy && hasProviderChatRoute) {
       return `http://localhost:${port}`;
     }
   }

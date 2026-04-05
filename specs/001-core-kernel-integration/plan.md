@@ -1,167 +1,120 @@
 # Implementation Plan: Core Kernel Integration
 
-**Branch**: `001-core-kernel-integration` | **Date**: 2026-04-02 | **Spec**: specs/001-core-kernel-integration/spec.md
+**Branch**: `001-core-kernel-integration` | **Date**: 2026-04-05 | **Spec**: `C:\FB\Andromeda SO V0.2.0\specs\001-core-kernel-integration\spec.md`
 **Input**: Feature specification from `/specs/001-core-kernel-integration/spec.md`
 
 ## Summary
 
-Estabelecer o `core/kernel` do Andromeda SO V0.2.0 como plataforma de integração modular. O núcleo deve suportar discovery de módulos por pasta, registro em memória e PostgreSQL, validação de contrato canônico com Zod, carregamento/boot e ciclo de vida de módulo (discovered → registered → validated → loaded → initialized → running → stopped → failed). Prioridades iniciais: discovery/registry (P1), validação/carregamento (P2), ciclo de vida e evolução sistêmica (P3).
+Estabelecer o `core/kernel` como centro vivo de integração do Andromeda SO, responsável por discovery, registry, validação, carregamento e ciclo de vida de módulos organizados por raiz, grupo e variante. A solução usa contratos canônicos com Zod, registry dual (memória + PostgreSQL), discovery em filesystem e uma máquina de estados explícita para permitir expansão futura sem acoplamento ad hoc.
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x (Node.js 20+)
-**Primary Dependencies**: Fastify, Zod, Drizzle ORM, pg, pgvector, ioredis, pino
-**Storage**: PostgreSQL (primary persistência de registro), Redis (cache efêmero + filas curtas), local filesystem (module discovery)
-**Testing**: Vitest + Supertest (API) + Testcontainers (PostgreSQL/Redis)
-**Target Platform**: Linux containerizado / Kubernetes; local dev com Docker Compose
-**Project Type**: Framework de execução (core/kernel agente modular)
-**Performance Goals**: discovery + registro 10 módulos <5s; carregamento <2s por módulo; gestor de ciclo de vida >100 módulos simultâneos estáveis
-**Constraints**: validar e bloquear circularidade de dependências; proibir loops implícitos; dev mode explícito; arquitetura deve crescer por contrato e não por patches.
-**Scale/Scope**: 100+ módulos por instância, 10+ grupos, variantes por evolução vertical
+**Language/Version**: TypeScript 5.4 + Node.js 20 (ESM)  
+**Primary Dependencies**: Fastify 4, Zod, Drizzle ORM, `pg`, `yaml`, Pino, `prom-client`, `ioredis`  
+**Storage**: PostgreSQL 15 para auditoria e recuperação, registry em memória para runtime, Redis 7 para coordenação efêmera/cache curto  
+**Testing**: Vitest, Supertest/Fastify inject, Testcontainers  
+**Target Platform**: Linux server local/prod com filesystem acessível para discovery e serviços Docker auxiliares  
+**Project Type**: backend web-service com dashboard React consumindo APIs do kernel  
+**Performance Goals**: descobrir e registrar pelo menos 10 módulos em menos de 5s, manter carregamento médio por módulo abaixo de 2s, suportar 100 módulos simultâneos com estado consistente  
+**Constraints**: seguir SDD + TDD, usar apenas contratos explícitos, manter retrocompatibilidade dos fluxos atuais, não introduzir dependência do core em detalhes internos de variantes  
+**Scale/Scope**: `core/kernel/src/{contracts,discovery,registry,validation,lifecycle,store,api}` + `modules/` declarativo + persistência de registry/lifecycle + endpoints HTTP canônicos
 
 ## Constitution Check
 
-*GATE: Passado* (conformidade com constituição v0.2.0 definida em `memory/constitution.md`): Spec-first, contract-driven, modular, core/kernel como centro de integração.
+*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+
+- PASS: existe spec ativa e o plano deriva diretamente dela, em conformidade com Artigos I e II.
+- PASS: o design mantém `core/kernel` como centro de integração sistêmica e crescimento estrutural, conforme Artigos IV e V.
+- PASS: módulos continuam organizados por raiz própria, grupos e variantes, em conformidade com Artigos VI e VII.
+- PASS: integrações propostas usam manifestos, contratos e capacidades registradas, conforme Artigo VIII.
+- PASS: stack proposta permanece na stack oficial V1 (TypeScript, Fastify, Zod, PostgreSQL, Redis, Drizzle), conforme Artigo IX.
+- PASS: não há necessidade de novas tecnologias nem violações de simplicidade estrutural, conforme Artigo X.
+- PASS: a feature pertence ao Ciclo 1 de fundação sistêmica, conforme Artigo XI.
+- PASS: a rastreabilidade entre spec, plan, tasks, implementação e testes é mantida, conforme Artigo XIV.
+
+## Phase 0 Research Decisions
+
+- Manifestos continuam em `module.manifest.yaml`, com schema canônico em `core/kernel/src/contracts/moduleManifest.schema.ts`.
+- Contratos de entrada e saída continuam validados com Zod e compatibilidade de versão por semver major.
+- Registry operacional permanece em memória com persistência em PostgreSQL para auditoria/recuperação.
+- O ciclo de vida mínimo adotado é `discovered -> registered -> validated -> loaded -> initialized -> running -> stopped -> failed`.
+- Dependências circulares e variantes incompatíveis por versão são tratadas como erro de validação antes de entrar em runtime.
+
+## Phase 1 Design Outputs
+
+- `research.md`: consolida decisões arquiteturais e alternativas rejeitadas.
+- `data-model.md`: define entidades operacionais e persistidas para módulos, contratos, registry e eventos de lifecycle.
+- `contracts/module-runtime-api.md`: documenta os endpoints HTTP do kernel para discovery, validação, carga e lifecycle.
+- `contracts/module-manifest.md`: documenta o contrato canônico do manifesto esperado no filesystem.
+- `quickstart.md`: descreve setup local, smoke test e validação da feature.
 
 ## Project Structure
 
-### Documentação (esta feature)
+### Documentation (this feature)
 
-```
+```text
 specs/001-core-kernel-integration/
-├── spec.md
 ├── plan.md
 ├── research.md
 ├── data-model.md
 ├── quickstart.md
-└── contracts/
+├── contracts/
+│   ├── module-manifest.md
+│   └── module-runtime-api.md
+└── tasks.md
 ```
 
-### Código (repositório)
+### Source Code (repository root)
 
-```
-core/
-  kernel/
-    src/
-      discovery/
-      registry/
-      validation/
-      lifecycle/
-      contracts/
-      api/
-      store/
-      config/
-    tests/
-      unit/
-      integration/
-      e2e/
-    module.manifest.yaml (opcional para auto-registro)
+```text
+core/kernel/
+├── src/
+│   ├── api/
+│   │   └── moduleRoutes.ts
+│   ├── contracts/
+│   │   ├── corePluginInterface.ts
+│   │   ├── lifecycle.schema.ts
+│   │   ├── moduleContract.schema.ts
+│   │   └── moduleManifest.schema.ts
+│   ├── discovery/
+│   │   └── fsDiscovery.ts
+│   ├── lifecycle/
+│   │   ├── lifecycleOrchestrator.ts
+│   │   ├── loadModule.ts
+│   │   └── stateMachine.ts
+│   ├── registry/
+│   │   ├── inMemoryRegistry.ts
+│   │   └── moduleRegistry.ts
+│   ├── store/
+│   │   ├── postgresRegistry.ts
+│   │   └── schema.ts
+│   ├── validation/
+│   │   ├── contractValidator.ts
+│   │   ├── dependencyValidator.ts
+│   │   └── manifestParser.ts
+│   └── __tests__/
+├── modules/
+│   ├── providers/
+│   ├── channels/
+│   └── llm-router/
+└── package.json
 
 modules/
-  [futuros módulos plugáveis]
+└── providers/
+    ├── module.manifest.yaml
+    ├── groups/
+    └── variants/
+
+frontend/
+└── src/
+    ├── api/
+    ├── components/
+    ├── hooks/
+    └── pages/
 ```
 
-**Structure Decision**: Core/kernel como domínio especial em `core/kernel`, separado de `modules/` que contém apenas módulos plugáveis. Isso reforça o papel central do core conforme constituição.
+**Structure Decision**: a feature usa a estrutura real existente do repositório, concentrando o comportamento do runtime em `core/kernel/src/*`, mantendo a árvore declarativa de módulos em `modules/` e preservando o frontend apenas como consumidor das APIs canônicas do kernel.
 
 ## Complexity Tracking
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| Core kernel + discovery + lifecycle no mesmo domínio | Coesão de integração core | Separar em vários repositórios aumentaria custo de orquestração e consistência |
-| Dependências em PostgreSQL + Redis | Auditoria e performance efêmera | Armazenamento único não atenderia requisitos de compliance e alta disponibilidade |
-
-## Module Manifest Schema
-
-### `module.manifest.yaml` (obrigatório)
-
-```yaml
-id: string (único)
-name: string
-group: string
-variant: string
-version: semver
-entrypoint: path.to.adapter
-contracts:
-  input: schema.path
-  output: schema.path
-capabilities: string[]
-status: 'active' | 'disabled' | 'deprecated'
-critical: boolean (default false)
-dependencies: string[] (sem circulares)
-```
-
-### `group.manifest.yaml` (opcional)
-
-```yaml
-group: string
-description: string
-capabilities: string[]
-variants: string[]
-```
-
-## Lifecycle State Machine
-
-```
-DISCOVERED → REGISTERED → VALIDATED → LOADED → INITIALIZED → RUNNING → STOPPED → FAILED
-```
-
-Transições:
-- `RUNNING → LOADED` (shutdown gracioso)
-- `LOADED → RUNNING` (reinicialização)
-- `VALIDATED → REGISTERED` (rejeição)
-- `DISCOVERED → STOPPED` (erro precoce)
-
-## Registry Persistence Model
-
-### Tabela `modules_registry` (PostgreSQL)
-
-```sql
-CREATE TABLE modules_registry (
-  id UUID PRIMARY KEY,
-  module_id VARCHAR(255) UNIQUE,
-  group_name VARCHAR(255),
-  variant_name VARCHAR(255),
-  version VARCHAR(50),
-  status ENUM('discovered','registered','validated','loaded','initialized','running','stopped','failed'),
-  capabilities JSONB,
-  contracts JSONB,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-### Redis Cache (runtime)
-
-```
-module:<id> → JSON completo do módulo ativo
-registry:active → lista de módulos RUNNING
-```
-
-## Implementation Phases
-
-### Phase 0: Research (✅)
-
-- Confirmado schema de `module.manifest.yaml` e contratos de entrada/saída.
-- Definido API do registry em runtime e persistência.
-- Estabelecida abordagem de API para status/ciclos.
-
-### Phase 1: Core Feature Build
-
-- M1: Discovery e registry (P1)
-- M2: Contratos e validação (P2)
-- M3: Ciclo de vida (P3)
-- M4: Expansão para novos tipos de módulo e proteção contra acoplamento ad hoc
-
-### Phase 2: Cross-cutting
-
-- Observability (logs + métricas + audit trails)
-- Segurança/limitação de loops e retries
-- Tests coverage 90%
-
-## Artifact Delivery
-
-- `research.md` (Phase 0)
-- `data-model.md` (entidades Module/Contract/Registry/History)
-- `quickstart.md` (setup local + smoke test)
-- `contracts/` (schemas JSON/YAML para manifests e interfaces)
-- `tasks.md` gerado via `speckit.tasks` após plan
+Nenhuma violação constitucional identificada; seção mantida vazia por não haver exceções a justificar.

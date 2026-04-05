@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Connection Test",
+  "type": "object",
+  "required": ["variant"],
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": ["ollama", "openai-api", "openai-oauth"]
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "apiKey": { "type": "string" },
+        "baseUrl": { "type": "string" },
+        "organization": { "type": "string" },
+        "callbackUrl": { "type": "string" },
+        "code": { "type": "string" },
+        "state": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["api-key", "base-url", "oauth-manual"]
+        },
+        "callbackUrl": { "type": "string" },
+        "code": { "type": "string" },
+        "state": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   benchmarkModel,
+  completeOpenAiCodexOAuth,
   createProvider,
+  createOpenAiCodexOAuthSession,
   deleteProvider,
   getProviderCatalog,
   getProviderHealth,
@@ -27,6 +29,23 @@ export function useCreateProvider() {
 
   return useMutation({
     mutationFn: createProvider,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['providers'] });
+    }
+  });
+}
+
+export function useCreateOpenAiCodexOAuthSession() {
+  return useMutation({
+    mutationFn: createOpenAiCodexOAuthSession
+  });
+}
+
+export function useCompleteOpenAiCodexOAuth() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: completeOpenAiCodexOAuth,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['providers'] });
     }

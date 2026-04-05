@@ -7,9 +7,9 @@
  * Referência: https://console.groq.com/docs/openai
  */
 import pino from 'pino';
-import type { AdapterFactory } from './adapter.interface';
-import { fetchWithTimeout, pingWithTimeout } from './http.utils';
-import { listSeedModels } from './providerCatalog';
+import { createProviderAdapterChatError, type AdapterFactory } from './adapter.interface.js';
+import { chatWithOpenAiCompatibleApi, fetchWithTimeout, pingWithTimeout } from './http.utils.js';
+import { listSeedModels } from './providerCatalog.js';
 
 const log = pino({ name: 'adapter:groq' });
 
@@ -62,6 +62,19 @@ export const groqAdapterFactory: AdapterFactory = (apiKey, _baseUrl) => ({
       { headers: { Authorization: `Bearer ${apiKey}` } },
       3000
     );
+  },
+
+  async chat(modelId, messages) {
+    if (!apiKey) {
+      throw createProviderAdapterChatError('UPSTREAM_CHAT_FAILED', 'Groq chat requires a configured API key.');
+    }
+
+    return chatWithOpenAiCompatibleApi({
+      url: 'https://api.groq.com/openai/v1/chat/completions',
+      modelId,
+      messages,
+      headers: { Authorization: `Bearer ${apiKey}` }
+    });
   }
 });
 

@@ -17,14 +17,14 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Exibir latência em ms ao lado do status quando `latencyMs` estiver presente
     - _Requisitos: 4.1, 4.2, 4.5_
 
-  - [ ]* 2.2 Escrever teste de propriedade para `HealthBadge` — Propriedade 6 e 7
+  - [x]* 2.2 Escrever teste de propriedade para `HealthBadge` — Propriedade 6 e 7
     - **Propriedade 6: HealthBadge mapeia health para cor correta**
     - **Valida: Requisito 4.1**
     - **Propriedade 7: HealthBadge exibe latência para qualquer valor numérico**
     - **Valida: Requisito 4.2**
     - Arquivo: `frontend/src/components/__tests__/HealthBadge.property.test.tsx`
 
-  - [ ]* 2.3 Escrever testes unitários para `HealthBadge`
+  - [x]* 2.3 Escrever testes unitários para `HealthBadge`
     - Testar estado Unknown, ok/warning/error com e sem latência
     - Arquivo: `frontend/src/components/__tests__/HealthBadge.test.tsx`
     - _Requisitos: 4.1, 4.2, 4.5_
@@ -33,7 +33,7 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Renderizar `<span>` com texto "Simulated" e classes âmbar neon
     - _Requisitos: 3.3, 3.4_
 
-  - [ ]* 2.5 Escrever testes unitários para `SimulatedBadge`
+  - [x]* 2.5 Escrever testes unitários para `SimulatedBadge`
     - Verificar renderização do span com texto e classes corretas
     - Arquivo: `frontend/src/components/__tests__/SimulatedBadge.test.tsx`
     - _Requisitos: 3.4_
@@ -44,13 +44,13 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Estilo: borda vermelha/rosa neon, posição `fixed bottom-4 right-4`
     - _Requisitos: 7.4, 7.5, 7.6_
 
-  - [ ]* 2.7 Escrever teste de propriedade para `ToastNotification` — Propriedade 12
+  - [x]* 2.7 Escrever teste de propriedade para `ToastNotification` — Propriedade 12
     - **Propriedade 12: ToastNotification desaparece dentro do intervalo [4000, 8000]ms**
     - **Valida: Requisito 7.4**
     - Usar `vi.useFakeTimers()` para controlar o tempo
     - Arquivo: `frontend/src/components/__tests__/ToastNotification.property.test.tsx`
 
-  - [ ]* 2.8 Escrever testes unitários para `ToastNotification`
+  - [x]* 2.8 Escrever testes unitários para `ToastNotification`
     - Testar auto-dismiss, fechar manualmente e estilo de erro
     - Arquivo: `frontend/src/components/__tests__/ToastNotification.test.tsx`
     - _Requisitos: 7.4, 7.5, 7.6_
@@ -83,14 +83,14 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Fechar `EventSource` no handler de erro para evitar reconexões infinitas
     - _Requisitos: 5.1, 5.2, 5.3_
 
-  - [ ]* 5.4 Escrever teste de propriedade para `useProviderHealthStream` — Propriedades 9 e 10
+  - [x]* 5.4 Escrever teste de propriedade para `useProviderHealthStream` — Propriedades 9 e 10
     - **Propriedade 9: useProviderHealthStream usa setQueryData, nunca invalidateQueries**
     - **Valida: Requisito 5.1**
     - **Propriedade 10: useProviderHealthStream aplica health e latencyMs ao provider correto**
     - **Valida: Requisitos 5.2, 5.3**
     - Arquivo: `frontend/src/hooks/__tests__/useProviderHealthStream.property.test.ts`
 
-  - [ ]* 5.5 Escrever testes unitários para `useProviderHealthStream`
+  - [x]* 5.5 Escrever testes unitários para `useProviderHealthStream`
     - Testar atualização via setQueryData, preservação de latencyMs e fechamento no erro
     - Arquivo: `frontend/src/hooks/__tests__/useProviderHealthStream.test.ts`
     - _Requisitos: 5.1, 5.2, 5.3_
@@ -106,7 +106,7 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Exibir `ToastNotification` em caso de erro
     - _Requisitos: 1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3, 7.3_
 
-  - [ ]* 6.2 Escrever testes de propriedade para `BenchmarkPanel` — Propriedades 1 a 5
+  - [x]* 6.2 Escrever testes de propriedade para `BenchmarkPanel` — Propriedades 1 a 5
     - **Propriedade 1: Seletor populado com todos os modelos disponíveis** — Valida: Requisito 1.1
     - **Propriedade 2: Chamada de benchmark usa o modelId selecionado** — Valida: Requisito 1.3
     - **Propriedade 3: Resultado de benchmark inserido no topo da tabela** — Valida: Requisito 3.1
@@ -114,7 +114,7 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - **Propriedade 5: SimulatedBadge presente se e somente se simulated=true** — Valida: Requisito 3.3
     - Arquivo: `frontend/src/components/__tests__/BenchmarkPanel.property.test.tsx`
 
-  - [ ]* 6.3 Escrever testes unitários para `BenchmarkPanel`
+  - [x]* 6.3 Escrever testes unitários para `BenchmarkPanel`
     - Testar estado loading, estado erro, estado sem modelos e inserção de resultado
     - Arquivo: `frontend/src/components/__tests__/BenchmarkPanel.test.tsx`
     - _Requisitos: 1.2, 1.4, 2.1, 2.4, 7.3_
@@ -128,12 +128,12 @@ Implementação incremental dos componentes, hooks e refatorações necessários
     - Exibir `ToastNotification` em caso de erro nas ações Sync e Test
     - _Requisitos: 4.1, 4.2, 4.3, 4.4, 5.1, 6.1, 6.2, 6.3, 6.4, 7.1, 7.2_
 
-  - [ ]* 7.2 Escrever testes de propriedade para `ProvidersTable` — Propriedades 8 e 11
+  - [x]* 7.2 Escrever testes de propriedade para `ProvidersTable` — Propriedades 8 e 11
     - **Propriedade 8: HealthBadge presente em cada linha da ProvidersTable** — Valida: Requisito 4.4
     - **Propriedade 11: Ambos os botões desabilitados durante qualquer ação por provider** — Valida: Requisito 6.4
     - Arquivo: `frontend/src/components/__tests__/ModelProviders.property.test.tsx`
 
-  - [ ]* 7.3 Escrever testes unitários para `ModelProviders`
+  - [x]* 7.3 Escrever testes unitários para `ModelProviders`
     - Testar botões Sync/Test com loading por provider e toast de erro
     - _Requisitos: 6.1, 6.2, 6.3, 6.4, 7.1, 7.2_
 

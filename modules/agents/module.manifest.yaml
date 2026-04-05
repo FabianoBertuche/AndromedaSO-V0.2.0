@@ -1,0 +1,16 @@
+id: agents-catalog
+name: agents-catalog
+group: agents
+variant: declarative-root
+version: 1.0.0
+entrypoint: modules/agents
+contracts:
+  input: modules/agents/contracts/agent-instance.contract.json
+  output: modules/agents/contracts/resolved-agent.contract.json
+capabilities:
+  - agent-templates
+  - agent-registry
+  - agent-resolution
+status: active
+critical: true
+dependencies: []

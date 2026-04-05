@@ -1,5 +1,6 @@
 export type ProviderType =
   | 'openai'
+  | 'openai-codex'
   | 'anthropic'
   | 'google'
   | 'xai'
@@ -20,15 +21,30 @@ export type ProviderType =
   | 'google-vertex'
   | 'cohere';
 
+export type PublicProviderVariant = 'ollama' | 'openai-api' | 'openai-oauth';
+
+export type ProviderAuthMode = 'api-key' | 'base-url' | 'oauth-manual';
+
+export type StructuredProviderHealth = {
+  status: 'ok' | 'warning' | 'degraded' | 'error' | 'unknown';
+  message: string;
+  latencyMs?: number;
+  checkedAt?: string;
+  details?: Record<string, unknown>;
+};
+
 export type TaskType = 'coding' | 'chat';
 
 export type Provider = {
   id: string;
   name: string;
   type: ProviderType;
+  variant?: PublicProviderVariant;
+  authMode?: ProviderAuthMode;
   apiKeyEnc?: string;
   baseUrl?: string;
   health: 'ok' | 'warning' | 'error';
+  healthDetails?: StructuredProviderHealth;
   createdAt: string;
   selectedModelIds: string[];
 };
@@ -57,7 +73,12 @@ export type ModelBenchmarkResult = {
 
 export type ProviderConfig = {
   type: ProviderType;
+  variant?: PublicProviderVariant;
+  authMode?: ProviderAuthMode;
   name?: string;
   apiKey?: string;
   baseUrl?: string;
+  organization?: string;
+  accessKeyId?: string;
+  secretAccessKey?: string;
 };

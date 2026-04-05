@@ -58,6 +58,13 @@ cd frontend && npm run dev
 
 O frontend estará disponível em `http://localhost:5173`.
 
+### 5. Models e Chat localmente
+
+- Use `?tab=models` para gestão de providers e modelos.
+- Use `?tab=chat` para testar chat separadamente.
+- O chat do frontend usa o endpoint backend `POST /api/providers/chat`.
+- O auto-target da API do frontend é resolvido no startup; se a URL ou a disponibilidade do backend mudar durante o desenvolvimento, reinicie o frontend.
+
 ## Variáveis de ambiente
 
 O kernel lê `core/kernel/.env` automaticamente. Copie o exemplo se necessário:
@@ -75,6 +82,24 @@ cp core/kernel/.env.example core/kernel/.env
 | `PORT` | `4000` | Porta do kernel |
 | `NODE_ENV` | `development` | Ambiente |
 | `PG_REQUIRED` | `false` | Se true, falha se PostgreSQL indisponível |
+
+### OpenAI Codex
+
+Se você for testar login do OpenAI Codex localmente, adicione `OPENAI_CODEX_WEB_CLIENT_ID` em `core/kernel/.env`.
+
+A Redirect URI local deve ser exatamente `http://localhost:5173/oauth/callback`.
+
+Esta subseção documenta apenas o fluxo manual atualmente implementado; o trabalho mais amplo de OpenAI Codex está **pausado/deferido**.
+
+O fluxo atual continua usando um web OAuth client BYO, mas a conclusão agora é manual:
+
+1. inicie o login na tela de providers;
+2. abra o link de autorização em uma nova aba;
+3. finalize o login na OpenAI;
+4. use a página `/oauth/callback` como helper para copiar a URL retornada completa ou `code` + `state`;
+5. cole esses dados de volta na tela de providers e conclua o sign-in manualmente.
+
+Para o passo a passo completo e solução de problemas, consulte `docs/suporte/openai-codex-setup.md`. Para o status atual, o bloqueador prático e o lembrete de retomada futura, consulte `docs/suporte/openai-codex-auth-status.md`.
 
 ## Verificar se o ambiente está funcionando
 

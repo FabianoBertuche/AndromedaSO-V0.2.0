@@ -1,0 +1,442 @@
+
+ RUN  v4.1.2 C:/FB/Andromeda SO V0.2.0/core/kernel
+
+{"level":30,"time":1775332693966,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"eGet!tTzcall","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"eGet!tTzcall","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"eGet!tTzcall","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%u@SaF!7SY0E","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%u@SaF!7SY0E","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%u@SaF!7SY0E","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ref","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ref","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ref","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K?","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K?","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K?","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"!?","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"!?","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"!?","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"iL s+K's{!Rp","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"iL s+K's{!Rp","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"iL s+K's{!Rp","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"m$GI","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"m$GI","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"m$GI","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*#]T$Q:56\"&","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*#]T$Q:56\"&","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*#]T$Q:56\"&","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y?z+Jr;Vt","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y?z+Jr;Vt","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y?z+Jr;Vt","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"|v_!UuJYwe3e","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"|v_!UuJYwe3e","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"|v_!UuJYwe3e","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693967,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"9\")$)d6]","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"9\")$)d6]","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"9\")$)d6]","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"y;U%QW8Gfzb0","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"y;U%QW8Gfzb0","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"y;U%QW8Gfzb0","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#B[~-?E9lWfe","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#B[~-?E9lWfe","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#B[~-?E9lWfe","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"8B$|~y","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"8B$|~y","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"8B$|~y","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"sY7P","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"sY7P","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"sY7P","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"kTb8","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"kTb8","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"kTb8","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"o","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"o","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"o","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":".>H%\\CEjM3Q:","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":".>H%\\CEjM3Q:","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":".>H%\\CEjM3Q:","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%VU%proto","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%VU%proto","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%VU%proto","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"5RY#sy","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"5RY#sy","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"5RY#sy","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"KO","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"KO","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"KO","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"@m;+R(&'i","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"@m;+R(&'i","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"@m;+R(&'i","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}L@9","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}L@9","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}L@9","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"fW\"?I[","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"fW\"?I[","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"fW\"?I[","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"B\\>?","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"B\\>?","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"B\\>?","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%WfF#","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%WfF#","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%WfF#","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&/ %","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&/ %","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&/ %","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"8  A39zxxE","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"8  A39zxxE","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"8  A39zxxE","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Yx&","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Yx&","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Yx&","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#0","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#0","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#0","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K6?<g","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K6?<g","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K6?<g","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u9'kH A","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u9'kH A","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u9'kH A","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"~^0Mf1","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"~^0Mf1","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"~^0Mf1","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"M9( >bO?P/","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"M9( >bO?P/","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"M9( >bO?P/","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y;^","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y;^","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y;^","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"I?2q","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"I?2q","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"I?2q","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":",o)1W=.","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":",o)1W=.","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":",o)1W=.","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"'e","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"'e","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"'e","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"0xyD","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"0xyD","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"0xyD","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"=S","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"=S","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"=S","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"?,A! rwZ| \"r","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"?,A! rwZ| \"r","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"?,A! rwZ| \"r","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hL","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hL","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hL","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"3*","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"3*","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"3*","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"q","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"q","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"q","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&-b0XhoNKX=\"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&-b0XhoNKX=\"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&-b0XhoNKX=\"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"^Rq4(","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"^Rq4(","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"^Rq4(","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"GLC^#|Bv`\"e","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"GLC^#|Bv`\"e","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"GLC^#|Bv`\"e","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"h! Yu(a.","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"h! Yu(a.","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"h! Yu(a.","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"S-","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"S-","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"S-","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"aKK|\\-","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"aKK|\\-","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"aKK|\\-","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y:m8","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y:m8","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Y:m8","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&_dfosK<pb(;","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&_dfosK<pb(;","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&_dfosK<pb(;","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*Bzc","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*Bzc","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&*Bzc","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}vd","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}vd","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"}vd","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\s","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\s","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\s","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JjeNZt{","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JjeNZt{","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JjeNZt{","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"`~?<","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"`~?<","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"`~?<","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"1S}Z(dy3","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"1S}Z(dy3","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"1S}Z(dy3","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#pV/&c?{z","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#pV/&c?{z","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#pV/&c?{z","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"i","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"i","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"i","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hF%ic&.6;6v","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hF%ic&.6;6v","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"hF%ic&.6;6v","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"z;\":f","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"z;\":f","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"z;\":f","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\XzodTt/B","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693968,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\XzodTt/B","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\XzodTt/B","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"name__l","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"name__l","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"name__l","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"2M#-?isPr","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"2M#-?isPr","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"2M#-?isPr","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"(;:u[bxW9j","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"(;:u[bxW9j","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"(;:u[bxW9j","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JcX8Es_3","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JcX8Es_3","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"JcX8Es_3","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#(fvo# k\"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#(fvo# k\"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"#(fvo# k\"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Q3,p,Q#j(SOi","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Q3,p,Q#j(SOi","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Q3,p,Q#j(SOi","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\/EA]]^,^2","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\/EA]]^,^2","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\/EA]]^,^2","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ZpL}","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ZpL}","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ZpL}","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"& ","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"& ","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"& ","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"*OH","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"*OH","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"*OH","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"<J]p/+U","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"<J]p/+U","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"<J]p/+U","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u#{#~","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u#{#~","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u#{#~","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"{P0N7Y","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"{P0N7Y","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"{P0N7Y","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"!}{t! c*T)","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"!}{t! c*T)","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"!}{t! c*T)","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\7bZNEUSMj(0","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\7bZNEUSMj(0","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\\7bZNEUSMj(0","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"~\"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"~\"","reason":"Invalid module: missing required fields","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693969,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"~\"","error":"Invalid module: missing required fields","msg":"Failed to start module"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"s,","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"s,","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"valueOf","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"valueOf","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"T<l91Dr_^&7p","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"T<l91Dr_^&7p","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&0","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&0","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"!~&~}","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\"!~&~}","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&#\"","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&#\"","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"f]|%","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"f]|%","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"@$T","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"@$T","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"2|!Vyp","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"2|!Vyp","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":":lG","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":":lG","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\" 87.AH","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"\" 87.AH","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"IZg%-:","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"IZg%-:","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"u","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"btt)j","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"btt)j","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"CO'@E>,JZ","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"CO'@E>,JZ","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"K","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"W}p^","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"W}p^","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Rst","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Rst","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"EeYAi","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"EeYAi","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Vlj_","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Vlj_","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"yx","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"yx","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"OTsZD","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"OTsZD","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&V_0>@8","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&V_0>@8","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":";t^Lmd","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":";t^Lmd","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"KP&PTJ#m%{","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"KP&PTJ#m%{","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"(N","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"(N","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"pV","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"pV","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"!yx\"$RvX$Ky","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"!yx\"$RvX$Ky","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"lO>0c","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"lO>0c","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"D6?B6{5{{i","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"D6?B6{5{{i","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"QGJEYto??xd","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"QGJEYto??xd","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&^#!y ","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&^#!y ","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Z","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Z","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Qz","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"Qz","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&\"hYZej?6","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"&\"hYZej?6","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"call","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"call","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"kL[sTG'","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"kL[sTG'","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%o","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%o","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"6T","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"6T","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"1'{<>HmI),@","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"1'{<>HmI),@","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"93A}","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"93A}","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"v.AX$GzAq.","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"v.AX$GzAq.","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ZL2([","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ZL2([","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ni=c%@l-W{kc","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"ni=c%@l-W{kc","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"+_5wdtXjm=j","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"+_5wdtXjm=j","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"j{na3\"@F?7V0","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"j{na3\"@F?7V0","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"~xD1!r\\2\"+","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"~xD1!r\\2\"+","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%:U^~=80.tR","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%:U^~=80.tR","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"%","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"_rQa","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693972,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"_rQa","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693973,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-start-1","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693973,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-start-1","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693974,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693975,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","reason":"Module missing contracts definition","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693975,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","error":"Module missing contracts definition","msg":"Failed to start module"}
+{"level":30,"time":1775332693975,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693975,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","reason":"Module missing contracts definition","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693975,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-invalid","error":"Module missing contracts definition","msg":"Failed to start module"}
+{"level":30,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","allModuleIds":["module-circular","dep-a"],"msg":"Depend├¬ncias circulares detectadas"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","reason":"Circular dependencies detected","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","error":"Circular dependencies detected","msg":"Failed to start module"}
+{"level":30,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","allModuleIds":["module-circular","dep-a"],"msg":"Depend├¬ncias circulares detectadas"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","reason":"Circular dependencies detected","msg":"M├│dulo rejeitado na valida├º├úo de depend├¬ncias"}
+{"level":50,"time":1775332693976,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-circular","error":"Circular dependencies detected","msg":"Failed to start module"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-persist","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-persist","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-pg-optional","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":40,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-pg-optional","error":"DB error","msg":"Failed to persist lifecycle event"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-pg-optional","state":"running","msg":"Module started"}
+{"level":40,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-pg-optional","error":"DB error","msg":"Failed to persist lifecycle event"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-1","fromState":"running","msg":"Stopping module"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-1","state":"stopped","msg":"Module stopped"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-2","fromState":"running","msg":"Stopping module"}
+{"level":30,"time":1775332693977,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-2","state":"stopped","msg":"Module stopped"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-warn","fromState":"running","msg":"Stopping module"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-warn","state":"stopped","msg":"Module stopped"}
+{"level":40,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-stop-warn","error":"DB error","msg":"Failed to persist lifecycle event"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-status","fromState":"loaded","msg":"Starting module lifecycle"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-status","state":"running","msg":"Module started"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-status","fromState":"running","msg":"Stopping module"}
+{"level":30,"time":1775332693980,"pid":29260,"hostname":"Emanuel","name":"lifecycleOrchestrator","moduleId":"module-status","state":"stopped","msg":"Module stopped"}
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  16:58:13
+   Duration  286ms (transform 62ms, setup 20ms, import 107ms, tests 24ms, environment 0ms)
+

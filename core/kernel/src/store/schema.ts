@@ -38,7 +38,7 @@ export const providers = pgTable('providers', {
   selectedModelIds: jsonb('selected_model_ids').notNull().default([]),
   createdAt: timestamp('created_at').defaultNow().notNull()
 }, (table) => ({
-  providerNameUnique: uniqueIndex('providers_name_idx').on(table.name)
+  providerNameTypeUnique: uniqueIndex('providers_name_type_idx').on(table.name, table.type)
 }));
 
 export const modelCatalogItems = pgTable('model_catalog_items', {

@@ -8,6 +8,6 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
     css: true,
-    include: ['src/**/*.test.ts', 'src/**/*.test.tsx']
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx', 'src/**/*.property.test.ts', 'src/**/*.property.test.tsx']
   }
 });

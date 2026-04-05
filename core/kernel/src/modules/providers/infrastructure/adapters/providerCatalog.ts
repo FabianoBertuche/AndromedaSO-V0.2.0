@@ -48,6 +48,7 @@ const ollamaLocalAndCloudModels = [
 
 const providerSeed: Record<ProviderType, Array<Omit<ModelCatalogItem, 'id' | 'providerId'>>> = {
   openai: openAiModels,
+  'openai-codex': openAiModels,
   anthropic: [model('claude-3.5-sonnet', 'Claude 3.5 Sonnet', { score: 9.0, capabilities: ['coding', 'chat', 'analysis'], priceLabel: '$0.03' })],
   google: [model('gemini-2.0-pro', 'Gemini 2.0 Pro', { score: 8.8, capabilities: ['coding', 'chat', 'analysis'], priceLabel: '$0.02', contextWindow: '1M' })],
   xai: [model('grok-2', 'Grok 2', { score: 8.5, capabilities: ['chat', 'analysis'], priceLabel: '$0.02' })],

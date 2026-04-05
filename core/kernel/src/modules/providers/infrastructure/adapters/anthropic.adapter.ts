@@ -7,7 +7,7 @@
  * Referência: https://docs.anthropic.com/en/api/models-list
  */
 import pino from 'pino';
-import type { AdapterFactory } from './adapter.interface';
+import { withUnsupportedChat, type AdapterFactory } from './adapter.interface';
 import { fetchWithTimeout, pingWithTimeout } from './http.utils';
 import { listSeedModels } from './providerCatalog';
 
@@ -33,7 +33,7 @@ export const anthropicAdapterFactory: AdapterFactory = (apiKey, _baseUrl) => {
     ...(apiKey ? { 'x-api-key': apiKey } : {})
   };
 
-  return {
+  return withUnsupportedChat({
     async listModels() {
       if (!apiKey) {
         // Retorna dados de seed estáticos — apiKey não configurada.
@@ -64,7 +64,7 @@ export const anthropicAdapterFactory: AdapterFactory = (apiKey, _baseUrl) => {
       }
       return pingWithTimeout(ANTHROPIC_MODELS_URL, { headers }, 3000);
     }
-  };
+  }, 'anthropic');
 };
 
 // Backward-compatible export

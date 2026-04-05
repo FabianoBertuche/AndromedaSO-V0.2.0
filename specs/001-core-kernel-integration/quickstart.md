@@ -1,76 +1,90 @@
 # Quickstart: Core Kernel Integration
 
-## Requisitos
+## Prerequisites
+
 - Node.js 20+
-- Docker/Docker Compose
-- PostgreSQL 15+
-- Redis 7+
+- Docker / Docker Compose
+- PostgreSQL e Redis disponíveis via `docker-compose.infra.yml`
 
-## Setup local
+## Local setup
 
-1. Clone o repo e vá para o branch:
+1. Selecionar a branch da feature.
 
 ```bash
 git checkout 001-core-kernel-integration
+```
+
+2. Subir a infraestrutura local.
+
+```bash
+docker-compose -f docker-compose.infra.yml up -d
+```
+
+3. Instalar dependências do kernel e iniciar o serviço.
+
+```bash
+cd core/kernel
 npm install
+npm run dev
 ```
 
-2. Iniciar dependências:
+4. Opcionalmente, iniciar o frontend em outra sessão.
 
 ```bash
-docker compose -f docker-compose.yml up -d postgres redis
+cd frontend
+npm install
+npm run dev
 ```
 
-3. Configurar variáveis de ambiente:
+## Required environment
 
-```bash
-export DATABASE_URL=postgres://andromeda:andromeda@localhost:5432/andromeda
-export REDIS_URL=redis://localhost:6379
-export NODE_ENV=development
-```
-
-4. Executar migrações (exemplo Drizzle):
-
-```bash
-npm run migrate
-```
-
-5. Iniciar o core/kernel:
-
-```bash
-npm run start:core-kernel
-```
+- `DATABASE_URL` apontando para PostgreSQL 15
+- `REDIS_URL` apontando para Redis 7
+- `PROVIDER_REPOSITORY_MODE` configurado conforme o modo local desejado, se aplicável
 
 ## Smoke test
 
-1. Criar módulo de teste em `modules/demo-module` com `module.manifest.yaml` válido.
-2. Disparar `http GET :3000/api/modules/discover`.  
-3. Verificar `http GET :3000/api/modules` contém o módulo e status `registered`.
-4. Validar contrato com `http POST :3000/api/modules/{id}/validate`.
-5. Carregar/inicializar e verificar `running`.
-
-## Notas
-- Para desenvolvimento rápido, use `npm run dev` com `NODE_ENV=development` (não padrão de produção).
-- Para reset de estado: `docker compose -f docker-compose.yml down -v` e reiniciar as dependências.
-
-## Benchmark e validação de critérios
-
-Executar benchmark de performance da feature:
+1. Confirmar que existe uma árvore de módulo válida, por exemplo `modules/providers/` com `module.manifest.yaml`.
+2. Executar discovery:
 
 ```bash
-npm test -- tests/integration/performance.benchmark.spec.ts
+curl -X POST http://localhost:4000/api/modules/discover -H "content-type: application/json" -d '{"rootPath":"C:/FB/Andromeda SO V0.2.0/modules"}'
 ```
 
-Este benchmark valida:
-- discovery + registro em escala (100 módulos)
-- taxa de sucesso de validação de contratos
-- tempo médio de carregamento
-- consistência de estado no ciclo de vida
+3. Listar módulos registrados:
 
-Relatório consolidado:
-- `specs/001-core-kernel-integration/hardening-report.md`
+```bash
+curl http://localhost:4000/api/modules
+```
 
-Referências arquiteturais:
+4. Validar um módulo descoberto:
+
+```bash
+curl -X POST http://localhost:4000/api/modules/<module-id>/validate
+```
+
+5. Carregar e iniciar o módulo:
+
+```bash
+curl -X POST http://localhost:4000/api/modules/<module-id>/load
+curl -X POST http://localhost:4000/api/modules/<module-id>/start
+curl http://localhost:4000/api/modules/<module-id>/status
+```
+
+## Verification
+
+Rodar as verificações mínimas do backend:
+
+```bash
+cd core/kernel
+npx tsc --noEmit
+npm run test
+```
+
+## References
+
 - `specs/001-core-kernel-integration/plan.md`
 - `specs/001-core-kernel-integration/research.md`
-- `.specify/memory/constitution.md`
+- `specs/001-core-kernel-integration/data-model.md`
+- `specs/001-core-kernel-integration/contracts/module-runtime-api.md`
+- `specs/001-core-kernel-integration/contracts/module-manifest.md`

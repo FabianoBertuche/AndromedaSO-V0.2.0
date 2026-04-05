@@ -18,7 +18,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - Implementar `pingWithTimeout(url, options, timeoutMs)` que mede latência real com `Date.now()`
     - _Requisitos: 3.1, 3.2, 3.3, 5.1, 5.2, 5.3, 7.1, 7.2, 7.3, 9.1, 9.2, 9.3_
 
-  - [ ]* 2.2 Escrever testes unitários para `http.utils.ts`
+  - [x]* 2.2 Escrever testes unitários para `http.utils.ts`
     - Testar `fetchWithTimeout`: sucesso, abort por timeout
     - Testar `pingWithTimeout`: retorna `{ ok: true, latencyMs: N }` em sucesso; retorna `{ ok: false, latencyMs: 3000 }` em timeout/falha
     - Usar `vi.stubGlobal('fetch', vi.fn())` para mockar chamadas HTTP
@@ -31,7 +31,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - `ping()`: usar `pingWithTimeout` com timeout de 3000ms; fallback seed se sem apiKey
     - _Requisitos: 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 3.2, 3.3, 3.4, 11.1–11.6_
 
-  - [ ]* 3.2 Escrever testes unitários para `openai.adapter.ts`
+  - [x]* 3.2 Escrever testes unitários para `openai.adapter.ts`
     - Testar `listModels()` sem apiKey → retorna seed
     - Testar `listModels()` com falha HTTP → retorna seed
     - Testar `listModels()` com sucesso → filtra prefixos corretos e mapeia campos
@@ -39,7 +39,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - Testar `ping()` com timeout → `{ ok: false, latencyMs: 3000 }`
     - _Requisitos: 12.1, 12.2, 12.3, 12.4_
 
-  - [ ]* 3.3 Escrever teste de propriedade para filtragem de modelos OpenAI
+  - [x]* 3.3 Escrever teste de propriedade para filtragem de modelos OpenAI
     - **Propriedade 3: Filtragem de modelos OpenAI**
     - Para qualquer lista de modelos retornada pela API, `listModels()` deve retornar apenas modelos cujo `id` começa com `gpt-`, `o1`, `o3` ou `o4`
     - Usar `fast-check` com `fc.array(fc.record({ id: fc.string() }))` e mínimo de 100 iterações
@@ -52,7 +52,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - `ping()`: usar `pingWithTimeout` com timeout de 3000ms; fallback seed se sem apiKey
     - _Requisitos: 4.1, 4.2, 4.3, 4.4, 5.1, 5.2, 5.3, 5.4, 11.1–11.6_
 
-  - [ ]* 4.2 Escrever testes unitários para `anthropic.adapter.ts`
+  - [x]* 4.2 Escrever testes unitários para `anthropic.adapter.ts`
     - Testar `listModels()` sem apiKey → retorna seed
     - Testar `listModels()` com falha HTTP → retorna seed
     - Testar `listModels()` com sucesso → mapeia `display_name` para `displayName`
@@ -67,7 +67,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - `ping()`: usar `pingWithTimeout` com timeout de 3000ms; fallback seed se sem apiKey
     - _Requisitos: 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3, 7.4, 11.1–11.6_
 
-  - [ ]* 5.2 Escrever testes unitários para `groq.adapter.ts`
+  - [x]* 5.2 Escrever testes unitários para `groq.adapter.ts`
     - Testar `listModels()` sem apiKey → retorna seed
     - Testar `listModels()` com falha HTTP → retorna seed
     - Testar `listModels()` com sucesso → mapeia campos corretamente
@@ -83,7 +83,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - `ping()`: usar `pingWithTimeout` para `{baseUrl}/api/tags` com timeout de 3000ms
     - _Requisitos: 8.1, 8.2, 8.3, 8.4, 9.1, 9.2, 9.3, 11.1–11.6_
 
-  - [ ]* 6.2 Escrever testes unitários para `ollama.adapter.ts`
+  - [x]* 6.2 Escrever testes unitários para `ollama.adapter.ts`
     - Testar `listModels()` com falha HTTP (Ollama não em execução) → retorna seed
     - Testar `listModels()` com sucesso → mapeia `name` para `modelId` e `displayName`
     - Testar `ping()` com sucesso → `{ ok: true, latencyMs: N }`
@@ -91,7 +91,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - Testar URL dinâmica: requisições usam `baseUrl` configurado, não URL hardcoded
     - _Requisitos: 12.2, 12.3, 12.4, 12.5_
 
-  - [ ]* 6.3 Escrever teste de propriedade para URL dinâmica do Ollama
+  - [x]* 6.3 Escrever teste de propriedade para URL dinâmica do Ollama
     - **Propriedade 8: URL dinâmica do Ollama**
     - Para qualquer `baseUrl` configurada, `listModels()` e `ping()` devem realizar requisições para `{baseUrl}/api/tags`
     - Usar `fast-check` com `fc.webUrl()` e verificar a URL capturada pelo mock de fetch
@@ -109,7 +109,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - Manter `defaultAdapter` para providers sem factory registrada
     - _Requisitos: 1.3, 1.4, 10.1, 10.2, 10.3, 10.4_
 
-  - [ ]* 8.2 Escrever teste de propriedade para round-trip de decodificação base64
+  - [x]* 8.2 Escrever teste de propriedade para round-trip de decodificação base64
     - **Propriedade 2: Round-trip de decodificação base64**
     - Para qualquer string UTF-8 usada como API key, codificar em base64 e decodificar deve retornar a string original
     - Usar `fast-check` com `fc.string()` e verificar `decodeApiKey(Buffer.from(s).toString('base64')) === s`
@@ -123,7 +123,7 @@ Substituir os quatro adapters mock de providers LLM (`openai`, `anthropic`, `gro
     - Atualizar testes existentes de `healthCheck()` que dependem de latências fixas dos mocks antigos
     - _Requisitos: 10.1, 10.2, 10.3, 10.4_
 
-  - [ ]* 9.2 Escrever teste de propriedade para instanciação com credenciais corretas
+  - [x]* 9.2 Escrever teste de propriedade para instanciação com credenciais corretas
     - **Propriedade 9: Instanciação com credenciais corretas no serviço**
     - Para qualquer provider com `apiKeyEnc` definido, `syncModels()` e `healthCheck()` devem passar a apiKey decodificada e o `baseUrl` sem transformação à factory
     - **Valida: Requisitos 10.1, 10.2, 10.4**

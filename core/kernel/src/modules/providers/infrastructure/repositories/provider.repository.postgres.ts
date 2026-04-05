@@ -1,6 +1,20 @@
 import { Pool } from 'pg';
 import type { ModelBenchmarkResult, ModelCatalogItem, Provider } from '../../domain/entities/provider.entity';
-import type { ProviderRepository } from '../../domain/repositories/provider.repository';
+import type { OpenAiCodexOAuthSession, ProviderRepository } from '../../domain/repositories/provider.repository';
+
+function parseOpenAiCodexOAuthSession(row: Record<string, unknown>): OpenAiCodexOAuthSession {
+  return {
+    id: String(row.id),
+    providerType: 'openai-codex',
+    stateHash: String(row.state_hash),
+    codeVerifier: String(row.code_verifier),
+    redirectUri: String(row.redirect_uri),
+    origin: String(row.origin),
+    expiresAt: new Date(String(row.expires_at)).toISOString(),
+    consumedAt: row.consumed_at ? new Date(String(row.consumed_at)).toISOString() : undefined,
+    createdAt: new Date(String(row.created_at)).toISOString()
+  };
+}
 
 const parseJsonArray = <T>(value: unknown): T[] => {
   if (Array.isArray(value)) {
@@ -35,14 +49,34 @@ export class ProviderRepositoryPostgres implements ProviderRepository {
     await this.pool.query(`
       CREATE TABLE IF NOT EXISTS provider_state (
         id TEXT PRIMARY KEY,
-        name TEXT NOT NULL UNIQUE,
+        name TEXT NOT NULL,
         type TEXT NOT NULL,
         api_key_enc TEXT,
         base_url TEXT,
         health TEXT NOT NULL,
         created_at TIMESTAMPTZ NOT NULL,
-        selected_model_ids JSONB NOT NULL DEFAULT '[]'::jsonb
+        selected_model_ids JSONB NOT NULL DEFAULT '[]'::jsonb,
+        CONSTRAINT provider_state_name_type_key UNIQUE (name, type)
       )
+    `);
+
+    await this.pool.query(`
+      ALTER TABLE provider_state
+      DROP CONSTRAINT IF EXISTS provider_state_name_key
+    `);
+
+    await this.pool.query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1
+          FROM pg_constraint
+          WHERE conname = 'provider_state_name_type_key'
+        ) THEN
+          ALTER TABLE provider_state
+          ADD CONSTRAINT provider_state_name_type_key UNIQUE (name, type);
+        END IF;
+      END $$;
     `);
 
     await this.pool.query(`
@@ -83,6 +117,30 @@ export class ProviderRepositoryPostgres implements ProviderRepository {
         score DOUBLE PRECISION NOT NULL,
         created_at TIMESTAMPTZ NOT NULL
       )
+    `);
+
+    await this.pool.query(`
+      CREATE TABLE IF NOT EXISTS provider_oauth_session (
+        id TEXT PRIMARY KEY,
+        provider_type TEXT NOT NULL,
+        state_hash TEXT NOT NULL,
+        code_verifier TEXT NOT NULL,
+        redirect_uri TEXT NOT NULL,
+        origin TEXT NOT NULL,
+        expires_at TIMESTAMPTZ NOT NULL,
+        consumed_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL
+      )
+    `);
+
+    await this.pool.query(`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_provider_oauth_session_state_hash
+      ON provider_oauth_session(state_hash)
+    `);
+
+    await this.pool.query(`
+      CREATE INDEX IF NOT EXISTS idx_provider_oauth_session_expires_at
+      ON provider_oauth_session(expires_at)
     `);
 
     this.initialized = true;
@@ -171,16 +229,18 @@ export class ProviderRepositoryPostgres implements ProviderRepository {
     };
   }
 
-  async findByName(name: string): Promise<Provider | null> {
+  async findByName(name: string, type?: Provider['type']): Promise<Provider | null> {
     await this.ensureInitialized();
+    const hasTypeFilter = typeof type === 'string';
     const result = await this.pool.query(
       `
       SELECT id
       FROM provider_state
       WHERE lower(name) = lower($1)
+        AND ($2::text IS NULL OR type = $2)
       LIMIT 1
       `,
-      [name]
+      [name, hasTypeFilter ? type : null]
     );
 
     if (result.rowCount === 0) {
@@ -344,6 +404,111 @@ export class ProviderRepositoryPostgres implements ProviderRepository {
       score: Number(row.score),
       createdAt: new Date(row.created_at).toISOString()
     }));
+  }
+
+  async createOAuthSession(session: OpenAiCodexOAuthSession): Promise<OpenAiCodexOAuthSession> {
+    await this.ensureInitialized();
+    await this.pool.query(
+      `
+      INSERT INTO provider_oauth_session(
+        id,
+        provider_type,
+        state_hash,
+        code_verifier,
+        redirect_uri,
+        origin,
+        expires_at,
+        consumed_at,
+        created_at
+      )
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      `,
+      [
+        session.id,
+        session.providerType,
+        session.stateHash,
+        session.codeVerifier,
+        session.redirectUri,
+        session.origin,
+        session.expiresAt,
+        session.consumedAt ?? null,
+        session.createdAt
+      ]
+    );
+
+    return session;
+  }
+
+  async findOAuthSessionByStateHash(stateHash: string): Promise<OpenAiCodexOAuthSession | null> {
+    await this.ensureInitialized();
+    const result = await this.pool.query(
+      `
+      SELECT id, provider_type, state_hash, code_verifier, redirect_uri, origin, expires_at, consumed_at, created_at
+      FROM provider_oauth_session
+      WHERE state_hash = $1
+      LIMIT 1
+      `,
+      [stateHash]
+    );
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    return parseOpenAiCodexOAuthSession(result.rows[0]);
+  }
+
+  async claimOAuthSessionByStateHash(
+    stateHash: string,
+    providerType: OpenAiCodexOAuthSession['providerType'],
+    consumedAt: string,
+    now: string
+  ): Promise<OpenAiCodexOAuthSession | null> {
+    await this.ensureInitialized();
+    const result = await this.pool.query(
+      `
+      UPDATE provider_oauth_session
+      SET consumed_at = $3
+      WHERE state_hash = $1
+        AND provider_type = $2
+        AND consumed_at IS NULL
+        AND expires_at > $4
+      RETURNING id, provider_type, state_hash, code_verifier, redirect_uri, origin, expires_at, consumed_at, created_at
+      `,
+      [stateHash, providerType, consumedAt, now]
+    );
+
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    return parseOpenAiCodexOAuthSession(result.rows[0]);
+  }
+
+  async consumeOAuthSession(sessionId: string, consumedAt: string): Promise<boolean> {
+    await this.ensureInitialized();
+    const result = await this.pool.query(
+      `
+      UPDATE provider_oauth_session
+      SET consumed_at = $2
+      WHERE id = $1
+        AND consumed_at IS NULL
+      `,
+      [sessionId, consumedAt]
+    );
+
+    return (result.rowCount ?? 0) > 0;
+  }
+
+  async deleteExpiredOAuthSessions(now: string): Promise<void> {
+    await this.ensureInitialized();
+    await this.pool.query(
+      `
+      DELETE FROM provider_oauth_session
+      WHERE expires_at <= $1
+      `,
+      [now]
+    );
   }
 
   async reset(): Promise<void> {

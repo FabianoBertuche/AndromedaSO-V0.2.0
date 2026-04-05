@@ -86,3 +86,65 @@ Registro de todas as features implementadas no projeto, com status e referência
 
 **Spec:** `.kiro/specs/provider-persistence-docker/`
 **Status:** Substituído — o spec `local-dev-setup` resolve o mesmo problema de forma mais abrangente.
+
+---
+
+## openai-codex-user-docs ✅ Concluído
+
+**Spec:** `.kiro/specs/openai-codex-user-docs/`
+**Objetivo:** Documentar o fluxo de login `openai-codex` para iniciantes, sem mudanças de código.
+
+### O que foi feito
+
+- **Feature somente de documentação** — sem alterações em código, configuração ou testes
+- **`docs/suporte/openai-codex-setup.md`** — guia principal em português para configurar `OPENAI_CODEX_WEB_CLIENT_ID` em `core/kernel/.env`
+- **Redirect URIs documentadas** — destaque para `http://localhost:5173/oauth/callback`, `https://app.example.com/oauth/callback` e aviso de que `/auth/callback` está errado
+- **Passo a passo local + checklist manual** — fluxo observável por usuários não técnicos, com checkboxes em Markdown
+- **Troubleshooting incluído** — cobertura para env var ausente, redirect URI incorreta e erro `missing_codex_entitlement`
+- **Cross-references adicionadas** — `docs/suporte/logincodex.md` e `docs/local-dev.md` agora apontam para o guia principal
+
+---
+
+## openai-codex-manual-flow-docs ✅ Concluído
+
+**Spec:** `.kiro/specs/openai-codex-manual-flow-docs/`
+**Objetivo:** Atualizar a camada de documentação para separar com clareza o comportamento atual do login OpenAI Codex, sua limitação atual e a direção de evolução que então estava em análise.
+
+### O que foi feito
+
+- **Feature somente de documentação** — sem alterações em código, testes, configs ou arquivos de ambiente
+- **Status canônico adicionado** — `docs/suporte/openai-codex-auth-status.md` passou a centralizar comportamento implementado, limitação atual e a direção então registrada na documentação
+- **Comportamento atual explicitado** — a documentação passou a afirmar com clareza que o comportamento implementado hoje é um fluxo **BYO web OAuth client** com `OPENAI_CODEX_WEB_CLIENT_ID`
+- **Limitação atual destacada** — os docs agora deixam explícito que esse fluxo não é a UX desejada no longo prazo e não é geralmente equivalente à experiência de openclaw/opencode
+- **Direção da época registrada** — a documentação daquele momento passou a registrar o fluxo manual **link/copy-return** como direção em análise, antes dos updates posteriores que o consolidaram como comportamento implementado do repositório
+- **Referências históricas contextualizadas** — materiais antigos, incluindo a exploração hardcoded-client, agora são contextualizados como referência histórica, sem reescrever o histórico do repositório
+
+---
+
+## openai-codex-pause-status ✅ Concluído
+
+**Spec:** `.kiro/specs/openai-codex-pause-status/`
+**Objetivo:** Registrar, somente na documentação, que o fluxo manual `openai-codex` continua implementado, mas que o trabalho mais amplo foi pausado/deferido.
+
+### O que foi feito
+
+- **Feature somente de documentação** — sem alterações em código, testes, configuração ou ambiente
+- **Status canônico atualizado** — `docs/suporte/openai-codex-auth-status.md` agora deixa explícito que o fluxo manual implementado permanece válido, mas a frente mais ampla está pausada/deferida
+- **Bloqueador prático documentado** — a documentação passou a registrar que ainda falta um auth/client model viável que não dependa de premissas impraticáveis
+- **Guias existentes preservados com novo enquadramento** — `docs/suporte/openai-codex-setup.md`, `docs/suporte/logincodex.md` e `docs/local-dev.md` continuam descrevendo o que funciona hoje, sem sugerir avanço ativo
+- **Lembrete de retomada adicionado** — a documentação agora aponta para `.kiro/specs/openai-codex-manual-auth-flow/`, `docs/suporte/openai-codex-setup.md` e `docs/suporte/openai-codex-auth-status.md` antes de reabrir a investigação
+
+---
+
+## chat-console-docs ✅ Concluído
+
+**Spec:** `.kiro/specs/chat-console-docs/`
+**Objetivo:** Registrar na documentação o estado entregue do chat separado do console de modelos.
+
+### O que foi feito
+
+- **Feature somente de documentação** — sem alterações em código, testes, configuração ou ambiente
+- **Models preservado como console de providers/modelos** — `Models` continua sendo a superfície de gestão
+- **Chat separado no frontend** — uso disponível separadamente via `?tab=chat`
+- **Pré-requisito backend registrado** — o frontend usa `POST /api/providers/chat` para chat
+- **Fluxo local resumido** — `docs/local-dev.md` agora registra uso de `?tab=models`, `?tab=chat` e a observação de restart do frontend após mudanças de backend em desenvolvimento

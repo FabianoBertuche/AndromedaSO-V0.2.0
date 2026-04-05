@@ -7,6 +7,7 @@
     "benchmark:full": "npm run benchmark"
   },
   "devDependencies": {
-    "autocannon": "^8.0.0"
+    "autocannon": "^8.0.0",
+    "openspec": "^0.0.0"
   }
 }

@@ -22,7 +22,7 @@ Reorganização do ambiente de desenvolvimento para rodar kernel e frontend dire
     - `OLLAMA_BASE_URL=http://127.0.0.1:11434`
     - `NODE_ENV=development`
     - `PG_REQUIRED=false`
-  - [ ] 2.2 Atualizar `core/kernel/.env.example` com todas as variáveis documentadas com comentários explicativos. O arquivo deve conter exatamente:
+  - [x] 2.2 Atualizar `core/kernel/.env.example` com todas as variáveis documentadas com comentários explicativos. O arquivo deve conter exatamente:
     ```
     # Porta do servidor HTTP do kernel
     PORT=4000
@@ -66,7 +66,7 @@ Reorganização do ambiente de desenvolvimento para rodar kernel e frontend dire
   - Nenhuma outra alteração no arquivo
   - _Requisitos: 3.1, 3.2, 3.3, 3.4_
 
-  - [ ]* 3.1 Escrever property tests para resolução de `baseUrl` do Ollama adapter
+  - [x]* 3.1 Escrever property tests para resolução de `baseUrl` do Ollama adapter
     - Arquivo: `core/kernel/src/modules/providers/infrastructure/adapters/__tests__/ollama.adapter.property.test.ts`
     - Usar `fast-check` para gerar URLs arbitrárias válidas
     - **Propriedade 1: Argumento explícito tem precedência sobre env var**
@@ -91,7 +91,7 @@ Reorganização do ambiente de desenvolvimento para rodar kernel e frontend dire
   - Nenhuma outra alteração na lógica existente
   - _Requisitos: 5.3, 5.4_
 
-  - [ ]* 4.1 Escrever property test para log do modo de repositório selecionado
+  - [x]* 4.1 Escrever property test para log do modo de repositório selecionado
     - Arquivo: `core/kernel/src/modules/providers/infrastructure/repositories/__tests__/provider.repository.factory.property.test.ts`
     - **Propriedade 4: Log do modo de repositório selecionado**
       - Para qualquer modo de repositório selecionado (`postgres` ou `memory`), o logger Pino com nome `providers:factory` deve emitir uma mensagem de nível `info` contendo o campo `mode` com o valor correspondente

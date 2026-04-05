@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Variant Catalog",
+  "type": "object",
+  "required": ["group", "variants"],
+  "properties": {
+    "group": {
+      "type": "string",
+      "const": "providers"
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "variant",
+          "moduleId",
+          "group",
+          "authMode",
+          "displayName",
+          "description",
+          "capabilities",
+          "requiredFields",
+          "optionalFields",
+          "status"
+        ],
+        "properties": {
+          "variant": {
+            "type": "string",
+            "enum": ["ollama", "openai-api", "openai-oauth"]
+          },
+          "moduleId": { "type": "string" },
+          "group": { "type": "string", "const": "providers" },
+          "authMode": {
+            "type": "string",
+            "enum": ["api-key", "base-url", "oauth-manual"]
+          },
+          "displayName": { "type": "string" },
+          "description": { "type": "string" },
+          "capabilities": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "requiredFields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "optionalFields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "status": { "type": "string" },
+          "saveAllowsDegradedHealth": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

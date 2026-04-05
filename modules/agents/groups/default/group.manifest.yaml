@@ -1,0 +1,5 @@
+groupId: default
+name: Default Agents
+description: Default group containing base agent templates
+version: 1.0.0
+status: active

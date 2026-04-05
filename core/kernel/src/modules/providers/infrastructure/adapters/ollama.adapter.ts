@@ -7,9 +7,15 @@
  * Referência: https://github.com/ollama/ollama/blob/main/docs/api.md#list-local-models
  */
 import pino from 'pino';
-import type { AdapterFactory } from './adapter.interface';
-import { fetchWithTimeout, pingWithTimeout } from './http.utils';
-import { listSeedModels } from './providerCatalog';
+import {
+  createProviderAdapterChatError,
+  type AdapterFactory,
+  type ProviderChatMessage,
+  type ProviderChatResult,
+  ProviderAdapterChatError
+} from './adapter.interface.js';
+import { fetchWithTimeout, pingWithTimeout } from './http.utils.js';
+import { listSeedModels } from './providerCatalog.js';
 
 const log = pino({ name: 'adapter:ollama' });
 
@@ -25,8 +31,41 @@ interface OllamaTagsResponse {
   models: OllamaModel[];
 }
 
+interface OllamaChatResponse {
+  message?: {
+    role?: string;
+    content?: string;
+  };
+}
+
+function normalizeOllamaChatModelId(modelId: string): string {
+  if (modelId.startsWith('ollama/')) {
+    return modelId.slice('ollama/'.length);
+  }
+
+  return modelId;
+}
+
+function isOllamaConnectionFailure(error: unknown): boolean {
+  const message = error instanceof Error ? error.message.toLowerCase() : '';
+  return [
+    'econnrefused',
+    'enotfound',
+    'fetch failed',
+    'network',
+    'timeout',
+    'abort',
+    'unreachable',
+    'socket'
+  ].some((term) => message.includes(term));
+}
+
 export const ollamaAdapterFactory: AdapterFactory = (_apiKey, baseUrl) => {
-  const base = baseUrl ?? process.env.OLLAMA_BASE_URL ?? DEFAULT_BASE_URL;
+  const base = baseUrl ?? process.env.OLLAMA_BASE_URL ?? (
+    process.env.NODE_ENV === 'production' 
+      ? 'http://host.docker.internal:11434' 
+      : DEFAULT_BASE_URL
+  );
 
   return {
     async listModels() {
@@ -54,6 +93,53 @@ export const ollamaAdapterFactory: AdapterFactory = (_apiKey, baseUrl) => {
 
     async ping() {
       return pingWithTimeout(`${base}/api/tags`, {}, 3000);
+    },
+
+    async chat(modelId: string, messages: ProviderChatMessage[]): Promise<ProviderChatResult> {
+      try {
+        const response = await fetchWithTimeout(`${base}/api/chat`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: normalizeOllamaChatModelId(modelId),
+            messages,
+            stream: false
+          })
+        }, 30000);
+
+        if (!response.ok) {
+          log.warn({ modelId, status: response.status }, 'ollama chat returned non-ok response');
+          throw createProviderAdapterChatError('UPSTREAM_CHAT_FAILED', 'Ollama chat request failed upstream.');
+        }
+
+        const payload = await response.json() as OllamaChatResponse;
+        const content = payload.message?.content?.trim();
+
+        if (!content) {
+          throw createProviderAdapterChatError('UPSTREAM_CHAT_FAILED', 'Ollama chat returned an invalid assistant message.');
+        }
+
+        return {
+          message: {
+            role: 'assistant',
+            content
+          }
+        };
+      } catch (error) {
+        if (error instanceof ProviderAdapterChatError) {
+          throw error;
+        }
+
+        log.warn({ modelId, errorMessage: error instanceof Error ? error.message : 'Unknown error' }, 'ollama chat request failed');
+        throw createProviderAdapterChatError(
+          isOllamaConnectionFailure(error) ? 'PROVIDER_UNREACHABLE' : 'UPSTREAM_CHAT_FAILED',
+          isOllamaConnectionFailure(error)
+            ? 'Ollama provider is unavailable or unreachable.'
+            : 'Ollama chat request failed upstream.'
+        );
+      }
     }
   };
 };
