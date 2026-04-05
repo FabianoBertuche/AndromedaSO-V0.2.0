@@ -1,62 +1,112 @@
-import { useQueries } from '@tanstack/react-query';
-import {
-  fetchAgentBudget,
-  fetchAgentPerformance,
-  fetchAgentReputation
-} from '../api/kernel';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import type {
+  AgentInstance,
+  AgentTemplateManifest,
+  ResolvedAgentConfig,
+  CreateAgentInput,
+  UpdateAgentInput,
+  DuplicateAgentInput,
+  LoadAgentInput
+} from '../types/kernel';
+import * as api from '../api/kernel';
 
-export type AgentRow = {
-  id: string;
-  performance: string;
-  reputation: string;
-  budget: string;
-};
+// Query hooks
 
-export function useAgents(agentIds: string[]) {
-  const uniqueIds = [...new Set(agentIds)].filter(Boolean);
-
-  const queries = useQueries({
-    queries: uniqueIds.map((agentId) => ({
-      queryKey: ['agents', agentId],
-      queryFn: async (): Promise<AgentRow> => {
-        const [performance, reputation, budget] = await Promise.all([
-          fetchAgentPerformance(agentId),
-          fetchAgentReputation(agentId),
-          fetchAgentBudget(agentId)
-        ]);
-
-        const latestPerformance = performance.records[performance.records.length - 1];
-        const reputationValues = Object.values(reputation);
-        const reputationAvg = reputationValues.length > 0
-          ? reputationValues.reduce((sum, value) => sum + value, 0) / reputationValues.length
-          : 0;
-
-        return {
-          id: agentId,
-          performance: latestPerformance
-            ? `${Math.round(latestPerformance.successRate * 100)}% SR • p95 ${latestPerformance.latencyP95}ms`
-            : 'No data',
-          reputation: reputationValues.length > 0 ? reputationAvg.toFixed(3) : 'No data',
-          budget: budget.budget
-            ? `${budget.budget.spentDaily}/${budget.budget.dailyLimit} day • ${budget.budget.spentMonthly}/${budget.budget.monthlyLimit} month`
-            : 'Not configured'
-        };
-      },
-      enabled: uniqueIds.length > 0,
-      refetchInterval: 4000,
-      staleTime: 2000
-    }))
+export function useAgentTemplates() {
+  return useQuery({
+    queryKey: ['agentTemplates'],
+    queryFn: api.listAgentTemplates,
+    staleTime: 5 * 60 * 1000 // 5 minutos
   });
+}
 
-  const isLoading = queries.some((query) => query.isLoading || query.isFetching);
-  const error = queries.find((query) => query.error)?.error as Error | undefined;
-  const rows = queries
-    .map((query) => query.data)
-    .filter((row): row is AgentRow => Boolean(row));
+export function useAgents() {
+  return useQuery({
+    queryKey: ['agents'],
+    queryFn: api.listAgents,
+    staleTime: 30 * 1000 // 30 segundos
+  });
+}
 
-  return {
-    rows,
-    isLoading,
-    error
-  };
+export function useAgent(agentId: string) {
+  return useQuery({
+    queryKey: ['agent', agentId],
+    queryFn: () => api.getAgent(agentId),
+    enabled: !!agentId
+  });
+}
+
+export function useAgentConfig(agentId: string, options?: LoadAgentInput) {
+  return useQuery({
+    queryKey: ['agentConfig', agentId, options],
+    queryFn: () => api.loadAgentConfig(agentId, options),
+    enabled: !!agentId
+  });
+}
+
+// Mutation hooks
+
+export function useCreateAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: CreateAgentInput) => api.createAgent(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+    }
+  });
+}
+
+export function useUpdateAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ agentId, payload }: { agentId: string; payload: UpdateAgentInput }) =>
+      api.updateAgent(agentId, payload),
+    onSuccess: (_data, { agentId }) => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+      queryClient.invalidateQueries({ queryKey: ['agent', agentId] });
+    }
+  });
+}
+
+export function useDeleteAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (agentId: string) => api.deleteAgent(agentId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+    }
+  });
+}
+
+export function useDuplicateAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ agentId, payload }: { agentId: string; payload?: DuplicateAgentInput }) =>
+      api.duplicateAgent(agentId, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+    }
+  });
+}
+
+export function useActivateAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (agentId: string) => api.activateAgent(agentId),
+    onSuccess: (_data, agentId) => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+      queryClient.invalidateQueries({ queryKey: ['agent', agentId] });
+    }
+  });
+}
+
+export function useDeactivateAgent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (agentId: string) => api.deactivateAgent(agentId),
+    onSuccess: (_data, agentId) => {
+      queryClient.invalidateQueries({ queryKey: ['agents'] });
+      queryClient.invalidateQueries({ queryKey: ['agent', agentId] });
+    }
+  });
 }

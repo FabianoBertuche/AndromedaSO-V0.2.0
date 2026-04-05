@@ -1,6 +1,188 @@
 import type { Agent, CostData } from '../types/kernel';
 import type { MultiTaskResponse, OrchestrationDetail, OrchestratorStatus } from '../types/kernel';
-import type { CatalogModel, ModelBenchmark, Provider, ProviderConfig } from '../types/model';
+import type {
+  AgentInstance,
+  AgentTemplateManifest,
+  ResolvedAgentConfig,
+  CreateAgentInput,
+  UpdateAgentInput,
+  DuplicateAgentInput,
+  LoadAgentInput
+} from '../types/kernel';
+import type {
+  CatalogModel,
+  ChatModelOption,
+  ConsoleApiError,
+  ModelBenchmark,
+  Provider,
+  ProviderConfig,
+  ProviderConnectionTestRequest,
+  ProviderConnectionTestResponse,
+  ProviderConsoleSavePayload,
+  ProviderHealthSummary,
+  ProviderVariant,
+  ProviderVariantAuthMode,
+  ProviderVariantCatalogResponse,
+  SendChatMessageRequest,
+  SendChatMessageResponse
+} from '../types/model';
+
+export type ChatModelOptionsBuildResult = {
+  options: ChatModelOption[];
+  ambiguousModelIds: string[];
+};
+
+const providerVariants = new Set<ProviderVariant>(['ollama', 'openai-api', 'openai-oauth']);
+const providerVariantAuthModes = new Set<ProviderVariantAuthMode>(['api-key', 'base-url', 'oauth-manual']);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function readStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter((item): item is string => typeof item === 'string');
+}
+
+function readProviderVariant(value: unknown): ProviderVariant | null {
+  return typeof value === 'string' && providerVariants.has(value as ProviderVariant)
+    ? value as ProviderVariant
+    : null;
+}
+
+function readProviderVariantAuthMode(value: unknown): ProviderVariantAuthMode | null {
+  return typeof value === 'string' && providerVariantAuthModes.has(value as ProviderVariantAuthMode)
+    ? value as ProviderVariantAuthMode
+    : null;
+}
+
+function normalizeProviderVariantCatalogResponse(payload: unknown): ProviderVariantCatalogResponse {
+  if (!isRecord(payload)) {
+    return { group: 'providers', variants: [] };
+  }
+
+  const variants = Array.isArray(payload.variants)
+    ? payload.variants.flatMap((item) => {
+      if (!isRecord(item)) {
+        return [];
+      }
+
+      const variant = readProviderVariant(item.variant);
+      const authMode = readProviderVariantAuthMode(item.authMode);
+      const displayName = typeof item.displayName === 'string' && item.displayName.trim()
+        ? item.displayName
+        : variant;
+
+      if (!variant || !authMode || !displayName) {
+        return [];
+      }
+
+      return [{
+        variant,
+        moduleId: typeof item.moduleId === 'string' ? item.moduleId : undefined,
+        group: 'providers' as const,
+        authMode,
+        displayName,
+        description: typeof item.description === 'string' ? item.description : undefined,
+        capabilities: readStringArray(item.capabilities),
+        requiredFields: readStringArray(item.requiredFields),
+        optionalFields: readStringArray(item.optionalFields),
+        status: typeof item.status === 'string' ? item.status : undefined,
+        saveAllowsDegradedHealth: typeof item.saveAllowsDegradedHealth === 'boolean'
+          ? item.saveAllowsDegradedHealth
+          : undefined
+      }];
+    })
+    : [];
+
+  return {
+    group: 'providers',
+    variants
+  };
+}
+
+function normalizeProviderCatalogResponse(payload: unknown): { providerId: string; selectedModelIds: string[]; models: CatalogModel[] } {
+  if (!isRecord(payload)) {
+    return { providerId: '', selectedModelIds: [], models: [] };
+  }
+
+  return {
+    providerId: typeof payload.providerId === 'string' ? payload.providerId : '',
+    selectedModelIds: readStringArray(payload.selectedModelIds),
+    models: Array.isArray(payload.models) ? payload.models as CatalogModel[] : []
+  };
+}
+
+function normalizeSendChatMessageResponse(payload: unknown): SendChatMessageResponse {
+  if (!isRecord(payload) || !isRecord(payload.message)) {
+    throw new Error('Invalid provider chat response.');
+  }
+
+  const role = payload.message.role;
+  const content = payload.message.content;
+
+  if (role !== 'assistant' || typeof content !== 'string' || !content.trim()) {
+    throw new Error('Invalid provider chat response.');
+  }
+
+  return {
+    message: {
+      role: 'assistant',
+      content
+    }
+  };
+}
+
+export function buildChatModelOptions(
+  providers: Provider[],
+  catalogs: Array<{ providerId: string; models: CatalogModel[] }>
+): ChatModelOptionsBuildResult {
+  const providersById = new Map(providers.map((provider) => [provider.id, provider]));
+  const optionsByModelId = new Map<string, ChatModelOption[]>();
+
+  catalogs.forEach((catalog) => {
+    const provider = providersById.get(catalog.providerId);
+
+    if (!provider || catalog.models.length === 0) {
+      return;
+    }
+
+    const originLabel = provider.variant ?? provider.name;
+
+    catalog.models.forEach((model) => {
+      const nextOption: ChatModelOption = {
+        providerId: provider.id,
+        providerName: provider.name,
+        modelId: model.modelId,
+        displayName: model.displayName,
+        label: `${model.displayName} - ${originLabel}`
+      };
+
+      const existingOptions = optionsByModelId.get(model.modelId) ?? [];
+      optionsByModelId.set(model.modelId, [...existingOptions, nextOption]);
+    });
+  });
+
+  const options: ChatModelOption[] = [];
+  const ambiguousModelIds: string[] = [];
+
+  optionsByModelId.forEach((modelOptions, modelId) => {
+    if (modelOptions.length === 1) {
+      options.push(modelOptions[0]);
+      return;
+    }
+
+    ambiguousModelIds.push(modelId);
+  });
+
+  return {
+    options,
+    ambiguousModelIds: ambiguousModelIds.sort((left, right) => left.localeCompare(right))
+  };
+}
 
 export type KernelStatus = {
   status: 'healthy' | 'ok' | 'degraded' | string;
@@ -52,11 +234,61 @@ export type TaskFeedbackRequest = {
   note?: string;
 };
 
+export type CreateOpenAiCodexOAuthSessionRequest = {
+  origin: string;
+};
+
+export type CreateOpenAiCodexOAuthSessionResponse = {
+  authUrl: string;
+  expiresAt: string;
+  redirectUri: string;
+  mode: 'manual';
+};
+
+export type CompleteOpenAiCodexOAuthRequest =
+  | { callbackUrl: string }
+  | { code: string; state: string };
+
+export type CompleteOpenAiCodexOAuthResponse = {
+  provider: Provider;
+  models: CatalogModel[];
+};
+
+export type RefreshOpenAiCodexTokenRequest = {
+  providerId: string;
+};
+
+export type RefreshOpenAiCodexTokenResponse = {
+  refreshed: true;
+  expiresIn?: number;
+};
+
 async function parseJson<T>(response: Response): Promise<T> {
   if (!response.ok) {
     throw new Error(`Kernel request failed: ${response.status}`);
   }
   return response.json() as Promise<T>;
+}
+
+async function readApiError(response: Response, fallbackMessage: string): Promise<Error> {
+  const contentType = response.headers.get('content-type') ?? '';
+
+  if (contentType.includes('application/json')) {
+    const payload = await response.json() as {
+      error?: string;
+      code?: string;
+      health?: ProviderHealthSummary;
+      details?: Record<string, unknown>;
+    };
+    const error = new Error(payload.error ?? fallbackMessage) as ConsoleApiError;
+    error.code = payload.code;
+    error.health = payload.health;
+    error.details = payload.details;
+    return error;
+  }
+
+  const text = await response.text();
+  return new Error(text || fallbackMessage);
 }
 
 export async function fetchKernelStatus(): Promise<KernelStatus> {
@@ -200,12 +432,56 @@ export async function createProvider(payload: ProviderConfig): Promise<Provider>
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   });
-  return parseJson<Provider>(response);
+
+  if (!response.ok) {
+    throw await readApiError(response, `Create provider failed: ${response.status}`);
+  }
+
+  return response.json() as Promise<Provider>;
 }
 
 export async function listProviders(): Promise<{ providers: Provider[] }> {
   const response = await fetch('/api/providers');
   return parseJson<{ providers: Provider[] }>(response);
+}
+
+export async function listProviderVariants(): Promise<ProviderVariantCatalogResponse> {
+  const response = await fetch('/api/providers/variants');
+
+  if (!response.ok) {
+    throw await readApiError(response, `List provider variants failed: ${response.status}`);
+  }
+
+  const payload = await response.json() as unknown;
+  return normalizeProviderVariantCatalogResponse(payload);
+}
+
+export async function testProviderConnection(payload: ProviderConnectionTestRequest): Promise<ProviderConnectionTestResponse> {
+  const response = await fetch('/api/providers/connection-test', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw await readApiError(response, `Provider connection test failed: ${response.status}`);
+  }
+
+  return response.json() as Promise<ProviderConnectionTestResponse>;
+}
+
+export async function saveProviderConsoleConfiguration(payload: ProviderConsoleSavePayload): Promise<Provider> {
+  const response = await fetch('/api/providers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw await readApiError(response, `Save provider configuration failed: ${response.status}`);
+  }
+
+  return response.json() as Promise<Provider>;
 }
 
 export async function syncProviderModels(providerId: string): Promise<{ providerId: string; models: CatalogModel[] }> {
@@ -217,14 +493,47 @@ export async function syncProviderModels(providerId: string): Promise<{ provider
   return parseJson<{ providerId: string; models: CatalogModel[] }>(response);
 }
 
-export async function getProviderHealth(providerId: string): Promise<{ providerId: string; health: string; latencyMs: number }> {
+export async function createOpenAiCodexOAuthSession(
+  payload: CreateOpenAiCodexOAuthSessionRequest
+): Promise<CreateOpenAiCodexOAuthSessionResponse> {
+  const response = await fetch('/api/providers/openai-oauth/oauth/sessions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw await readApiError(response, `OpenAI OAuth sign-in start failed: ${response.status}`);
+  }
+
+  return response.json() as Promise<CreateOpenAiCodexOAuthSessionResponse>;
+}
+
+export async function completeOpenAiCodexOAuth(
+  payload: CompleteOpenAiCodexOAuthRequest
+): Promise<CompleteOpenAiCodexOAuthResponse> {
+  const response = await fetch('/api/providers/openai-oauth/oauth/complete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw await readApiError(response, `OpenAI OAuth sign-in completion failed: ${response.status}`);
+  }
+
+  return response.json() as Promise<CompleteOpenAiCodexOAuthResponse>;
+}
+
+export async function getProviderHealth(providerId: string): Promise<{ providerId: string; health: string; latencyMs: number; healthDetails?: ProviderHealthSummary }> {
   const response = await fetch(`/api/providers/${encodeURIComponent(providerId)}/health`);
-  return parseJson<{ providerId: string; health: string; latencyMs: number }>(response);
+  return parseJson<{ providerId: string; health: string; latencyMs: number; healthDetails?: ProviderHealthSummary }>(response);
 }
 
 export async function getProviderCatalog(providerId: string): Promise<{ providerId: string; selectedModelIds: string[]; models: CatalogModel[] }> {
   const response = await fetch(`/api/providers/${encodeURIComponent(providerId)}/models`);
-  return parseJson<{ providerId: string; selectedModelIds: string[]; models: CatalogModel[] }>(response);
+  const payload = await parseJson<unknown>(response);
+  return normalizeProviderCatalogResponse(payload);
 }
 
 export async function saveProviderSelectedModels(providerId: string, modelIds: string[]) {
@@ -234,6 +543,21 @@ export async function saveProviderSelectedModels(providerId: string, modelIds: s
     body: JSON.stringify({ modelIds })
   });
   return parseJson<{ providerId: string; selectedModelIds: string[] }>(response);
+}
+
+export async function sendModelChatMessage(payload: SendChatMessageRequest): Promise<SendChatMessageResponse> {
+  const response = await fetch('/api/providers/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw await readApiError(response, `Provider chat failed: ${response.status}`);
+  }
+
+  const responsePayload = await response.json() as unknown;
+  return normalizeSendChatMessageResponse(responsePayload);
 }
 
 export async function benchmarkModel(modelId: string, taskType: 'coding' | 'chat'): Promise<{ result: ModelBenchmark & { success: boolean } }> {
@@ -276,4 +600,106 @@ export async function deleteProvider(id: string): Promise<void> {
     const body = await response.json() as { error?: string };
     throw new Error(body.error ?? `Delete failed: ${response.status}`);
   }
+}
+
+// ============================================
+// AGENTS MODULE API
+// ============================================
+
+async function parseJsonAgents<T>(response: Response): Promise<T> {
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+    throw new Error(error.error || `HTTP ${response.status}`);
+  }
+  if (response.status === 204) {
+    return {} as T;
+  }
+  return response.json() as Promise<T>;
+}
+
+// Listar templates disponíveis
+export async function listAgentTemplates(): Promise<AgentTemplateManifest[]> {
+  const response = await fetch('/api/agents/templates');
+  const data = await parseJsonAgents<{ templates: AgentTemplateManifest[] }>(response);
+  return data.templates;
+}
+
+// Listar todos os agentes
+export async function listAgents(): Promise<AgentInstance[]> {
+  const response = await fetch('/api/agents');
+  const data = await parseJsonAgents<{ agents: AgentInstance[] }>(response);
+  return data.agents;
+}
+
+// Obter detalhe de um agente
+export async function getAgent(agentId: string): Promise<AgentInstance> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}`);
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Criar agente a partir de template
+export async function createAgent(payload: CreateAgentInput): Promise<AgentInstance> {
+  const response = await fetch('/api/agents', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Atualizar agente existente
+export async function updateAgent(agentId: string, payload: UpdateAgentInput): Promise<AgentInstance> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Deletar agente (soft delete)
+export async function deleteAgent(agentId: string): Promise<void> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}`, {
+    method: 'DELETE'
+  });
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+    throw new Error(error.error || `HTTP ${response.status}`);
+  }
+}
+
+// Duplicar agente
+export async function duplicateAgent(agentId: string, payload?: DuplicateAgentInput): Promise<AgentInstance> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/duplicate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload ?? {})
+  });
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Ativar agente
+export async function activateAgent(agentId: string): Promise<AgentInstance> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/activate`, {
+    method: 'POST'
+  });
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Desativar agente
+export async function deactivateAgent(agentId: string): Promise<AgentInstance> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/deactivate`, {
+    method: 'POST'
+  });
+  return parseJsonAgents<AgentInstance>(response);
+}
+
+// Carregar configuração resolvida
+export async function loadAgentConfig(agentId: string, payload?: LoadAgentInput): Promise<ResolvedAgentConfig> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/load`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload ?? {})
+  });
+  return parseJsonAgents<ResolvedAgentConfig>(response);
 }

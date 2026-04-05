@@ -1,25 +1,38 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AgentTable } from './components/AgentTable';
 import { ModuleDiscover } from './components/ModuleDiscover';
 import { StatusCard } from './components/StatusCard';
 import { useStatus } from './hooks/useStatus';
+import { Agents } from './pages/Agents';
 import { CostDashboard } from './pages/CostDashboard';
 import { Orchestrator } from './pages/Orchestrator';
-import { ModelProviders } from './pages/ModelProviders';
+import { LlmConnectionConsole } from './pages/LlmConnectionConsole';
+import { ModelChatConsole } from './pages/ModelChatConsole';
 import { RouterIntelligence } from './pages/RouterIntelligence';
 import { OAuthCallbackHandler } from './pages/OAuthCallbackHandler';
 
+const allowedTabs = ['dashboard', 'agents', 'costs', 'models', 'chat', 'router'] as const;
+type AppTab = typeof allowedTabs[number];
+
+function parseTab(search: string): AppTab {
+  const tab = new URLSearchParams(search).get('tab');
+  return allowedTabs.find((allowedTab) => allowedTab === tab) ?? 'dashboard';
+}
+
 function MainApp() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [discoveredAgentIds, setDiscoveredAgentIds] = useState<string[]>([]);
-  const [tab, setTab] = useState<'dashboard' | 'agents' | 'costs' | 'models' | 'router'>('dashboard');
+  const tab = parseTab(location.search);
   const { data, isLoading, error, isFetching } = useStatus();
 
-  const navItems: Array<{ key: 'dashboard' | 'agents' | 'costs' | 'models' | 'router'; label: string }> = [
+  const navItems: Array<{ key: AppTab; label: string }> = [
     { key: 'dashboard', label: 'Dashboard' },
     { key: 'agents', label: 'Agents' },
     { key: 'costs', label: 'Costs' },
     { key: 'models', label: 'Models' },
+    { key: 'chat', label: 'Chat' },
     { key: 'router', label: 'Router Intelligence' }
   ];
 
@@ -29,13 +42,13 @@ function MainApp() {
         <h1 className="font-mono text-4xl font-black tracking-wider text-green-300 drop-shadow-[0_0_14px_rgba(0,255,65,0.75)] sm:text-6xl">
           Andromeda OS
         </h1>
-        <p className="mt-2 max-w-2xl font-mono text-lg text-cyan-300/90">Model Providers Management v2.0 + Router Intelligence</p>
+        <p className="mt-2 max-w-2xl font-mono text-lg text-cyan-300/90">LLM Connection Console + Router Intelligence</p>
 
         <nav className="mt-4 flex flex-wrap gap-2">
           {navItems.map((item) => (
             <button
               key={item.key}
-              onClick={() => setTab(item.key)}
+              onClick={() => navigate(`/?tab=${item.key}`)}
               className={`rounded border px-3 py-1 font-mono text-sm ${tab === item.key
                 ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100'
                 : 'border-cyan-600/40 bg-slate-900/40 text-cyan-300'}`}
@@ -75,7 +88,7 @@ function MainApp() {
 
       {tab === 'agents' && (
         <main className="mx-auto max-w-6xl">
-          <AgentTable discoveredAgentIds={discoveredAgentIds} />
+          <Agents />
         </main>
       )}
 
@@ -87,7 +100,13 @@ function MainApp() {
 
       {tab === 'models' && (
         <main className="mx-auto max-w-6xl">
-          <ModelProviders />
+          <LlmConnectionConsole />
+        </main>
+      )}
+
+      {tab === 'chat' && (
+        <main className="mx-auto max-w-6xl">
+          <ModelChatConsole />
         </main>
       )}
 

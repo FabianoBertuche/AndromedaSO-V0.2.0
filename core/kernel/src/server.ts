@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { randomUUID } from 'node:crypto';
 import { moduleRoutes } from './api/moduleRoutes.js';
+import { agentRoutes } from './modules/agents/routes/agentRoutes.js';
 import { evolutionRoutes } from './api/evolutionRoutes.js';
 import { orchestratorRoutes } from './routes/orchestratorRoutes.js';
 import { llmRouterRoutes, providerRoutes } from './modules/providers/routes/providerRoutes.js';
@@ -64,5 +65,6 @@ export async function buildServer(logger = true) {
   server.register(llmRouterRoutes, { prefix: '/api/llm-router' });
   server.register(evolutionRoutes);
   server.register(orchestratorRoutes);
+  server.register(agentRoutes, { prefix: '/api/agents' });
   return server;
 }
