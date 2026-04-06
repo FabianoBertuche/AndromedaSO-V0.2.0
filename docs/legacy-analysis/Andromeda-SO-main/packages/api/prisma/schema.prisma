@@ -1,0 +1,840 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SandboxProfile {
+  id          String      @id
+  name        String
+  description String
+  version     Int
+  isSystem    Boolean
+  mode        String
+  riskLevel   String
+  config      Json
+  tenantId    String      @default("default")
+  createdAt   DateTime
+  updatedAt   DateTime
+  deletedAt   DateTime?
+  archivedAt  DateTime?
+
+  agentConfigs AgentSandboxConfig[]
+
+  @@index([tenantId])
+  @@index([deletedAt])
+  @@map("sandbox_profiles")
+}
+
+model AgentSandboxConfig {
+  agentId      String   @id
+  enabled      Boolean
+  profileId    String?
+  overrides    Json
+  enforcement  Json
+  tenantId     String   @default("default")
+  createdAt    DateTime
+  updatedAt    DateTime
+  deletedAt    DateTime?
+  archivedAt   DateTime?
+
+  profile SandboxProfile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId])
+  @@index([deletedAt])
+  @@map("agent_sandbox_configs")
+}
+
+model SandboxExecution {
+  id             String                 @id
+  agentId        String
+  taskId         String?
+  skillId        String?
+  capability     String
+  status         String
+  mode           String
+  command        Json
+  policySnapshot Json
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  durationMs     Int?
+  exitCode       Int?
+  resourceUsage  Json?
+  errorMessage   String?
+  stdout         String?
+  stderr         String?
+
+  tenantId       String                 @default("default")
+  deletedAt      DateTime?
+  archivedAt     DateTime?
+
+  artifacts SandboxArtifact[]
+  approvals ApprovalRequest[]
+
+  @@index([tenantId])
+  @@index([agentId])
+  @@index([taskId])
+  @@index([deletedAt])
+  @@map("sandbox_executions")
+}
+
+model SandboxArtifact {
+  id            String   @id
+  executionId   String
+  name          String
+  path          String
+  sizeBytes     Int
+  sha256        String
+  mimeType      String?
+  retainedUntil DateTime?
+  metadata      Json?
+
+  execution SandboxExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@index([executionId])
+  @@map("sandbox_artifacts")
+}
+
+model ApprovalRequest {
+  id               String          @id
+  agentId          String
+  taskId           String?
+  executionId      String?
+  reason           String
+  requestedAction  Json
+  status           String
+  approvedBy       String?
+  approvedAt       DateTime?
+  rejectedAt       DateTime?
+
+  execution SandboxExecution? @relation(fields: [executionId], references: [id], onDelete: SetNull)
+
+  @@index([agentId])
+  @@index([taskId])
+  @@index([executionId])
+  @@map("approval_requests")
+}
+
+model MemoryEntry {
+  id              String               @id
+  type            String
+  scopeType       String
+  scopeId         String
+  agentId         String?
+  taskId          String?
+  sessionId       String?
+  projectId       String?
+  userId          String?
+  teamId          String?
+  title           String
+  content         String
+  summary         String?
+  tags            Json
+  source          String
+  sourceEventId   String?
+  createdAt       DateTime
+  updatedAt       DateTime
+  deletedAt       DateTime?
+  archivedAt      DateTime?
+  expiresAt       DateTime?
+  isPinned        Boolean
+  status          String
+  importanceScore Float
+  tenantId        String               @default("default")
+  metadata        Json
+
+  links            MemoryLink[]
+  retrievalRecords MemoryRetrievalRecord[]
+
+  @@index([tenantId])
+  @@index([type])
+  @@index([scopeType, scopeId])
+  @@index([agentId])
+  @@index([taskId])
+  @@index([sessionId])
+  @@index([projectId])
+  @@index([userId])
+  @@index([teamId])
+  @@index([status, isPinned])
+  @@index([deletedAt])
+  @@map("memory_entries")
+}
+
+model MemoryLink {
+  id               String       @id
+  memoryEntryId    String
+  linkedEntityType  String
+  linkedEntityId    String
+  relationType      String
+  tenantId          String       @default("default")
+  createdAt         DateTime
+
+  memoryEntry MemoryEntry @relation(fields: [memoryEntryId], references: [id], onDelete: Cascade)
+
+  @@index([memoryEntryId])
+  @@index([tenantId])
+  @@index([linkedEntityType, linkedEntityId])
+  @@map("memory_links")
+}
+
+model MemoryRetrievalRecord {
+  id                    String   @id
+  taskId                String
+  agentId               String?
+  sessionId             String?
+  memoryEntryId         String
+  retrievalReason       String
+  retrievalScore        Float
+  usedInPromptAssembly   Boolean
+  usedAt                DateTime
+  tenantId              String   @default("default")
+  createdAt             DateTime
+
+  memoryEntry MemoryEntry @relation(fields: [memoryEntryId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@index([tenantId])
+  @@index([agentId])
+  @@index([sessionId])
+  @@index([memoryEntryId])
+  @@map("memory_retrieval_records")
+}
+
+model MemoryPolicy {
+  id                 String                @id
+  memoryType         String
+  scopeType          String
+  retentionMode      String
+  ttlDays            Int?
+  maxEntries         Int?
+  allowAutoPromotion Boolean
+  allowManualPin     Boolean
+  allowSemanticExtraction Boolean
+  tenantId           String                @default("default")
+  createdAt          DateTime
+  updatedAt          DateTime
+  deletedAt          DateTime?
+  archivedAt         DateTime?
+
+  @@unique([tenantId, memoryType, scopeType])
+  @@map("memory_policies")
+}
+
+model KnowledgeCollection {
+  id          String              @id @default(uuid())
+  name        String
+  description String?
+  scopeType   String
+  scopeId     String
+  sourceType  String
+  status      String
+  metadata    Json                @default("{}")
+  tenantId    String              @default("default")
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  deletedAt   DateTime?
+  archivedAt  DateTime?
+
+  documents KnowledgeDocument[]
+
+  @@index([tenantId])
+  @@index([deletedAt])
+  @@map("knowledge_collections")
+}
+
+model KnowledgeDocument {
+  id              String              @id @default(uuid())
+  collectionId    String
+  title           String
+  sourceType      String
+  sourcePath      String?
+  mimeType        String?
+  rawText         String?
+  checksum        String?
+  status          String
+  detectedLang    String?
+  detectedLocale  String?
+  langConfidence  Float?
+  metadata        Json                @default("{}")
+  tenantId        String              @default("default")
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  deletedAt       DateTime?
+  archivedAt      DateTime?
+
+  collection KnowledgeCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  chunks     KnowledgeChunk[]
+
+  @@index([collectionId])
+  @@index([deletedAt])
+  @@map("knowledge_documents")
+}
+
+model KnowledgeChunk {
+  id            String            @id @default(uuid())
+  documentId    String
+  ordinal       Int
+  content       String
+  tokenEstimate Int?
+  embeddingRef  String?
+  metadata      Json              @default("{}")
+  tenantId      String            @default("default")
+  createdAt     DateTime          @default(now())
+  deletedAt     DateTime?
+  archivedAt    DateTime?
+
+  document KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+  @@index([deletedAt])
+  @@map("knowledge_chunks")
+}
+
+model RetrievalRecord {
+  id                  String   @id @default(uuid())
+  taskId              String?
+  sessionId           String?
+  agentId             String?
+  query               String
+  filters             Json
+  selectedChunkIds    String
+  selectedDocumentIds String
+  scoreSummary        Json
+  durationMs          Int
+  tenantId            String   @default("default")
+  createdAt           DateTime @default(now())
+
+  @@index([tenantId])
+
+  @@index([agentId])
+  @@index([taskId])
+  @@map("retrieval_records")
+}
+
+model AgentKnowledgePolicy {
+  id                        String   @id @default(uuid())
+  agentId                   String   @unique
+  knowledgeEnabled          Boolean  @default(false)
+  vaultReadEnabled          Boolean  @default(false)
+  vaultWriteEnabled         Boolean  @default(false)
+  writeMode                 String   @default("disabled")
+  approvalRequired          Boolean  @default(true)
+  allowedCollectionIds      String
+  allowedPaths              String
+  maxChunks                 Int      @default(5)
+  maxContextTokens          Int      @default(2000)
+  rerankEnabled             Boolean  @default(false)
+  preferMemoryOverKnowledge Boolean  @default(true)
+  preferKnowledgeOverMemory Boolean  @default(false)
+  tenantId                  String   @default("default")
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@index([tenantId])
+  @@map("agent_knowledge_policies")
+}
+
+model CommunicationSession {
+  id                String                     @id @default(uuid())
+  channel           String
+  externalSessionId String?
+  internalUserId    String?
+  externalUserId    String?
+  status            String                     @default("active")
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  deletedAt         DateTime?
+  archivedAt        DateTime?
+  lastMessageAt     DateTime?
+  context           Json                       @default("{}")
+  metadata          Json                       @default("{}")
+
+  tenantId          String                     @default("default")
+
+  messages CommunicationMessage[]
+
+  @@index([tenantId])
+  @@index([deletedAt])
+  @@map("communication_sessions")
+}
+
+model CommunicationMessage {
+  id        String             @id @default(uuid())
+  sessionId String
+  channel   String
+  role      String
+  content   Json
+  sender    Json
+  metadata  Json               @default("{}")
+  tenantId  String             @default("default")
+  createdAt DateTime           @default(now())
+  deletedAt DateTime?
+  archivedAt DateTime?
+
+  @@index([tenantId])
+  @@index([deletedAt])
+
+  session CommunicationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("communication_messages")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  role         String    @default("viewer")
+  tenantId     String    @default("default")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  refreshTokens RefreshToken[]
+  apiKeys       ApiKey[]
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model ApiKey {
+  id         String    @id @default(uuid())
+  name       String
+  keyHash    String    @unique
+  userId     String
+  tenantId   String
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@map("api_keys")
+}
+
+model AgentBudgetPolicy {
+  id                 String   @id @default(cuid())
+  tenantId           String   @default("default")
+  agentId            String
+  dailyLimitUsd      Decimal  @db.Decimal(12, 4)
+  monthlyLimitUsd    Decimal  @db.Decimal(12, 4)
+  dailySpentUsd      Decimal  @default(0) @db.Decimal(12, 4)
+  monthlySpentUsd    Decimal  @default(0) @db.Decimal(12, 4)
+  currency           String   @default("USD")
+  alertsEnabled      Boolean  @default(true)
+  lastDailyResetAt   DateTime?
+  lastMonthlyResetAt DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  deletedAt          DateTime?
+
+  @@unique([tenantId, agentId])
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, deletedAt])
+  @@map("agent_budget_policies")
+}
+
+model AgentVersion {
+  id                        String   @id @default(cuid())
+  tenantId                  String   @default("default")
+  agentId                   String
+  versionNumber             Int
+  sourceVersionLabel        String?
+  snapshot                  Json
+  changeSummary             String
+  restoredFromVersionNumber Int?
+  createdBy                 String?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  deletedAt                 DateTime?
+
+  @@unique([tenantId, agentId, versionNumber])
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, agentId, createdAt])
+  @@index([tenantId, deletedAt])
+  @@map("agent_versions")
+}
+
+model TaskFeedback {
+  id          String   @id @default(cuid())
+  tenantId    String   @default("default")
+  taskId      String
+  agentId     String
+  userId      String
+  rating      Int
+  comment     String?
+  metadata    Json?
+  submittedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+
+  @@unique([tenantId, taskId, userId])
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, taskId])
+  @@index([tenantId, submittedAt])
+  @@index([tenantId, deletedAt])
+  @@map("task_feedback")
+}
+
+model AgentPerformanceRecord {
+  id                  String   @id @default(cuid())
+  tenantId            String   @default("default")
+  agentId             String
+  periodType          String
+  periodStart         DateTime
+  periodEnd           DateTime
+  tasksTotal          Int      @default(0)
+  tasksSucceeded      Int      @default(0)
+  tasksFailed         Int      @default(0)
+  successRate         Decimal  @default(0) @db.Decimal(5, 4)
+  avgConformance      Decimal? @db.Decimal(5, 4)
+  feedbackScore       Decimal? @db.Decimal(5, 4)
+  avgLatencyMs        Int?
+  totalTokensUsed     Int      @default(0)
+  totalCostUsd        Decimal  @default(0) @db.Decimal(12, 4)
+  reputationScores    Json?
+  reputationUpdatedAt DateTime?
+  metricsSnapshot     Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  deletedAt           DateTime?
+
+  @@unique([tenantId, agentId, periodType, periodStart, periodEnd])
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, periodType, periodStart])
+  @@index([tenantId, deletedAt])
+  @@map("agent_performance_records")
+}
+
+model PlaybookSuggestion {
+  id              String   @id @default(cuid())
+  tenantId        String   @default("default")
+  agentId         String
+  title           String
+  summary         String
+  proposedChange  Json
+  confidence      Decimal  @db.Decimal(4, 3)
+  status          String
+  sourceEpisodeIds Json?
+  analysisPayload Json?
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  rejectionReason String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
+
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, status])
+  @@index([tenantId, confidence])
+  @@index([tenantId, deletedAt])
+  @@map("playbook_suggestions")
+}
+
+model AgentExecutionLedger {
+  id                   String   @id @default(cuid())
+  tenantId             String   @default("default")
+  taskId               String
+  agentId              String
+  sessionId            String?
+  capability           String?
+  status               String
+  model                String?
+  provider             String?
+  promptTokens         Int?
+  completionTokens     Int?
+  totalTokens          Int?
+  latencyMs            Int?
+  costUsd              Decimal? @db.Decimal(12, 4)
+  conformanceScore     Decimal? @db.Decimal(5, 4)
+  feedbackRating       Int?
+  executionStartedAt   DateTime?
+  executionCompletedAt DateTime?
+  resultSnapshot       Json?
+  metadata             Json?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  deletedAt            DateTime?
+
+  @@unique([tenantId, taskId])
+  @@index([tenantId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, executionCompletedAt])
+  @@index([tenantId, status])
+  @@index([tenantId, deletedAt])
+  @@map("agent_execution_ledger")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  tenantId   String
+  userId     String?
+  action     String
+  resource   String
+  resourceId String?
+  metadata   Json     @default("{}")
+  createdAt  DateTime @default(now())
+
+  @@index([tenantId])
+  @@index([userId])
+  @@index([resource])
+  @@map("audit_logs")
+}
+
+model ExecutionPlan {
+  id               String   @id @default(cuid())
+  tenantId         String   @default("default")
+  taskId           String
+  agentId          String
+  title            String
+  description      String?
+  status           String   @default("pending")
+  totalSteps       Int      @default(0)
+  completedSteps   Int      @default(0)
+  failedSteps      Int      @default(0)
+  requiresApproval Boolean  @default(false)
+  approvedBy       String?
+  approvedAt       DateTime?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  failedAt         DateTime?
+  rollbackAt       DateTime?
+  metadata         Json?
+  deletedAt        DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  steps PlanStep[]
+
+  @@index([tenantId])
+  @@index([tenantId, taskId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, status])
+  @@index([tenantId, deletedAt])
+  @@map("execution_plans")
+}
+
+model PlanStep {
+  id                       String   @id @default(cuid())
+  tenantId                 String   @default("default")
+  planId                   String
+  stepIndex                Int
+  title                    String
+  description              String?
+  agentId                  String
+  skillId                  String?
+  status                   String   @default("pending")
+  input                    Json?
+  output                   Json?
+  errorMessage             String?
+  dependsOn                String[]
+  canRunParallel           Boolean  @default(false)
+  requiresApproval         Boolean  @default(false)
+  approvedBy               String?
+  approvedAt               DateTime?
+  continuationInstructions String?
+  expectedOutputFormat     String?
+  startedAt                DateTime?
+  completedAt              DateTime?
+  failedAt                 DateTime?
+  retryCount               Int      @default(0)
+  maxRetries               Int      @default(2)
+  deletedAt                DateTime?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  plan     ExecutionPlan  @relation(fields: [planId], references: [id], onDelete: Cascade)
+  handoffs AgentHandoff[]
+
+  @@unique([planId, stepIndex])
+  @@index([tenantId])
+  @@index([tenantId, planId])
+  @@index([tenantId, agentId])
+  @@index([tenantId, status])
+  @@index([tenantId, deletedAt])
+  @@map("plan_steps")
+}
+
+model AgentHandoff {
+  id             String   @id @default(cuid())
+  tenantId       String   @default("default")
+  planId         String
+  stepId         String
+  fromAgentId    String
+  toAgentId      String
+  status         String   @default("pending")
+  payload        Json
+  result         Json?
+  rejectedReason String?
+  deletedAt      DateTime?
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
+
+  step PlanStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, planId])
+  @@index([tenantId, stepId])
+  @@index([tenantId, fromAgentId])
+  @@index([tenantId, toAgentId])
+  @@index([tenantId, status])
+  @@index([tenantId, deletedAt])
+  @@map("agent_handoffs")
+}
+
+model Agent {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  name            String
+  role            String
+  description     String
+  teamId          String   @default("team-core")
+  category        String   @default("general")
+  type            String   @default("specialist")
+  defaultModel    String   @default("automatic-router")
+  status          String   @default("active")
+  isDefault       Boolean  @default(false)
+  version         String   @default("v1.0.0")
+  preferredLocale String   @default("pt-BR")
+  fallbackLocale  String   @default("en-US")
+
+  identity        Json
+  soul            Json
+  rules           Json
+  playbook        Json
+  context         Json
+  safeguardConfig Json
+  personaConfig   Json
+
+  tenantId        String   @default("default")
+  createdBy       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
+  archivedAt      DateTime?
+
+  bundles         AgentBundle[]
+
+  @@index([tenantId])
+  @@index([slug])
+  @@index([deletedAt])
+  @@map("agents")
+}
+
+model AgentBundle {
+  id                String   @id @default(uuid())
+  agentId           String
+  tenantId          String   @default("default")
+  version           String
+  schemaVersion     String
+  checksum          String
+  filePath          String
+  includesKnowledge Boolean  @default(false)
+  includesVersions  Boolean  @default(true)
+  exportedAt        DateTime @default(now())
+  exportedBy        String?
+  deletedAt         DateTime?
+
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([agentId])
+  @@index([deletedAt])
+  @@map("agent_bundles")
+}
+
+model LocaleRegistry {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  name      String
+  isDefault Boolean  @default(false)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("locale_registry")
+}
+
+model LocalizedMessage {
+  id        String   @id @default(uuid())
+  key       String
+  locale    String
+  value     String
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, locale])
+  @@index([locale])
+  @@index([category])
+  @@map("localized_messages")
+}
+
+model UserPreferences {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  preferredLocale  String   @default("pt-BR")
+  fallbackLocale   String   @default("en-US")
+  theme            String   @default("dark")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+  @@map("user_preferences")
+}
+
+model AgentImportJob {
+  id               String            @id @default(uuid())
+  tenantId         String            @default("default")
+  bundleChecksum   String
+  status           AgentImportStatus @default(PENDING)
+  conflictPolicy   ConflictPolicy   @default(ABORT)
+  importedAgentId  String?
+  report           Json?
+  errorMessage     String?
+  startedAt        DateTime          @default(now())
+  completedAt      DateTime?
+  createdBy        String
+
+  @@index([tenantId, status])
+  @@map("agent_import_jobs")
+}
+
+enum AgentImportStatus {
+  PENDING
+  VALIDATING
+  CONFLICT_DETECTED
+  IMPORTING
+  COMPLETED
+  FAILED
+}
+
+enum ConflictPolicy {
+  ABORT
+  RENAME
+  OVERWRITE
+}

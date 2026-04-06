@@ -1,0 +1,104 @@
+{
+  "title": "Gerenciamento de Agentes",
+  "create": "Novo Agente",
+  "import": "Importar",
+  "export": "Exportar",
+  "search": "Buscar agentes...",
+  "noAgents": "Nenhum agente encontrado",
+  "tabs": {
+    "identity": "Identidade",
+    "history": "Histórico",
+    "performance": "Desempenho",
+    "suggestions": "Sugestões",
+    "behavior": "Comportamento",
+    "safeguards": "Salvaguardas",
+    "sandbox": "Sandbox",
+    "chat": "Chat"
+  },
+  "fields": {
+    "name": "Nome",
+    "role": "Função",
+    "description": "Descrição",
+    "status": "Status",
+    "team": "Equipe",
+    "category": "Categoria",
+    "type": "Tipo",
+    "model": "Modelo",
+    "version": "Versão",
+    "locale": "Idioma Preferido",
+    "fallbackLocale": "Idioma Fallback"
+  },
+  "behavior": {
+    "formality": "Formalidade",
+    "warmth": "Cordialidade",
+    "objectivity": "Objetividade",
+    "detailLevel": "Nível de Detalhe",
+    "caution": "Cautela",
+    "autonomy": "Autonomia",
+    "creativity": "Criatividade",
+    "ambiguityTolerance": "Tolerância à Ambiguidade",
+    "proactivity": "Proatividade",
+    "delegationTendency": "Delegação",
+    "feedbackFrequency": "Frequência de Feedback",
+    "playbookStrictness": "Rigidez do Playbook",
+    "complianceStrictness": "Rigidez de Conformidade",
+    "selfReviewIntensity": "Intensidade de Auto-revisão",
+    "evidenceRequirements": "Requisitos de Evidência"
+  },
+  "safeguards": {
+    "mode": "Modo",
+    "strict": "Estrito",
+    "standard": "Padrão",
+    "flexible": "Flexível",
+    "requireAuditOnCriticalTasks": "Requer auditoria em tarefas críticas",
+    "alwaysProvideIntermediateFeedback": "Fornecer feedback intermediário sempre",
+    "preferSpecialistDelegation": "Preferir delegação para especialista",
+    "blockOutOfRoleResponses": "Bloquear respostas fora do papel"
+  },
+  "markdown": {
+    "identity": "Identidade",
+    "soul": "Essência",
+    "rules": "Regras",
+    "playbook": "Playbook",
+    "context": "Contexto"
+  },
+  "performance": {
+    "tasksTotal": "Total de Tarefas",
+    "tasksSucceeded": "Sucesso",
+    "tasksFailed": "Falhas",
+    "successRate": "Taxa de Sucesso",
+    "avgLatency": "Latência Média",
+    "avgCost": "Custo Médio",
+    "conformance": "Conformidade",
+    "feedback": "Avaliação"
+  },
+  "history": {
+    "title": "Histórico de Versões",
+    "version": "Versão",
+    "date": "Data",
+    "summary": "Resumo",
+    "restore": "Restaurar",
+    "noHistory": "Sem histórico disponível"
+  },
+  "suggestions": {
+    "title": "Sugestões de Playbook",
+    "approve": "Aprovar",
+    "reject": "Rejeitar",
+    "confidence": "Confiança",
+    "noSuggestions": "Sem sugestões pendentes"
+  },
+  "sandbox": {
+    "title": "Configuração de Sandbox",
+    "profile": "Perfil",
+    "dryRun": "Simular Execução",
+    "execute": "Executar",
+    "dryRunResult": "Resultado da Simulação",
+    "noProfile": "Nenhum perfil configurado"
+  },
+  "chat": {
+    "title": "Chat com Agente",
+    "placeholder": "Digite sua mensagem...",
+    "send": "Enviar",
+    "clear": "Limpar"
+  }
+}

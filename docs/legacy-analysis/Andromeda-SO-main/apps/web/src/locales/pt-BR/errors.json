@@ -1,0 +1,47 @@
+{
+  "validation": {
+    "required": "Campo obrigatório",
+    "invalidFormat": "Formato inválido",
+    "minLength": "Mínimo de {{min}} caracteres",
+    "maxLength": "Máximo de {{max}} caracteres",
+    "email": "Email inválido",
+    "url": "URL inválida"
+  },
+  "auth": {
+    "unauthorized": "Não autorizado",
+    "forbidden": "Acesso negado",
+    "tokenExpired": "Sessão expirada. Faça login novamente.",
+    "invalidCredentials": "Credenciais inválidas",
+    "loginRequired": "Login necessário"
+  },
+  "rateLimit": {
+    "exceeded": "Limite de requisições excedido",
+    "retryAfter": "Tente novamente em {{seconds}} segundos"
+  },
+  "agent": {
+    "notFound": "Agente não encontrado",
+    "budgetExceeded": "Orçamento do agente excedido",
+    "timeout": "Tempo limite de execução excedido",
+    "conformanceFailed": "Falha de conformidade do agente"
+  },
+  "task": {
+    "created": "Tarefa criada com sucesso",
+    "completed": "Tarefa concluída com sucesso",
+    "failed": "Falha ao executar tarefa",
+    "cancelled": "Tarefa cancelada",
+    "notFound": "Tarefa não encontrada"
+  },
+  "budget": {
+    "warning": "Aviso: Orçamento próximo do limite",
+    "exceeded": "Orçamento excedido"
+  },
+  "health": {
+    "degraded": "Saúde do sistema degradada",
+    "recovered": "Sistema recuperado"
+  },
+  "network": {
+    "offline": "Você está offline",
+    "online": "Conexão restabelecida",
+    "serverError": "Erro de servidor"
+  }
+}

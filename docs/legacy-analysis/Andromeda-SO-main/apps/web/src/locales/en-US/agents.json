@@ -1,0 +1,104 @@
+{
+  "title": "Agent Management",
+  "create": "New Agent",
+  "import": "Import",
+  "export": "Export",
+  "search": "Search agents...",
+  "noAgents": "No agents found",
+  "tabs": {
+    "identity": "Identity",
+    "history": "History",
+    "performance": "Performance",
+    "suggestions": "Suggestions",
+    "behavior": "Behavior",
+    "safeguards": "Safeguards",
+    "sandbox": "Sandbox",
+    "chat": "Chat"
+  },
+  "fields": {
+    "name": "Name",
+    "role": "Role",
+    "description": "Description",
+    "status": "Status",
+    "team": "Team",
+    "category": "Category",
+    "type": "Type",
+    "model": "Model",
+    "version": "Version",
+    "locale": "Preferred Locale",
+    "fallbackLocale": "Fallback Locale"
+  },
+  "behavior": {
+    "formality": "Formality",
+    "warmth": "Warmth",
+    "objectivity": "Objectivity",
+    "detailLevel": "Detail Level",
+    "caution": "Caution",
+    "autonomy": "Autonomy",
+    "creativity": "Creativity",
+    "ambiguityTolerance": "Ambiguity Tolerance",
+    "proactivity": "Proactivity",
+    "delegationTendency": "Delegation",
+    "feedbackFrequency": "Feedback Frequency",
+    "playbookStrictness": "Playbook Strictness",
+    "complianceStrictness": "Compliance Strictness",
+    "selfReviewIntensity": "Self Review Intensity",
+    "evidenceRequirements": "Evidence Requirements"
+  },
+  "safeguards": {
+    "mode": "Mode",
+    "strict": "Strict",
+    "standard": "Standard",
+    "flexible": "Flexible",
+    "requireAuditOnCriticalTasks": "Require audit on critical tasks",
+    "alwaysProvideIntermediateFeedback": "Always provide intermediate feedback",
+    "preferSpecialistDelegation": "Prefer specialist delegation",
+    "blockOutOfRoleResponses": "Block out-of-role responses"
+  },
+  "markdown": {
+    "identity": "Identity",
+    "soul": "Soul",
+    "rules": "Rules",
+    "playbook": "Playbook",
+    "context": "Context"
+  },
+  "performance": {
+    "tasksTotal": "Total Tasks",
+    "tasksSucceeded": "Success",
+    "tasksFailed": "Failed",
+    "successRate": "Success Rate",
+    "avgLatency": "Avg Latency",
+    "avgCost": "Avg Cost",
+    "conformance": "Conformance",
+    "feedback": "Feedback"
+  },
+  "history": {
+    "title": "Version History",
+    "version": "Version",
+    "date": "Date",
+    "summary": "Summary",
+    "restore": "Restore",
+    "noHistory": "No history available"
+  },
+  "suggestions": {
+    "title": "Playbook Suggestions",
+    "approve": "Approve",
+    "reject": "Reject",
+    "confidence": "Confidence",
+    "noSuggestions": "No pending suggestions"
+  },
+  "sandbox": {
+    "title": "Sandbox Configuration",
+    "profile": "Profile",
+    "dryRun": "Dry Run",
+    "execute": "Execute",
+    "dryRunResult": "Dry Run Result",
+    "noProfile": "No profile configured"
+  },
+  "chat": {
+    "title": "Chat with Agent",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "clear": "Clear"
+  }
+}

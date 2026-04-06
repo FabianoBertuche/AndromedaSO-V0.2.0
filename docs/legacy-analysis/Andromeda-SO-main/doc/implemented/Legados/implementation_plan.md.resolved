@@ -1,0 +1,54 @@
+# Expansão da Inteligência Ollama e Chat no Console
+
+Este plano detalha as melhorias necessárias para tornar o Model Center e o Console mais dinâmicos e baseados em dados reais, permitindo a escolha de modelos para chat e expandindo as categorias de inteligência.
+
+## Mudanças Propostas [DONE]
+
+### [Componente] Core Domain & API Backend [DONE]
+
+#### [MODIFY] [OllamaProviderAdapter.ts](file:///c:/FB/Andromeda%20SO/packages/api/src/infrastructure/adapters/providers/OllamaProviderAdapter.ts) [DONE]
+- Refinar [inferCapabilities](file:///c:/FB/Andromeda%20SO/packages/api/src/infrastructure/adapters/providers/OllamaProviderAdapter.ts#33-47) para incluir `reasoning` (modelos como 'deepseek-r1', 'thought') e `vision` (modelos 'llava', 'moondream').
+
+#### [MODIFY] [RunBenchmarkUseCase.ts](file:///c:/FB/Andromeda%20SO/packages/core/src/application/use-cases/model-center/RunBenchmarkUseCase.ts)
+- Atualizar para aceitar mais tipos de tarefas e atualizar o score do modelo no repositório após a simulação.
+
+#### [MODIFY] [BuildSessionTimeline.ts](file:///c:/FB/Andromeda%20SO/packages/api/src/modules/communication/application/use-cases/BuildSessionTimeline.ts)
+- Enriquecer a timeline com dados de roteamento (qual modelo foi escolhido e por quê).
+- Adicionar detalhes de execução de benchmarks.
+- Melhorar as descrições para serem mais informativas (ex: incluir tokens, tempo de resposta).
+
+#### [MODIFY] [communication.ws-gateway.ts](file:///c:/FB/Andromeda%20SO/packages/api/src/modules/communication/interfaces/websocket/communication.ws-gateway.ts)
+- Alterar para verificar se a mensagem do cliente contém um `metadata.modelId`. Se sim, usar este modelo para a execução da tarefa, ignorando o roteamento automático.
+- Propagar eventos de roteamento e benchmark para o EventBus para que a timeline os capture.
+
+---
+
+### [Componente] Frontend Web
+
+#### [MODIFY] [TimelineView.tsx](file:///c:/FB/Andromeda%20SO/apps/web/src/components/Timeline/TimelineView.tsx)
+- Melhorar a renderização dos cartões da timeline para mostrar detalhes técnicos (JSON formatado, métricas).
+- Adicionar ícones específicos para roteamento e benchmark.
+
+#### [MODIFY] [App.tsx](file:///c:/FB/Andromeda%20SO/apps/web/src/App.tsx)
+- Buscar lista de modelos disponíveis.
+- Adicionar um seletor de modelo (dropdown) próximo ao input de chat.
+- Enviar o `modelId` selecionado no payload do socket.
+
+#### [MODIFY] [ModelCatalogPanel.tsx](file:///c:/FB/Andromeda%20SO/apps/web/src/components/model-center/ModelCatalogPanel.tsx)
+- Adicionar ações para testar [generate](file:///c:/FB/Andromeda%20SO/packages/core/src/domain/provider/IProviderAdapter.ts#19-20), [chat](file:///c:/FB/Andromeda%20SO/packages/api/src/infrastructure/adapters/providers/OllamaProviderAdapter.ts#105-113) e [embed](file:///c:/FB/Andromeda%20SO/packages/core/src/domain/provider/IProviderAdapter.ts#21-22) diretamente do catálogo (ex: abrir um modal de playground).
+
+#### [MODIFY] [RouterIntelligencePanel.tsx](file:///c:/FB/Andromeda%20SO/apps/web/src/components/model-center/RouterIntelligencePanel.tsx)
+- Adicionar opções `vision` e `reasoning` no dropdown.
+- Integrar com o endpoint `POST /model-center/router/simulate` em vez de usar timeout/mock local.
+
+#### [MODIFY] [BenchmarkLabPanel.tsx](file:///c:/FB/Andromeda%20SO/apps/web/src/components/model-center/BenchmarkLabPanel.tsx)
+- Popular o seletor "Modelo Alvo" com os modelos reais do catálogo.
+- Integrar o botão "Rodar Benchmark" com `POST /model-center/benchmarks/run`.
+
+## Plano de Verificação
+
+### Testes Manuais
+- [ ] Abrir o Console, selecionar um modelo específico (ex: `mistral`) e enviar uma mensagem.
+- [ ] Verificar se o log do backend confirma o uso do modelo selecionado.
+- [ ] No Model Center, rodar um benchmark para um modelo e ver o score atualizar na tabela do catálogo.
+- [ ] No Router Intelligence, selecionar 'vision' e verificar se o roteador escolhe um modelo compatível.

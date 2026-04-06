@@ -1,0 +1,41 @@
+# Andromeda OS — Infraestrutura de desenvolvimento local
+# Sobe: Redis (BullMQ) + PostgreSQL (Prisma)
+# Uso: docker-compose up -d
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: andromeda-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: andromeda-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: andromeda
+      POSTGRES_PASSWORD: andromeda
+      POSTGRES_DB: andromeda_dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U andromeda -d andromeda_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  redis_data:
+  postgres_data:

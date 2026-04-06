@@ -1,0 +1,30 @@
+# Tarefas - Andromeda OS MVP v0.1
+
+## Fase 1: Core (Concluído)
+- [x] Configuração do Projeto e Monorepo (npm workspaces, TypeScript)
+- [x] Camada de Domínio: Entidade Task e Máquina de Estados
+- [x] Camada de Domínio: Interface TaskRepository
+- [x] Camada de Domínio: Entidade TaskEvent
+- [x] Camada de Infraestrutura: Implementação de TaskRepository em Memória
+- [x] Camada de Aplicação: Caso de Uso CreateTask
+- [x] Camada de API: Endpoints de Task (Criar, Listar, Detalhes)
+
+## Fase 2: Skills (Concluído)
+- [x] Camada de Domínio: Registro de Skills e Resolver
+- [x] Camada de Infraestrutura: Script Skill Runtime
+- [x] Camada de Aplicação: Lógica de Execução de Skills
+- [x] Camada de API: Endpoints de Skill (Registro, Listagem, Execução)
+
+## Fase 3: Motor de Execução (Concluído)
+- [x] Camada de Domínio: ExecutionStrategy e Factory
+- [x] Camada de Aplicação: Pipeline de Execução (Template Method)
+
+## Fase 4: Agentes (Concluído)
+- [x] Camada de Domínio: Registro de Agentes
+- [x] Camada de Infraestrutura: Integração com LLM (Mock/Provider)
+- [x] Camada de Aplicação: Cadastro e Gestão de Agentes
+
+## Fase 5: Conclusão e Demonstração (Concluído)
+- [x] Refinamento de Erros e Logs
+- [x] Documentação Final (README)
+- [x] Guia de Demonstração de Fluxo Completo

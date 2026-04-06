@@ -575,10 +575,8 @@ export class ProviderOrchestratorService implements IModelCenterService {
       throw createProviderChatDomainError(404, 'MODEL_NOT_FOUND', 'Model not found in synced provider catalogs.');
     }
 
-    if (matches.length > 1) {
-      throw createProviderChatDomainError(409, 'MODEL_AMBIGUOUS', 'Model is ambiguous across multiple providers.');
-    }
-
+    // First-match strategy: use the first provider that has this model
+    // This resolves ambiguity when the same model exists across multiple providers
     const [match] = matches;
 
     return {
@@ -611,4 +609,12 @@ export class ProviderOrchestratorService implements IModelCenterService {
 
     throw new Error('Provider not found');
   }
+}
+
+// Factory para obter instância do ProviderOrchestratorService
+export async function getProviderOrchestratorService(): Promise<ProviderOrchestratorService> {
+  // Importação dinâmica para evitar circular dependency
+  const { getProviderRepository } = await import('../infrastructure/repositories/provider.repository.factory.js');
+  const repository = await getProviderRepository();
+  return new ProviderOrchestratorService(repository);
 }

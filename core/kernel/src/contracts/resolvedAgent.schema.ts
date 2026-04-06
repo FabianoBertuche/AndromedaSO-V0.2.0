@@ -5,6 +5,42 @@ export const resolutionTraceEntrySchema = z.object({
   sourceId: z.string().min(1)
 });
 
+export const effectiveBehaviorProfileSchema = z.object({
+  persona: z.string().min(1),
+  tone: z.string().min(1),
+  style: z.string().min(1),
+  interactionMode: z.string().min(1),
+  behaviorProfile: z.string().min(1)
+});
+export type EffectiveBehaviorProfile = z.infer<typeof effectiveBehaviorProfileSchema>;
+
+export const effectiveExecutionPolicySchema = z.object({
+  temperature: z.number().min(0).max(2).default(0.7),
+  topP: z.number().min(0).max(1).default(1.0),
+  maxTokens: z.number().int().positive().nullable().default(null),
+  responseFormat: z.string().min(1).default('markdown'),
+  reasoningMode: z.string().min(1).nullable().default(null),
+  timeoutMs: z.number().int().positive().default(30000),
+  retryPolicy: z.record(z.string(), z.unknown()).optional()
+});
+export type EffectiveExecutionPolicy = z.infer<typeof effectiveExecutionPolicySchema>;
+
+export const effectiveChannelPolicySchema = z.object({
+  allowedChannels: z.array(z.string().min(1)),
+  defaultChannelBehavior: z.record(z.string(), z.unknown()),
+  channelOverrides: z.record(z.string(), z.unknown()),
+  constraints: z.array(z.string().min(1)).default([])
+});
+export type EffectiveChannelPolicy = z.infer<typeof effectiveChannelPolicySchema>;
+
+export const effectiveModelPolicySchema = z.object({
+  preferredModel: z.string().min(1).nullable().default(null),
+  allowedModels: z.array(z.string().min(1)).default([]),
+  providerConstraints: z.array(z.string().min(1)).default([]),
+  reasoningMode: z.string().min(1).nullable().default(null)
+});
+export type EffectiveModelPolicy = z.infer<typeof effectiveModelPolicySchema>;
+
 export const agentBindingsSchema = z.object({
   provider: z.string().min(1).optional(),
   model: z.string().min(1).optional(),
@@ -37,8 +73,16 @@ export const resolvedAgentSchema = z.object({
   operationalParameters: z.record(z.string(), z.unknown()),
   bindings: agentBindingsSchema,
   resolutionTrace: z.array(resolutionTraceEntrySchema),
-  configHash: z.string().min(1)
+  configHash: z.string().min(1),
+  effectiveSystemPrompt: z.string().min(1),
+  effectiveBehaviorProfile: effectiveBehaviorProfileSchema,
+  effectiveExecutionPolicy: effectiveExecutionPolicySchema,
+  effectiveChannelPolicy: effectiveChannelPolicySchema,
+  effectiveModelPolicy: effectiveModelPolicySchema,
+  configSnapshotVersion: z.number().int().positive().default(1),
+  lastResolvedAt: z.string().datetime()
 });
 
 export type ResolvedAgentConfig = z.infer<typeof resolvedAgentSchema>;
 export type ResolutionTraceEntry = z.infer<typeof resolutionTraceEntrySchema>;
+export type AgentBindings = z.infer<typeof agentBindingsSchema>;

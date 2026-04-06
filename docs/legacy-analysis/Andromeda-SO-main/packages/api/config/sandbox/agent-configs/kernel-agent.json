@@ -1,0 +1,19 @@
+{
+  "agentId": "kernel-agent",
+  "enabled": true,
+  "profileId": "sbx_code_runner",
+  "overrides": {},
+  "enforcement": {
+    "mandatoryForCapabilities": [
+      "exec",
+      "process",
+      "write",
+      "edit",
+      "cron",
+      "gateway"
+    ],
+    "fallbackBehavior": "deny"
+  },
+  "createdAt": "2026-03-19T01:55:25.076Z",
+  "updatedAt": "2026-03-19T01:55:25.076Z"
+}

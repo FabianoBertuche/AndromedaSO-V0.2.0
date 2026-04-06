@@ -1,0 +1,184 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Andromeda OS API",
+        "description": "Gateway Communication and Control API for the Andromeda OS agent ecosystem.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/v1",
+            "description": "API Version 1"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "JWT": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
+            "ApiKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-api-key"
+            }
+        }
+    },
+    "security": [
+        {
+            "JWT": []
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "summary": "Authenticate user",
+                "tags": [
+                    "Auth"
+                ],
+                "security": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@andromeda.os"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "summary": "Refresh access token",
+                "tags": [
+                    "Auth"
+                ],
+                "security": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "refreshToken": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed"
+                    }
+                }
+            }
+        },
+        "/agents": {
+            "get": {
+                "summary": "List all active agents",
+                "tags": [
+                    "Agents"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of agents",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "role": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "active",
+                                                    "archived"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/model-center/models": {
+            "get": {
+                "summary": "List available models across all providers",
+                "tags": [
+                    "Model Center"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of models"
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "summary": "Health Check",
+                "tags": [
+                    "System"
+                ],
+                "security": [],
+                "responses": {
+                    "200": {
+                        "description": "System health status"
+                    }
+                }
+            }
+        }
+    }
+}

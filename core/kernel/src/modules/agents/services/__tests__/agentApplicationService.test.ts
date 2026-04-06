@@ -19,7 +19,7 @@ describe('AgentApplicationService', () => {
     discovery = new AgentTemplateDiscovery();
     discovery.reset();
     resolver = new AgentConfigResolver();
-    service = new AgentApplicationService(repository, discovery, resolver);
+    service = new AgentApplicationService(repository, discovery, resolver, {} as any);
     await discovery.listTemplates(PROJECT_ROOT);
   });
 

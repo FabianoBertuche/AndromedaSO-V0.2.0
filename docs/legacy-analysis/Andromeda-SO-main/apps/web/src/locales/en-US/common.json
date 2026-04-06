@@ -1,0 +1,62 @@
+{
+  "app": {
+    "title": "Andromeda OS",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "agents": "Agents",
+    "tasks": "Tasks",
+    "knowledge": "Knowledge",
+    "memory": "Memory",
+    "settings": "Settings",
+    "modelCenter": "Model Center",
+    "costs": "Costs",
+    "timeline": "Timeline",
+    "plans": "Plans"
+  },
+  "locale": {
+    "switch": "Switch language",
+    "ptBR": "Português (Brasil)",
+    "enUS": "English (US)",
+    "current": "Current language"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "running": "Running",
+    "paused": "Paused"
+  },
+  "validation": {
+    "required": "Required field",
+    "invalid": "Invalid value",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters"
+  },
+  "messages": {
+    "saved": "Saved successfully",
+    "deleted": "Deleted successfully",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "error": "An error occurred"
+  }
+}

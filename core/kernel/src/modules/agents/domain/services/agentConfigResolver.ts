@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import pino from 'pino';
+import type { RetryPolicy } from '../../../../contracts/schemas/index.js';
 import type {
   AgentInstance,
   AgentOverrides
@@ -9,6 +10,13 @@ import {
   resolvedAgentSchema,
   type ResolutionTraceEntry
 } from '../../../../contracts/resolvedAgent.schema.js';
+import {
+  resolveEffectiveSystemPrompt,
+  resolveEffectiveBehaviorProfile,
+  resolveEffectiveExecutionPolicy,
+  resolveEffectiveChannelPolicy,
+  resolveEffectiveModelPolicy
+} from './resolution/index.js';
 
 const log = pino({ name: 'agents:resolver' });
 
@@ -81,6 +89,7 @@ export class AgentConfigResolver {
     bindings?: AgentBindings
   ): ReturnType<typeof resolvedAgentSchema.parse> {
     const resolutionTrace: ResolutionTraceEntry[] = [];
+    const now = new Date();
 
     const templateConfig = template.config as Record<string, unknown>;
     const templateDefaults = (template.defaults ?? {}) as TemplateDefaults;
@@ -155,6 +164,80 @@ export class AgentConfigResolver {
     resolved.enabledCapabilities = deduplicateAndPreserveOrder(resolved.enabledCapabilities);
     resolved.tags = deduplicateAndPreserveOrder(resolved.tags);
 
+    const role = resolved.role ?? agent.role;
+    const personality = resolved.personality ?? agent.personality;
+    const tone = resolved.tone ?? agent.tone;
+    const responseStyle = resolved.responseStyle ?? agent.responseStyle;
+
+    const effectiveSystemPrompt = resolveEffectiveSystemPrompt({
+      systemPrompt: role,
+      operatingInstructions: resolved.systemInstructions,
+      doRules: resolved.restrictions,
+      dontRules: resolved.securityRules
+    });
+
+    // Adicionar instruções de comportamento ao system prompt
+    const behaviorInstructions = [];
+
+    if (resolved.personality) {
+      behaviorInstructions.push(`Você tem a personalidade: ${resolved.personality}.`);
+    }
+    if (resolved.tone) {
+      behaviorInstructions.push(`Use um tom ${resolved.tone} em suas respostas.`);
+    }
+    if (resolved.responseStyle) {
+      behaviorInstructions.push(`Seu estilo de resposta é: ${resolved.responseStyle}.`);
+    }
+    if (resolved.role) {
+      behaviorInstructions.push(`Você atua como: ${resolved.role}.`);
+    }
+
+    // Instrução fundamental: sempre se apresentar como agente
+    behaviorInstructions.push(`
+IMPORTANTE: Você é um AGENTE de IA, não apenas um modelo.
+- Sempre se apresente como "${resolved.name || agent.name || 'Agente'}'"
+- Mantenha sua personalidade consistente
+- Responda de forma alinhada com seu papel e objetivo
+- Nunca diga que você é "apenas um modelo de linguagem" ou "apenas uma IA"
+`);
+
+    // Combinar system prompt com instruções de comportamento
+    const enhancedSystemPrompt = behaviorInstructions.length > 0
+      ? `${effectiveSystemPrompt}\n\n---\nCOMPORTAMENTO DO AGENTE:\n${behaviorInstructions.join('\n')}`
+      : effectiveSystemPrompt;
+
+    const effectiveBehaviorProfile = resolveEffectiveBehaviorProfile({
+      persona: personality,
+      tone: tone,
+      style: responseStyle,
+      interactionMode: operationalParameters.interactionMode as string | undefined,
+      behaviorProfile: operationalParameters.behaviorProfile as string | undefined
+    });
+
+    const effectiveExecutionPolicy = resolveEffectiveExecutionPolicy({
+      temperature: operationalParameters.temperature as number | undefined,
+      topP: operationalParameters.topP as number | undefined,
+      maxTokens: operationalParameters.maxTokens as number | null | undefined,
+      responseFormat: operationalParameters.responseFormat as string | undefined,
+      reasoningMode: operationalParameters.reasoningMode as string | null | undefined,
+      timeoutMs: operationalParameters.timeoutMs as number | undefined,
+      retryPolicy: operationalParameters.retryPolicy as RetryPolicy | undefined
+    });
+
+    const effectiveChannelPolicy = resolveEffectiveChannelPolicy({
+      allowedChannels: resolved.allowedChannels,
+      defaultChannelBehavior: operationalParameters.defaultChannelBehavior as Record<string, unknown> | undefined,
+      channelOverrides: operationalParameters.channelOverrides as Record<string, Record<string, unknown>> | undefined,
+      channelConstraints: operationalParameters.channelConstraints as string[] | undefined
+    });
+
+    const effectiveModelPolicy = resolveEffectiveModelPolicy({
+      preferredModel: resolved.preferredModel,
+      allowedModels: operationalParameters.allowedModels as string[] | undefined,
+      providerConstraints: operationalParameters.providerConstraints as string[] | undefined,
+      reasoningMode: effectiveExecutionPolicy.reasoningMode
+    });
+
     const finalConfig: Record<string, unknown> = {
       agentId: agent.id,
       templateId: agent.templateId,
@@ -162,11 +245,11 @@ export class AgentConfigResolver {
       name: resolved.name ?? agent.name,
       slug: resolved.slug ?? agent.slug,
       description: agent.description,
-      role: resolved.role ?? agent.role,
+      role: role,
       goal: resolved.goal ?? agent.goal,
-      personality: resolved.personality ?? agent.personality,
-      tone: resolved.tone ?? agent.tone,
-      responseStyle: resolved.responseStyle ?? agent.responseStyle,
+      personality: personality,
+      tone: tone,
+      responseStyle: responseStyle,
       systemInstructions: resolved.systemInstructions,
       restrictions: resolved.restrictions,
       securityRules: resolved.securityRules,
@@ -180,7 +263,14 @@ export class AgentConfigResolver {
       enabledCapabilities: resolved.enabledCapabilities,
       operationalParameters,
       bindings: resolvedBindings,
-      resolutionTrace
+      resolutionTrace,
+      effectiveSystemPrompt: enhancedSystemPrompt,
+      effectiveBehaviorProfile,
+      effectiveExecutionPolicy,
+      effectiveChannelPolicy,
+      effectiveModelPolicy,
+      configSnapshotVersion: 1,
+      lastResolvedAt: now.toISOString()
     };
 
     finalConfig.configHash = computeConfigHash(finalConfig);

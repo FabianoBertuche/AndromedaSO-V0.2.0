@@ -1,0 +1,42 @@
+{
+  "title": "Tarefas",
+  "create": "Nova Tarefa",
+  "search": "Buscar tarefas...",
+  "noTasks": "Nenhuma tarefa encontrada",
+  "fields": {
+    "title": "Título",
+    "description": "Descrição",
+    "status": "Status",
+    "priority": "Prioridade",
+    "agent": "Agente",
+    "createdAt": "Criado em",
+    "updatedAt": "Atualizado em",
+    "completedAt": "Concluído em"
+  },
+  "status": {
+    "pending": "Pendente",
+    "running": "Em execução",
+    "completed": "Concluída",
+    "failed": "Falhou",
+    "cancelled": "Cancelada"
+  },
+  "priority": {
+    "low": "Baixa",
+    "medium": "Média",
+    "high": "Alta",
+    "critical": "Crítica"
+  },
+  "detail": {
+    "inputs": "Entradas",
+    "outputs": "Saídas",
+    "logs": "Logs",
+    "metrics": "Métricas"
+  },
+  "actions": {
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "cancel": "Cancelar",
+    "retry": "Tentar novamente"
+  }
+}

@@ -1,0 +1,9 @@
+﻿src/components/knowledge/CollectionsList.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/knowledge/DocumentManagement.tsx(19,38): error TS6133: 'collectionId' is declared but its value is never read.
+src/components/knowledge/KnowledgeView.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/components/knowledge/KnowledgeView.tsx(2,34): error TS6133: 'Settings' is declared but its value is never read.
+src/components/knowledge/KnowledgeView.tsx(3,27): error TS1484: 'Collection' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/knowledge/KnowledgeView.tsx(4,30): error TS1484: 'Document' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/knowledge/KnowledgeView.tsx(15,12): error TS6133: 'isLoading' is declared but its value is never read.
+src/components/knowledge/KnowledgeView.tsx(17,5): error TS2304: Cannot find name 'useEffect'.
+src/components/knowledge/KnowledgeView.tsx(21,5): error TS2304: Cannot find name 'useEffect'.

@@ -1,0 +1,116 @@
+{
+  "id": "sbx_safe_readonly",
+  "name": "Safe Readonly",
+  "description": "Uso para agentes consultivos com leitura e auditoria restritas.",
+  "version": 1,
+  "isSystem": true,
+  "mode": "process",
+  "riskLevel": "low",
+  "config": {
+    "enabled": true,
+    "mode": "process",
+    "filesystem": {
+      "readOnlyRoot": true,
+      "workingDirectory": "/workspace",
+      "allowedReadPaths": [
+        "/workspace"
+      ],
+      "allowedWritePaths": [],
+      "tempDirectory": "/workspace/tmp",
+      "persistArtifacts": false,
+      "maxArtifactSizeMb": 25,
+      "maxTotalArtifactSizeMb": 100
+    },
+    "network": {
+      "mode": "off",
+      "allowedDomains": [],
+      "allowedIps": [],
+      "allowedPorts": [],
+      "blockPrivateNetworks": true,
+      "allowDns": false,
+      "httpOnly": true
+    },
+    "resources": {
+      "timeoutSeconds": 60,
+      "cpuLimit": 1,
+      "memoryMb": 512,
+      "diskMb": 512,
+      "maxProcesses": 8,
+      "maxThreads": 8,
+      "maxStdoutKb": 256,
+      "maxStderrKb": 256
+    },
+    "execution": {
+      "allowShell": false,
+      "allowedBinaries": [
+        "node",
+        "python",
+        "python3",
+        "bash"
+      ],
+      "blockedBinaries": [
+        "sudo",
+        "su",
+        "ssh",
+        "scp",
+        "docker",
+        "kubectl"
+      ],
+      "allowedInterpreters": [
+        "node",
+        "python",
+        "python3"
+      ],
+      "allowSubprocessSpawn": false,
+      "allowPackageInstall": false
+    },
+    "environment": {
+      "runtime": "node",
+      "runtimeVersion": "20",
+      "envVars": {},
+      "inheritHostEnv": false,
+      "secretInjection": false,
+      "timezone": "UTC",
+      "locale": "en-US"
+    },
+    "security": {
+      "runAsNonRoot": true,
+      "noNewPrivileges": true,
+      "disableDeviceAccess": true,
+      "disablePrivilegedMode": true,
+      "disableHostNamespaces": true
+    },
+    "ioPolicy": {
+      "maxInputSizeKb": 256,
+      "maxOutputSizeKb": 512,
+      "allowedOutputTypes": [
+        "text",
+        "json",
+        "file"
+      ],
+      "stripSensitiveOutput": true,
+      "contentScan": true,
+      "retention": "task"
+    },
+    "audit": {
+      "enabled": true,
+      "captureCommand": true,
+      "captureStdout": true,
+      "captureStderr": true,
+      "captureExitCode": true,
+      "captureArtifacts": true,
+      "captureTiming": true,
+      "captureHashes": true,
+      "capturePolicySnapshot": true,
+      "captureNetworkEvents": false
+    },
+    "approvals": {
+      "requireApprovalForExec": true,
+      "requireApprovalForWriteOutsideWorkspace": true,
+      "requireApprovalForNetwork": true,
+      "requireApprovalForLargeArtifacts": false
+    }
+  },
+  "createdAt": "2026-03-19T00:00:20.572Z",
+  "updatedAt": "2026-03-19T00:00:20.572Z"
+}

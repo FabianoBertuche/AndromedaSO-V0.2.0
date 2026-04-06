@@ -1,0 +1,42 @@
+{
+  "title": "Tasks",
+  "create": "New Task",
+  "search": "Search tasks...",
+  "noTasks": "No tasks found",
+  "fields": {
+    "title": "Title",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "agent": "Agent",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "completedAt": "Completed At"
+  },
+  "status": {
+    "pending": "Pending",
+    "running": "Running",
+    "completed": "Completed",
+    "failed": "Failed",
+    "cancelled": "Cancelled"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "detail": {
+    "inputs": "Inputs",
+    "outputs": "Outputs",
+    "logs": "Logs",
+    "metrics": "Metrics"
+  },
+  "actions": {
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "retry": "Retry"
+  }
+}

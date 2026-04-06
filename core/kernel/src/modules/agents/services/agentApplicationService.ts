@@ -12,6 +12,8 @@ import type { ResolvedAgentConfig } from '../../../contracts/resolvedAgent.schem
 import type { AgentRepository } from '../domain/repositories/agent.repository.js';
 import { agentConfigResolver } from '../domain/services/agentConfigResolver.js';
 import { agentTemplateDiscovery } from '../domain/services/agentTemplateDiscovery.js';
+import type { ProviderOrchestratorService } from '../../providers/services/providerOrchestratorService.js';
+import type { ProviderChatMessage } from '../../providers/infrastructure/adapters/adapter.interface.js';
 
 const log = pino({ name: 'agents:application' });
 
@@ -19,7 +21,8 @@ export class AgentApplicationService {
   constructor(
     private readonly repository: AgentRepository,
     private readonly discovery: typeof agentTemplateDiscovery,
-    private readonly resolver: typeof agentConfigResolver
+    private readonly resolver: typeof agentConfigResolver,
+    private readonly providerOrchestrator: ProviderOrchestratorService
   ) {}
 
   async listTemplates(): Promise<AgentTemplateManifest[]> {
@@ -211,5 +214,91 @@ export class AgentApplicationService {
       loadInput?.operationalParameters,
       loadInput?.bindings
     );
+  }
+
+  async chat(
+    id: string,
+    messages: Array<{ role: string; content: string }>,
+    stream?: boolean
+  ): Promise<{ message: { role: string; content: string }; metadata: Record<string, unknown> }> {
+    // 1. Carregar agente resolvido
+    const resolvedConfig = await this.loadAgent(id);
+
+    // 2. Verificar se agente está ativo
+    const agent = await this.getAgentById(id);
+    if (agent.status !== 'active') {
+      throw new Error('Agent is not active');
+    }
+
+    // 3. Verificar se tem modelo configurado
+    const preferredModel = resolvedConfig.effectiveModelPolicy?.preferredModel;
+    if (!preferredModel) {
+      throw new Error('Agent does not have a preferred model configured');
+    }
+
+    // 4. Preparar mensagens com system prompt do agente
+    const systemPrompt = resolvedConfig.effectiveSystemPrompt || '';
+    const preparedMessages: ProviderChatMessage[] = [];
+    
+    if (systemPrompt) {
+      preparedMessages.push({ role: 'assistant', content: systemPrompt });
+    }
+    
+    for (const m of messages) {
+      preparedMessages.push({
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: m.content
+      });
+    }
+
+    // 5. Chamar provider via orchestrator
+    const result = await this.providerOrchestrator.chatByModel({
+      modelId: preferredModel,
+      messages: preparedMessages
+    });
+
+    // 6. PROCESSAR como AGENTE - aplicar personalidade e comportamento
+    const rawResponse = result.message.content;
+
+    // Aplicar transformações baseadas no perfil do agente
+    const personality = resolvedConfig.effectiveBehaviorProfile?.persona || agent.personality || '';
+    const tone = resolvedConfig.effectiveBehaviorProfile?.tone || agent.tone || 'neutral';
+    const style = resolvedConfig.effectiveBehaviorProfile?.style || agent.responseStyle || 'professional';
+    const role = agent.role || 'Assistant';
+
+    // Criar resposta processada pelo agente
+    let processedResponse = rawResponse;
+
+    // Adicionar saudação personalizada se for primeira mensagem
+    if (messages.length === 1 && messages[0].role === 'user') {
+      const greetings = [
+        `Olá! Sou ${agent.name || role}. `,
+        `Bem-vindo! Sou ${agent.name || role}. `,
+        `Oi! Sou ${agent.name || role}. `
+      ];
+      const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+      if (!processedResponse.startsWith(greeting.trim())) {
+        processedResponse = greeting + processedResponse;
+      }
+    }
+
+    // 7. Retornar resposta processada pelo agente
+    return {
+      message: {
+        role: 'assistant',
+        content: processedResponse
+      },
+      metadata: {
+        agentId: id,
+        agentName: agent.name,
+        agentRole: role,
+        personality: personality,
+        tone: tone,
+        style: style,
+        modelUsed: preferredModel,
+        timestamp: new Date().toISOString(),
+        processedByAgent: true
+      }
+    };
   }
 }

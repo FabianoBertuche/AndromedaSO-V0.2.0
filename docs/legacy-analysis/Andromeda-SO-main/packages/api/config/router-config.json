@@ -1,0 +1,11 @@
+{
+  "purpose": "default",
+  "weights": {
+    "quality": 0.5,
+    "latency": 0.2,
+    "cost": 0.2,
+    "stability": 0,
+    "capabilityFit": 0.1
+  },
+  "updatedAt": "2026-03-18T00:00:00.000Z"
+}

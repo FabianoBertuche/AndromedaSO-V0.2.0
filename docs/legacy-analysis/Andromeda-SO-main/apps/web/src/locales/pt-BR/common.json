@@ -1,0 +1,62 @@
+{
+  "app": {
+    "title": "Andromeda OS",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "actions": "Ações",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "nav": {
+    "agents": "Agentes",
+    "tasks": "Tarefas",
+    "knowledge": "Conhecimento",
+    "memory": "Memória",
+    "settings": "Configurações",
+    "modelCenter": "Centro de Modelos",
+    "costs": "Custos",
+    "timeline": "Linha do Tempo",
+    "plans": "Planos"
+  },
+  "locale": {
+    "switch": "Trocar idioma",
+    "ptBR": "Português (Brasil)",
+    "enUS": "English (US)",
+    "current": "Idioma atual"
+  },
+  "status": {
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "pending": "Pendente",
+    "completed": "Concluído",
+    "failed": "Falhou",
+    "running": "Em execução",
+    "paused": "Pausado"
+  },
+  "validation": {
+    "required": "Campo obrigatório",
+    "invalid": "Valor inválido",
+    "minLength": "Mínimo de {{min}} caracteres",
+    "maxLength": "Máximo de {{max}} caracteres"
+  },
+  "messages": {
+    "saved": "Salvo com sucesso",
+    "deleted": "Excluído com sucesso",
+    "created": "Criado com sucesso",
+    "updated": "Atualizado com sucesso",
+    "error": "Ocorreu um erro"
+  }
+}

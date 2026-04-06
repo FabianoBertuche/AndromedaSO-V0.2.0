@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { agentConfigResolver } from '../domain/services/agentConfigResolver.js';
 import { agentTemplateDiscovery } from '../domain/services/agentTemplateDiscovery.js';
 import { getAgentRepository } from '../infrastructure/repositories/agent.repository.factory.js';
+import { getProviderOrchestratorService } from '../../providers/services/providerOrchestratorService.js';
 import { AgentApplicationService } from '../services/agentApplicationService.js';
 
 const createAgentRequestSchema = z.object({
@@ -73,6 +74,26 @@ const loadAgentRequestSchema = z.object({
   operationalParameters: z.record(z.string(), z.unknown()).optional()
 });
 
+const agentChatRequestSchema = z.object({
+  messages: z.array(z.object({
+    role: z.enum(['user', 'assistant', 'system']),
+    content: z.string()
+  })),
+  stream: z.boolean().optional()
+});
+
+const agentChatResponseSchema = z.object({
+  message: z.object({
+    role: z.enum(['assistant']),
+    content: z.string()
+  }),
+  metadata: z.object({
+    agentId: z.string(),
+    modelUsed: z.string(),
+    timestamp: z.string()
+  }).optional()
+});
+
 let servicePromise: Promise<AgentApplicationService> | null = null;
 
 export function resetAgentRoutesService(): void {
@@ -82,8 +103,9 @@ export function resetAgentRoutesService(): void {
 async function getAgentApplicationService(): Promise<AgentApplicationService> {
   if (!servicePromise) {
     const repository = await getAgentRepository();
+    const providerOrchestratorService = await getProviderOrchestratorService();
     servicePromise = Promise.resolve(
-      new AgentApplicationService(repository, agentTemplateDiscovery, agentConfigResolver)
+      new AgentApplicationService(repository, agentTemplateDiscovery, agentConfigResolver, providerOrchestratorService)
     );
   }
   return servicePromise;
@@ -258,6 +280,36 @@ export const agentRoutes: FastifyPluginAsync = async function agentRoutes(server
         return reply.status(404).send({ error: message });
       }
       if (message.includes('disabled')) {
+        return reply.status(400).send({ error: message });
+      }
+      return reply.status(500).send({ error: message });
+    }
+  });
+
+  server.post('/:id/chat', async function handleAgentChat(request, reply) {
+    const { id } = request.params as { id: string };
+    const service = await getAgentApplicationService();
+    const parsed = agentChatRequestSchema.safeParse(request.body ?? {});
+
+    if (!parsed.success) {
+      return reply.status(400).send({
+        error: 'Invalid request body',
+        details: parsed.error.issues
+      });
+    }
+
+    try {
+      const result = await service.chat(id, parsed.data.messages, parsed.data.stream);
+      return result;
+    } catch (error) {
+      const message = (error as Error).message;
+      if (message.includes('not found')) {
+        return reply.status(404).send({ error: message });
+      }
+      if (message.includes('not active')) {
+        return reply.status(400).send({ error: message });
+      }
+      if (message.includes('does not have a preferred model')) {
         return reply.status(400).send({ error: message });
       }
       return reply.status(500).send({ error: message });

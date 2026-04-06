@@ -1,0 +1,47 @@
+{
+  "validation": {
+    "required": "Required field",
+    "invalidFormat": "Invalid format",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters",
+    "email": "Invalid email",
+    "url": "Invalid URL"
+  },
+  "auth": {
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access denied",
+    "tokenExpired": "Session expired. Please login again.",
+    "invalidCredentials": "Invalid credentials",
+    "loginRequired": "Login required"
+  },
+  "rateLimit": {
+    "exceeded": "Rate limit exceeded",
+    "retryAfter": "Retry after {{seconds}} seconds"
+  },
+  "agent": {
+    "notFound": "Agent not found",
+    "budgetExceeded": "Agent budget exceeded",
+    "timeout": "Execution timeout",
+    "conformanceFailed": "Agent conformance failed"
+  },
+  "task": {
+    "created": "Task created successfully",
+    "completed": "Task completed successfully",
+    "failed": "Task failed",
+    "cancelled": "Task cancelled",
+    "notFound": "Task not found"
+  },
+  "budget": {
+    "warning": "Warning: Budget near limit",
+    "exceeded": "Budget exceeded"
+  },
+  "health": {
+    "degraded": "System health degraded",
+    "recovered": "System recovered"
+  },
+  "network": {
+    "offline": "You are offline",
+    "online": "Connection restored",
+    "serverError": "Server error"
+  }
+}

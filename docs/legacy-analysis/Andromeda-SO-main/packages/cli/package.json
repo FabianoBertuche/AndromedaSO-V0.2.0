@@ -1,0 +1,24 @@
+{
+  "name": "@andromeda/cli",
+  "version": "0.1.0",
+  "description": "Andromeda OS Command Line Interface",
+  "type": "module",
+  "bin": {
+    "andromeda": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "archiver": "^7.0.0",
+    "unzipper": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.2",
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

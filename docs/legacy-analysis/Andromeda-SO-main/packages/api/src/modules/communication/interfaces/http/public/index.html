@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andromeda OS | Gateway Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/console/style.css">
+</head>
+
+<body>
+
+    <aside>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+            ANDROMEDA OS
+        </div>
+
+        <div class="config-group">
+            <div class="section-title">Gateway Config</div>
+            <label style="font-size: 0.75rem; color: var(--text-dim);">Bearer Token</label>
+            <input type="password" id="token-input" class="input-field" value="andromeda_dev_web_token">
+
+            <label style="font-size: 0.75rem; color: var(--text-dim); margin-top: 12px; display: block;">API URL</label>
+            <input type="text" id="api-url" class="input-field" value="http://localhost:5000/gateway">
+        </div>
+
+        <div class="config-group">
+            <div class="section-title">Session Context</div>
+            <label style="font-size: 0.75rem; color: var(--text-dim);">Session ID</label>
+            <input type="text" id="session-input" class="input-field" placeholder="Auto-generated">
+
+            <label style="font-size: 0.75rem; color: var(--text-dim); margin-top: 12px; display: block;">User ID</label>
+            <input type="text" id="user-id-input" class="input-field" value="user_dev">
+        </div>
+
+        <div class="config-group" style="flex: 1; overflow-y: auto; min-height: 200px;">
+            <div class="section-title">Task Explorer (MVP01)</div>
+            <div id="task-list"
+                style="background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border); max-height: 300px; overflow-y: auto;">
+                <div style="padding: 20px; text-align: center; color: var(--text-dim); font-size: 0.8rem;">Carregando
+                    tasks...
+                </div>
+            </div>
+            <button onclick="fetchTasks()"
+                style="width: 100%; margin-top: 12px; padding: 8px; background: transparent; border: 1px solid var(--border); color: var(--text-dim); border-radius: 4px; cursor: pointer; font-size: 0.7rem;">
+                RECARREGAR LISTA
+            </button>
+        </div>
+
+        <div class="config-group" style="margin-top: auto;">
+            <button id="toggle-inspector"
+                style="width: 100%; padding: 10px; background: transparent; border: 1px solid var(--border); color: var(--text-dim); border-radius: 8px; cursor: pointer; font-size: 0.8rem;"
+                onclick="toggleInspector()">
+                Toggle JSON Inspector
+            </button>
+        </div>
+    </aside>
+
+    <main>
+        <header class="chat-header">
+            <div>
+                <h2 style="font-weight: 600;">Communication Gateway Console</h2>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">MVP02 Web Channel Adapter</p>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                API connected
+            </div>
+        </header>
+
+        <div id="messages-container">
+            <div class="message assistant">
+                Bem-vindo ao <b>Andromeda OS Gateway Console</b>.<br>
+                Esta interface consome diretamente o endpoint <code>/gateway/message</code> que acabamos de implementar.
+                <div class="meta">System • MVP02</div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Envie um comando para o Andromeda OS..." autofocus>
+                <button class="send-btn" id="send-button" onclick="sendMessage()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div id="inspector" class="inspector">
+        <div class="section-title" style="margin-bottom: 20px;">Last Response Payload</div>
+        <pre id="json-display">{}</pre>
+    </div>
+
+    <script src="/console/script.js"></script>
+</body>
+
+</html>

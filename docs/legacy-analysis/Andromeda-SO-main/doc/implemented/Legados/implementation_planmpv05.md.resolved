@@ -1,0 +1,36 @@
+# Plano de Implementação - MVP05: Fundação Híbrida (TS + Python)
+
+Este plano descreve as etapas para consolidar a arquitetura híbrida do Andromeda OS, integrando o serviço cognitivo Python ao kernel TypeScript de forma resiliente e incremental.
+
+## Objetivo
+Estabelecer a comunicação funcional e segura entre o backend TS (Kernel) e o serviço cognitivo Python (Cognit), garantindo que o sistema continue operacional mesmo em caso de indisponibilidade do serviço secundário.
+
+## User Review Required
+> [!IMPORTANT]
+> O serviço Python será opcional nesta fase. Se ele estiver offline, o Kernel TS assumirá a lógica fallback (como já faz atualmente). Toda integração usará timeouts agressivos para evitar degradação de performance no core.
+
+## Mudanças Propostas
+
+### 1. Infraestrutura Python (`services/cognitive-python`)
+O serviço já possui estrutura básica. As melhorias focarão em garantir que os contratos batam 100% com o adapter TS.
+- [MODIFY] `services/cognitive-python/app/main.py`: Refinar endpoints de saúde e classificação.
+
+### 2. Integração no Kernel TS (`packages/api`)
+Integrar o `CognitiveSignalPort` nos fluxos de decisão.
+- [MODIFY] `packages/api/src/modules/cognitive/dependencies.ts`: Garantir a injeção correta do `PythonCognitiveServiceAdapter`.
+- [MODIFY] `packages/core/src/application/use-cases/model-center/RouteTaskUseCase.ts`: (Opcional) Incorporar sinal cognitivo na decisão de roteamento se disponível.
+
+### 3. Configuração e Ambiente
+- [MODIFY] `.env.example`: Adicionar variáveis do serviço cognitivo.
+- [NEW] `scripts/start-cognitive.ps1`: Script facilitador para subir o serviço Python.
+
+## Plano de Verificação
+
+### Testes Automatizados
+- Executar `npm test` no módulo `cognitive` para validar o adapter TS.
+- Executar `pytest` no serviço Python para validar os contratos Pydantic.
+
+### Verificação Manual
+1. Subir o Kernel TS e validar que mensagens no gateway continuam funcionando.
+2. Ativar o serviço Python e observar logs de interconexão.
+3. Simular falha (desligar Python) e validar que o Kernel continua operando sem erros fatais.

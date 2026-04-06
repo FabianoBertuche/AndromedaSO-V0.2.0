@@ -26,6 +26,7 @@ import type {
   SendChatMessageRequest,
   SendChatMessageResponse
 } from '../types/model';
+import type { AgentChatMessage, AgentChatRequest, AgentChatResponse } from '../types/kernel';
 
 export type ChatModelOptionsBuildResult = {
   options: ChatModelOption[];
@@ -558,6 +559,37 @@ export async function sendModelChatMessage(payload: SendChatMessageRequest): Pro
 
   const responsePayload = await response.json() as unknown;
   return normalizeSendChatMessageResponse(responsePayload);
+}
+
+export async function chatWithAgent(
+  agentId: string, 
+  payload: AgentChatRequest
+): Promise<AgentChatResponse> {
+  const response = await fetch(`/api/agents/${encodeURIComponent(agentId)}/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const error = await readApiError(response, `Agent chat failed: ${response.status}`);
+    throw error;
+  }
+
+  const data = await response.json() as unknown;
+  
+  // Parse response to ensure it matches AgentChatResponse
+  if (!isRecord(data) || !isRecord(data.message)) {
+    throw new Error('Invalid response format from agent chat');
+  }
+  
+  return {
+    message: {
+      role: 'assistant',
+      content: String(data.message.content || '')
+    },
+    metadata: isRecord(data.metadata) ? data.metadata : undefined
+  };
 }
 
 export async function benchmarkModel(modelId: string, taskType: 'coding' | 'chat'): Promise<{ result: ModelBenchmark & { success: boolean } }> {

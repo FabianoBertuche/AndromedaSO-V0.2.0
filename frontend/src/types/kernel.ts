@@ -216,3 +216,30 @@ export type LoadAgentInput = {
   };
   operationalParameters?: Record<string, unknown>;
 };
+
+// ============================================
+// AGENT CHAT TYPES - Chat com agente (não com modelo)
+// ============================================
+
+export type AgentChatMessage = {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+};
+
+export type AgentChatRequest = {
+  messages: AgentChatMessage[];
+  stream?: boolean;
+};
+
+export type AgentChatResponse = {
+  message: {
+    role: 'assistant';
+    content: string;
+  };
+  metadata?: {
+    agentId: string;
+    modelUsed: string;
+    timestamp: string;
+    [key: string]: unknown;
+  };
+};

@@ -1,0 +1,17 @@
+{
+    "name": "andromeda-telegram",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "scripts": {
+        "dev": "npx ts-node src/index.ts"
+    },
+    "dependencies": {
+        "telegraf": "^4.12.2",
+        "dotenv": "^16.4.5",
+        "axios": "^1.6.7"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    }
+}

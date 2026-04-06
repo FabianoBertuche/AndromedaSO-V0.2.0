@@ -112,6 +112,32 @@ Implemente apenas se o usuário pedir explicitamente. Foque nas obrigatórias.
 
 ---
 
+## REGRA 10: Foco em AGENTES, não em MODELOS (Lei Canônica)
+
+Este projeto é um **sistema de agentes**, não um sistema de modelos.
+
+### Lei Canônica Imutável:
+- Toda comunicação (chat, API, canais) é feita **com o agente**, não com o modelo
+- O **agente** é a entidade central - ele possui o modelo, systemPrompt, comportamento
+- O **modelo** é apenas um detalhe de implementação configurável dentro do agente
+
+### Exceção Permitida:
+- Apenas na **aba "Model"** da interface de configuração de agentes o usuário pode selecionar modelos diretamente
+- Todas as outras camadas devem tratar exclusivamente com agentes
+
+### Implementação Obrigatória:
+- **Backend**: Chat com agentes via `/api/agents/:id/chat` - nunca expor endpoints de chat com modelos diretamente para consumo de agentes
+- **Frontend**: Hooks de chat devem enviar apenas `{ agentId, messages }`, nunca `{ modelId, messages }`
+- **Futuros canais**: Qualquer novo canal de comunicação (WebSocket, Slack, Discord, etc.) deve conversar com agentes, não com modelos
+
+### Invariantes:
+- `agente.systemPrompt` → injetado automaticamente pelo backend como mensagem system
+- `agente.preferredModel` → usado automaticamente pelo backend ao chamar provider
+- Frontend nunca deve chamar `/api/providers/*` para聊天 com agentes
+- Sistema de agentes deve funcionar mesmo que modelos sejam trocados - o agente mantém sua identidade
+
+---
+
 ## Ambiente de desenvolvimento
 
 ```bash
