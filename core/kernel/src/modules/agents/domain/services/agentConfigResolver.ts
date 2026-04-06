@@ -24,10 +24,37 @@ interface ResolvedFields {
   name?: string;
   slug?: string;
   role?: string;
+  mission?: string;
+  scope?: string;
   goal?: string;
   personality?: string;
   tone?: string;
   responseStyle?: string;
+  soul?: string;
+  voice?: string;
+  rules?: {
+    must?: string[];
+    mustNot?: string[];
+    delegateWhen?: string[];
+    reviewWhen?: string[];
+    feedbackWhen?: string[];
+    interruptWhen?: string[];
+    evidenceWhen?: string[];
+  };
+  playbook?: {
+    start?: string[];
+    execute?: string[];
+    review?: string[];
+    report?: string[];
+  };
+  context?: {
+    stack?: string[];
+    architecture?: string[];
+    objectives?: string[];
+    decisions?: string[];
+    constraints?: string[];
+    patterns?: string[];
+  };
   systemInstructions: string[];
   restrictions: string[];
   securityRules: string[];
@@ -48,6 +75,16 @@ interface AgentBindings {
   provider?: string;
   model?: string;
   channel?: string;
+}
+
+function toStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => (typeof item === 'string' ? item.trim() : ''))
+    .filter((item) => item.length > 0);
 }
 
 function stableStringify(value: unknown): string {
@@ -103,10 +140,37 @@ export class AgentConfigResolver {
       name: String(templateConfig.name ?? ''),
       slug: String(templateConfig.slug ?? ''),
       role: String(templateConfig.role ?? ''),
+      mission: String(templateConfig.mission ?? ''),
+      scope: String(templateConfig.scope ?? ''),
       goal: String(templateConfig.goal ?? ''),
       personality: String(templateConfig.personality ?? ''),
       tone: String(templateConfig.tone ?? ''),
       responseStyle: String(templateConfig.responseStyle ?? ''),
+      soul: String(templateConfig.soul ?? ''),
+      voice: String(templateConfig.voice ?? ''),
+      rules: {
+        must: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.must),
+        mustNot: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.mustNot),
+        delegateWhen: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.delegateWhen),
+        reviewWhen: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.reviewWhen),
+        feedbackWhen: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.feedbackWhen),
+        interruptWhen: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.interruptWhen),
+        evidenceWhen: toStringArray((templateConfig.rules as Record<string, unknown> | undefined)?.evidenceWhen)
+      },
+      playbook: {
+        start: toStringArray((templateConfig.playbook as Record<string, unknown> | undefined)?.start),
+        execute: toStringArray((templateConfig.playbook as Record<string, unknown> | undefined)?.execute),
+        review: toStringArray((templateConfig.playbook as Record<string, unknown> | undefined)?.review),
+        report: toStringArray((templateConfig.playbook as Record<string, unknown> | undefined)?.report)
+      },
+      context: {
+        stack: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.stack),
+        architecture: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.architecture),
+        objectives: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.objectives),
+        decisions: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.decisions),
+        constraints: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.constraints),
+        patterns: toStringArray((templateConfig.context as Record<string, unknown> | undefined)?.patterns)
+      },
       systemInstructions: [...(Array.isArray(templateConfig.systemInstructions) ? templateConfig.systemInstructions : []) as string[]],
       restrictions: [...(Array.isArray(templateConfig.restrictions) ? templateConfig.restrictions : []) as string[]],
       securityRules: [...(Array.isArray(templateConfig.securityRules) ? templateConfig.securityRules : []) as string[]],
@@ -169,8 +233,31 @@ export class AgentConfigResolver {
     const tone = resolved.tone ?? agent.tone;
     const responseStyle = resolved.responseStyle ?? agent.responseStyle;
 
+    const agentGoal = resolved.goal ?? agent.goal ?? '';
+    const agentName = resolved.name ?? agent.name ?? 'Agente';
+    const agentDescription = agent.description ?? '';
+
+    const promptRules = {
+      must: resolved.rules?.must ?? resolved.restrictions,
+      mustNot: resolved.rules?.mustNot ?? resolved.securityRules,
+      delegateWhen: resolved.rules?.delegateWhen ?? [],
+      reviewWhen: resolved.rules?.reviewWhen ?? [],
+      feedbackWhen: resolved.rules?.feedbackWhen ?? [],
+      interruptWhen: resolved.rules?.interruptWhen ?? [],
+      evidenceWhen: resolved.rules?.evidenceWhen ?? []
+    };
+
     const effectiveSystemPrompt = resolveEffectiveSystemPrompt({
-      systemPrompt: role,
+      systemPrompt: `Você é ${agentName}, um agente de IA. ${agentGoal} ${agentDescription}`.trim(),
+      agentIdentity: `Nome: ${agentName}\nPapel: ${resolved.role ?? agent.role ?? ''}`.trim(),
+      mission: resolved.mission,
+      scope: resolved.scope,
+      soul: resolved.soul,
+      voice: resolved.voice,
+      responseStyle: resolved.responseStyle,
+      rules: promptRules,
+      playbook: resolved.playbook,
+      context: resolved.context,
       operatingInstructions: resolved.systemInstructions,
       doRules: resolved.restrictions,
       dontRules: resolved.securityRules
@@ -283,12 +370,54 @@ IMPORTANTE: Você é um AGENTE de IA, não apenas um modelo.
     operationalParameters: Record<string, unknown>,
     overrides: AgentOverrides
   ): void {
+    const rawOverrides = overrides as Record<string, unknown>;
+
     if (overrides.name !== undefined) resolved.name = overrides.name;
     if (overrides.role !== undefined) resolved.role = overrides.role;
+    if (typeof rawOverrides.mission === 'string') resolved.mission = rawOverrides.mission;
+    if (typeof rawOverrides.scope === 'string') resolved.scope = rawOverrides.scope;
     if (overrides.goal !== undefined) resolved.goal = overrides.goal;
     if (overrides.personality !== undefined) resolved.personality = overrides.personality;
     if (overrides.tone !== undefined) resolved.tone = overrides.tone;
     if (overrides.responseStyle !== undefined) resolved.responseStyle = overrides.responseStyle;
+    if (typeof rawOverrides.soul === 'string') resolved.soul = rawOverrides.soul;
+    if (typeof rawOverrides.voice === 'string') resolved.voice = rawOverrides.voice;
+
+    if (rawOverrides.rules && typeof rawOverrides.rules === 'object') {
+      const nextRules = rawOverrides.rules as Record<string, unknown>;
+      resolved.rules = {
+        must: toStringArray(nextRules.must),
+        mustNot: toStringArray(nextRules.mustNot),
+        delegateWhen: toStringArray(nextRules.delegateWhen),
+        reviewWhen: toStringArray(nextRules.reviewWhen),
+        feedbackWhen: toStringArray(nextRules.feedbackWhen),
+        interruptWhen: toStringArray(nextRules.interruptWhen),
+        evidenceWhen: toStringArray(nextRules.evidenceWhen)
+      };
+    }
+
+    if (rawOverrides.playbook && typeof rawOverrides.playbook === 'object') {
+      const nextPlaybook = rawOverrides.playbook as Record<string, unknown>;
+      resolved.playbook = {
+        start: toStringArray(nextPlaybook.start),
+        execute: toStringArray(nextPlaybook.execute),
+        review: toStringArray(nextPlaybook.review),
+        report: toStringArray(nextPlaybook.report)
+      };
+    }
+
+    if (rawOverrides.context && typeof rawOverrides.context === 'object') {
+      const nextContext = rawOverrides.context as Record<string, unknown>;
+      resolved.context = {
+        stack: toStringArray(nextContext.stack),
+        architecture: toStringArray(nextContext.architecture),
+        objectives: toStringArray(nextContext.objectives),
+        decisions: toStringArray(nextContext.decisions),
+        constraints: toStringArray(nextContext.constraints),
+        patterns: toStringArray(nextContext.patterns)
+      };
+    }
+
     if (overrides.systemInstructions !== undefined) {
       resolved.systemInstructions = [...resolved.systemInstructions, ...overrides.systemInstructions];
     }

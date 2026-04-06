@@ -1,24 +1,15 @@
 /**
- * Agent Mapper - Converte entre formato legado do backend e canônico do frontend
- *
- * Backend (legado) -> Frontend (canônico):
- * - personality -> persona
- * - responseStyle -> style
- * - systemInstructions -> systemPrompt (array -> string)
- * - goal -> objective
- * - description -> shortDescription
- *
- * Frontend (canônico) -> Backend (legado):
- * - persona -> personality
- * - style -> responseStyle
- * - systemPrompt -> systemInstructions (string -> array)
- * - objective -> goal
- * - shortDescription -> description
+ * Agent Mapper - Converte entre formato legado do backend e canônico do frontend.
  */
 
-import type { AgentInstance } from '../types/kernel.js';
+import type {
+  AgentBehaviorContext,
+  AgentBehaviorPlaybook,
+  AgentBehaviorRules,
+  AgentInstance,
+  AgentMemoryConfig
+} from '../types/kernel.js';
 
-// Tipo para representar o agente retornado pela API (formato legado)
 export interface BackendAgent {
   id: string;
   name: string;
@@ -27,11 +18,11 @@ export interface BackendAgent {
   description?: string;
   goal?: string;
   personality?: string;
+  tone?: string;
   responseStyle?: string;
   systemInstructions?: string[];
   createdAt?: string;
   updatedAt?: string;
-  // Outros campos opcionais que podem vir do backend
   role?: string;
   templateId?: string | null;
   isActive?: boolean;
@@ -40,7 +31,6 @@ export interface BackendAgent {
   [key: string]: unknown;
 }
 
-// Tipo para payload de atualização no backend
 export interface BackendUpdatePayload {
   name?: string;
   description?: string;
@@ -56,315 +46,294 @@ export interface BackendUpdatePayload {
   [key: string]: unknown;
 }
 
-/**
- * Converte array de strings para string com separador duplo de newline
- */
+const DEFAULT_MEMORY: AgentMemoryConfig = {
+  memorySessionEnabled: true,
+  memoryScopeType: 'session',
+  memoryMaxEntries: 50,
+  memoryShared: false,
+  memoryRetentionPeriod: 'session'
+};
+
+const DEFAULT_RULES: AgentBehaviorRules = {
+  must: [],
+  mustNot: [],
+  delegateWhen: [],
+  reviewWhen: [],
+  feedbackWhen: [],
+  interruptWhen: [],
+  evidenceWhen: []
+};
+
+const DEFAULT_PLAYBOOK: AgentBehaviorPlaybook = {
+  start: [],
+  execute: [],
+  review: [],
+  report: []
+};
+
+const DEFAULT_CONTEXT: AgentBehaviorContext = {
+  stack: [],
+  architecture: [],
+  objectives: [],
+  decisions: [],
+  constraints: [],
+  patterns: []
+};
+
+function asStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === 'string').map((item) => item.trim()).filter(Boolean);
+}
+
+function asRecord(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return value as Record<string, unknown>;
+}
+
 function joinInstructions(instructions: string[] | undefined): string {
   if (!instructions || !Array.isArray(instructions)) return '';
   return instructions.join('\n\n');
 }
 
-/**
- * Converte string para array de instruções, split por separador duplo de newline
- */
 function splitInstructions(systemPrompt: string | undefined): string[] {
   if (!systemPrompt || typeof systemPrompt !== 'string') return [];
-  const split = systemPrompt.split(/\n\n+/);
-  return split.filter(line => line.trim().length > 0);
+  return systemPrompt.split(/\n\n+/).map((line) => line.trim()).filter(Boolean);
 }
 
-/**
- * Valida e converte timestamp do backend para formato ISO
- */
 function parseTimestamp(value: unknown): string {
   if (!value) return new Date().toISOString();
   const date = new Date(value as string | number | Date);
-  return isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
+  return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
 }
 
-/**
- * Valida e converte status do backend para formato canônico
- */
 function parseStatus(status: unknown): AgentInstance['status'] {
-  const validStatuses: AgentInstance['status'][] = ['draft', 'active', 'inactive', 'archived', 'deleted'];
-  if (typeof status === 'string' && validStatuses.includes(status as AgentInstance['status'])) {
-    return status as AgentInstance['status'];
-  }
-  return 'draft';
+  const valid: AgentInstance['status'][] = ['draft', 'active', 'inactive', 'archived', 'deleted', 'disabled'];
+  return typeof status === 'string' && valid.includes(status as AgentInstance['status'])
+    ? (status as AgentInstance['status'])
+    : 'draft';
 }
 
-/**
- * Valida e converte visibility para formato canônico
- */
 function parseVisibility(visibility: unknown): AgentInstance['visibility'] {
-  const validVisibilities: AgentInstance['visibility'][] = ['private', 'internal', 'public'];
-  if (typeof visibility === 'string' && validVisibilities.includes(visibility as AgentInstance['visibility'])) {
-    return visibility as AgentInstance['visibility'];
-  }
-  return 'private';
+  const valid: AgentInstance['visibility'][] = ['private', 'internal', 'public', 'team'];
+  return typeof visibility === 'string' && valid.includes(visibility as AgentInstance['visibility'])
+    ? (visibility as AgentInstance['visibility'])
+    : 'private';
 }
 
-/**
- * Converte dados do backend (legado) para formato canônico do frontend
- *
- * @param agent - Dados retornados pela API do backend
- * @returns Agente no formato canônico do frontend
- */
+function setOverride(target: Record<string, unknown>, key: string, value: unknown): void {
+  if (value !== undefined) {
+    target[key] = value;
+  }
+}
+
 export function mapBackendToFrontend(agent: BackendAgent): AgentInstance {
   if (!agent || typeof agent !== 'object') {
     throw new Error('Invalid agent data: expected object');
   }
 
-  const now = new Date().toISOString();
-  const overrides = (agent.overrides as Record<string, unknown>) || {};
+  const overrides = asRecord(agent.overrides);
+  const rules = {
+    ...DEFAULT_RULES,
+    ...(asRecord(overrides.rules) as Partial<AgentBehaviorRules>)
+  };
+  const playbook = {
+    ...DEFAULT_PLAYBOOK,
+    ...(asRecord(overrides.playbook) as Partial<AgentBehaviorPlaybook>)
+  };
+  const context = {
+    ...DEFAULT_CONTEXT,
+    ...(asRecord(overrides.context) as Partial<AgentBehaviorContext>)
+  };
+  const memory = {
+    ...DEFAULT_MEMORY,
+    ...(asRecord(overrides.memory) as Partial<AgentMemoryConfig>)
+  };
+
+  memory.memorySessionEnabled = (overrides.memorySessionEnabled as boolean | undefined) ?? memory.memorySessionEnabled;
+  memory.memoryScopeType = (overrides.memoryScopeType as AgentMemoryConfig['memoryScopeType'] | undefined) ?? memory.memoryScopeType;
+  memory.memoryMaxEntries = (overrides.memoryMaxEntries as number | undefined) ?? memory.memoryMaxEntries;
+  memory.memoryShared = (overrides.memoryShared as boolean | undefined) ?? memory.memoryShared;
+  memory.memoryRetentionPeriod = (overrides.memoryRetentionPeriod as AgentMemoryConfig['memoryRetentionPeriod'] | undefined) ?? memory.memoryRetentionPeriod;
 
   return {
-    // Identidade (campos diretos)
     id: String(agent.id ?? ''),
     name: String(agent.name ?? ''),
     slug: String(agent.slug ?? agent.name ?? ''),
-    owner: '',
-    source: '',
-    version: '1.0.0',
-
-    // Status e visibilidade
     status: parseStatus(agent.status),
     visibility: parseVisibility(agent.visibility),
-    isActive: Boolean(agent.isActive ?? false),
-
-    // Mapeamento de campos legados para canônicos
-    shortDescription: String(agent.description ?? ''),
-    longDescription: '',
-    objective: String(agent.goal ?? ''),
-    persona: String(agent.personality ?? ''),
-    style: String(agent.responseStyle ?? ''),
-    systemPrompt: joinInstructions(agent.systemInstructions),
-
-    // Papel e objetivo
-    role: String(agent.role ?? ''),
-    mission: '',
-    domain: '',
-    successCriteria: [],
-
-    // Personalidade (campos canônicos sem equivalente no backend)
-    tone: '',
-    behaviorProfile: '',
-    interactionMode: 'reactive',
-    defaultLanguage: 'pt-BR',
-    tags: [],
-    categories: [],
-
-    // Instruções e políticas
-    operatingInstructions: [],
-    doRules: [],
-    dontRules: [],
-    guardrails: [],
-    escalationRules: [],
-
-    // Template e origem
-    templateId: agent.templateId ?? null,
-    isTemplateDerived: Boolean(agent.templateId),
-    templateSource: null,
-    templateVariant: null,
-    templateManifestRef: null,
-    originTemplateVersion: null,
-    templateDefaultsSnapshot: null,
-    templateInheritanceMode: 'copy-on-create',
-    templateLockPolicy: 'none',
-
-    // Modelo e execução (lê de overrides se existir)
-    preferredModel: (overrides.preferredModel as string | null) ?? null,
-    allowedModels: (overrides.allowedModels as string[]) ?? [],
-    providerConstraints: (overrides.providerConstraints as string[]) ?? [],
-    channelConstraints: (overrides.channelConstraints as string[]) ?? [],
-    temperature: (overrides.temperature as number) ?? 0.7,
-    topP: (overrides.topP as number) ?? 1.0,
-    maxTokens: (overrides.maxTokens as number | null) ?? null,
-    responseFormat: (overrides.responseFormat as AgentInstance['responseFormat']) ?? 'text',
-    reasoningMode: (overrides.reasoningMode as AgentInstance['reasoningMode']) ?? null,
-    timeoutMs: (overrides.timeoutMs as number) ?? 30000,
-    retryPolicy: {
-      maxRetries: (overrides.retryPolicy as { maxRetries?: number })?.maxRetries ?? 3,
-      backoffMs: (overrides.retryPolicy as { backoffMs?: number })?.backoffMs ?? 1000,
-      strategy: ((overrides.retryPolicy as { strategy?: string })?.strategy ?? 'exponential') as 'exponential' | 'fixed',
-    },
-
-    // Capacidades (defaults)
-    toolsEnabled: false,
-    knowledgeEnabled: false,
-    memoryEnabled: false,
-    routingEnabled: false,
-    handoffEnabled: false,
-    humanEscalationEnabled: false,
-    capabilities: [],
-
-    // Canais (defaults)
-    allowedChannels: [],
-    defaultChannelBehavior: {},
-    channelOverrides: {},
-
-    // Governança
-    isEditable: true,
-    auditMetadata: {
-      createdBy: null,
-      updatedBy: null,
-      reason: null,
-    },
-
-    // Ciclo de vida
-    originType: 'manual',
-    cloneOfAgentId: null,
-    isDeleted: false,
+    owner: String(overrides.owner ?? 'system'),
+    source: String(overrides.source ?? (agent.templateId ? 'template' : 'manual')),
+    version: String(overrides.version ?? '1.0.0'),
+    createdAt: parseTimestamp(agent.createdAt),
+    updatedAt: parseTimestamp(agent.updatedAt),
     deletedAt: null,
     activatedAt: null,
     deactivatedAt: null,
-    createdAt: parseTimestamp(agent.createdAt),
-    updatedAt: parseTimestamp(agent.updatedAt),
+    isDeleted: false,
+    originType: 'manual',
+    cloneOfAgentId: (overrides.cloneOfAgentId as string | null | undefined) ?? null,
 
-    // Resolução de configuração
-    overrides: agent.overrides ?? {},
+    description: String(agent.description ?? ''),
+    shortDescription: String(agent.description ?? ''),
+    longDescription: String(overrides.longDescription ?? ''),
+
+    role: String(agent.role ?? ''),
+    goal: String(agent.goal ?? ''),
+    objective: String(agent.goal ?? ''),
+    mission: String(overrides.mission ?? ''),
+    domain: String(overrides.domain ?? ''),
+    successCriteria: asStringArray(overrides.successCriteria),
+    personality: String(agent.personality ?? ''),
+    persona: String(agent.personality ?? ''),
+    tone: String(agent.tone ?? overrides.tone ?? ''),
+    responseStyle: String(agent.responseStyle ?? ''),
+    style: String(agent.responseStyle ?? ''),
+    behaviorProfile: String(overrides.behaviorProfile ?? ''),
+    interactionMode: (overrides.interactionMode as AgentInstance['interactionMode'] | undefined) ?? 'reactive',
+    defaultLanguage: String(overrides.defaultLanguage ?? 'pt-BR'),
+
+    soul: String(overrides.soul ?? ''),
+    voice: String(overrides.voice ?? ''),
+    rules,
+    playbook,
+    context,
+
+    systemInstructions: asStringArray(agent.systemInstructions),
+    operatingInstructions: asStringArray(overrides.operatingInstructions),
+    restrictions: asStringArray(overrides.restrictions),
+    securityRules: asStringArray(overrides.securityRules),
+    doRules: asStringArray(overrides.doRules).length > 0 ? asStringArray(overrides.doRules) : rules.must,
+    dontRules: asStringArray(overrides.dontRules).length > 0 ? asStringArray(overrides.dontRules) : rules.mustNot,
+    guardrails: asStringArray(overrides.guardrails),
+    escalationRules: asStringArray(overrides.escalationRules),
+    systemPrompt: joinInstructions(agent.systemInstructions),
+
+    tags: asStringArray(overrides.tags),
+    categories: asStringArray(overrides.categories),
+
+    templateId: (agent.templateId ?? null) as string | null,
+    sourceTemplateId: String(overrides.sourceTemplateId ?? agent.templateId ?? ''),
+    isTemplateDerived: Boolean(agent.templateId),
+    templateSource: (overrides.templateSource as string | null | undefined) ?? null,
+    templateVariant: (overrides.templateVariant as string | null | undefined) ?? null,
+    templateManifestRef: (overrides.templateManifestRef as string | null | undefined) ?? null,
+    originTemplateVersion: (overrides.originTemplateVersion as string | null | undefined) ?? null,
+    templateDefaultsSnapshot: (overrides.templateDefaultsSnapshot as Record<string, unknown> | null | undefined) ?? null,
+    templateInheritanceMode: (overrides.templateInheritanceMode as AgentInstance['templateInheritanceMode'] | undefined) ?? 'copy-on-create',
+    templateLockPolicy: (overrides.templateLockPolicy as AgentInstance['templateLockPolicy'] | undefined) ?? 'none',
+
+    preferredModel: (overrides.preferredModel as string | null | undefined) ?? null,
+    compatibleModelStrategy: (overrides.compatibleModelStrategy as string | null | undefined) ?? null,
+    allowedModels: asStringArray(overrides.allowedModels),
+    providerConstraints: asStringArray(overrides.providerConstraints),
+    channelConstraints: asStringArray(overrides.channelConstraints),
+    temperature: (overrides.temperature as number | undefined) ?? 0.7,
+    topP: (overrides.topP as number | undefined) ?? 1,
+    maxTokens: (overrides.maxTokens as number | null | undefined) ?? null,
+    responseFormat: (overrides.responseFormat as AgentInstance['responseFormat'] | undefined) ?? 'text',
+    reasoningMode: (overrides.reasoningMode as AgentInstance['reasoningMode'] | undefined) ?? null,
+    timeoutMs: (overrides.timeoutMs as number | undefined) ?? 30000,
+    retryPolicy: {
+      maxRetries: (asRecord(overrides.retryPolicy).maxRetries as number | undefined) ?? 3,
+      backoffMs: (asRecord(overrides.retryPolicy).backoffMs as number | undefined) ?? 1000,
+      strategy: (asRecord(overrides.retryPolicy).strategy as AgentInstance['retryPolicy']['strategy'] | undefined) ?? 'exponential'
+    },
+
+    toolsEnabled: Boolean(overrides.toolsEnabled ?? false),
+    knowledgeEnabled: Boolean(overrides.knowledgeEnabled ?? false),
+    memoryEnabled: Boolean(overrides.memoryEnabled ?? false),
+    routingEnabled: Boolean(overrides.routingEnabled ?? false),
+    handoffEnabled: Boolean(overrides.handoffEnabled ?? false),
+    humanEscalationEnabled: Boolean(overrides.humanEscalationEnabled ?? false),
+    enabledCapabilities: asStringArray(overrides.enabledCapabilities),
+    capabilities: asStringArray(overrides.capabilities),
+
+    allowedChannels: asStringArray(overrides.allowedChannels),
+    defaultChannelBehavior: asRecord(overrides.defaultChannelBehavior),
+    channelOverrides: asRecord(overrides.channelOverrides) as Record<string, Record<string, unknown>>,
+
+    memorySessionEnabled: memory.memorySessionEnabled,
+    memoryScopeType: memory.memoryScopeType,
+    memoryMaxEntries: memory.memoryMaxEntries,
+    memoryShared: memory.memoryShared,
+    memoryRetentionPeriod: memory.memoryRetentionPeriod,
+    memory,
+
+    isActive: Boolean(agent.isActive ?? false),
+    isEditable: Boolean(overrides.isEditable ?? true),
+    auditMetadata: {
+      createdBy: (overrides.createdBy as string | null | undefined) ?? null,
+      updatedBy: (overrides.updatedBy as string | null | undefined) ?? null,
+      reason: (overrides.reason as string | null | undefined) ?? null
+    },
+
+    overrides,
     explicitParameters: {},
-    resolvedConfig: null,
-    resolutionTrace: null,
-    effectiveSystemPrompt: null,
-    effectiveBehaviorProfile: null,
-    effectiveExecutionPolicy: null,
-    effectiveChannelPolicy: null,
-    effectiveModelPolicy: null,
-    configSnapshotVersion: 1,
-    lastResolvedAt: null,
-    lastValidatedAt: null,
+    resolvedConfig: (agent.resolvedConfig as Record<string, unknown> | null | undefined) ?? null,
+    resolutionTrace: (agent.resolutionTrace as Array<Record<string, unknown>> | null | undefined) ?? null,
+    effectiveSystemPrompt: (agent.effectiveSystemPrompt as string | null | undefined) ?? null,
+    effectiveBehaviorProfile: (agent.effectiveBehaviorProfile as AgentInstance['effectiveBehaviorProfile']) ?? null,
+    effectiveExecutionPolicy: (agent.effectiveExecutionPolicy as AgentInstance['effectiveExecutionPolicy']) ?? null,
+    effectiveChannelPolicy: (agent.effectiveChannelPolicy as AgentInstance['effectiveChannelPolicy']) ?? null,
+    effectiveModelPolicy: (agent.effectiveModelPolicy as AgentInstance['effectiveModelPolicy']) ?? null,
+    configSnapshotVersion: (overrides.configSnapshotVersion as number | undefined) ?? 1,
+    lastResolvedAt: (agent.lastResolvedAt as string | null | undefined) ?? null,
+    lastValidatedAt: (agent.lastValidatedAt as string | null | undefined) ?? null
   };
 }
 
-/**
- * Converte atualizações canônicas do frontend para formato legado do backend
- *
- * @param updates - Atualizações no formato canônico do frontend
- * @returns Payload para enviar à API do backend
- */
 export function mapFrontendToBackend(updates: Partial<AgentInstance>): BackendUpdatePayload {
   if (!updates || typeof updates !== 'object') {
     throw new Error('Invalid updates: expected object');
   }
 
   const payload: BackendUpdatePayload = {};
+  const overrides: Record<string, unknown> = {};
 
-  // Campos diretos (sem transformação)
-  if ('name' in updates && updates.name !== undefined) {
-    payload.name = updates.name;
+  if (updates.name !== undefined) payload.name = updates.name;
+  if (updates.role !== undefined) payload.role = updates.role;
+  if (updates.status !== undefined) payload.status = updates.status;
+  if (updates.visibility !== undefined) payload.visibility = updates.visibility;
+  if (updates.isActive !== undefined) payload.isActive = updates.isActive;
+  if (updates.shortDescription !== undefined) payload.description = updates.shortDescription;
+  if (updates.objective !== undefined) payload.goal = updates.objective;
+  if (updates.persona !== undefined) payload.personality = updates.persona;
+  if (updates.style !== undefined) payload.responseStyle = updates.style;
+  if (updates.systemPrompt !== undefined) payload.systemInstructions = splitInstructions(updates.systemPrompt);
+
+  setOverride(overrides, 'preferredModel', updates.preferredModel);
+  setOverride(overrides, 'temperature', updates.temperature);
+  setOverride(overrides, 'maxTokens', updates.maxTokens);
+  setOverride(overrides, 'timeoutMs', updates.timeoutMs);
+  setOverride(overrides, 'topP', updates.topP);
+  setOverride(overrides, 'responseFormat', updates.responseFormat);
+  setOverride(overrides, 'reasoningMode', updates.reasoningMode);
+  setOverride(overrides, 'retryPolicy', updates.retryPolicy);
+
+  setOverride(overrides, 'soul', updates.soul);
+  setOverride(overrides, 'voice', updates.voice);
+  setOverride(overrides, 'rules', updates.rules);
+  setOverride(overrides, 'playbook', updates.playbook);
+  setOverride(overrides, 'context', updates.context);
+
+  setOverride(overrides, 'memory', updates.memory);
+  setOverride(overrides, 'memorySessionEnabled', updates.memorySessionEnabled);
+  setOverride(overrides, 'memoryScopeType', updates.memoryScopeType);
+  setOverride(overrides, 'memoryMaxEntries', updates.memoryMaxEntries);
+  setOverride(overrides, 'memoryShared', updates.memoryShared);
+  setOverride(overrides, 'memoryRetentionPeriod', updates.memoryRetentionPeriod);
+
+  if (updates.overrides && typeof updates.overrides === 'object') {
+    Object.assign(overrides, updates.overrides);
   }
 
-  if ('role' in updates && updates.role !== undefined) {
-    payload.role = updates.role;
-  }
-
-  if ('status' in updates && updates.status !== undefined) {
-    payload.status = updates.status;
-  }
-
-  if ('visibility' in updates && updates.visibility !== undefined) {
-    payload.visibility = updates.visibility;
-  }
-
-  if ('isActive' in updates && updates.isActive !== undefined) {
-    payload.isActive = updates.isActive;
-  }
-
-  // Mapeamento de campos canônicos para legados
-  if ('shortDescription' in updates && updates.shortDescription !== undefined) {
-    payload.description = updates.shortDescription;
-  }
-
-  if ('objective' in updates && updates.objective !== undefined) {
-    payload.goal = updates.objective;
-  }
-
-  if ('persona' in updates && updates.persona !== undefined) {
-    payload.personality = updates.persona;
-  }
-
-  if ('style' in updates && updates.style !== undefined) {
-    payload.responseStyle = updates.style;
-  }
-
-  if ('systemPrompt' in updates && updates.systemPrompt !== undefined) {
-    payload.systemInstructions = splitInstructions(updates.systemPrompt);
-  }
-
-  // Preserva overrides se existirem
-  if ('overrides' in updates && updates.overrides !== undefined) {
-    payload.overrides = updates.overrides;
-  }
-
-  // Campos de modelo e execução
-  if ('preferredModel' in updates && updates.preferredModel !== undefined) {
-    // O backend pode não suportar preferredModel diretamente
-    // Então vamos colocar nos overrides
-    payload.overrides = {
-      ...payload.overrides,
-      preferredModel: updates.preferredModel
-    };
-  }
-
-  if ('temperature' in updates && updates.temperature !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      temperature: updates.temperature
-    };
-  }
-
-  if ('maxTokens' in updates && updates.maxTokens !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      maxTokens: updates.maxTokens
-    };
-  }
-
-  if ('timeoutMs' in updates && updates.timeoutMs !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      timeoutMs: updates.timeoutMs
-    };
-  }
-
-  if ('topP' in updates && updates.topP !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      topP: updates.topP
-    };
-  }
-
-  if ('responseFormat' in updates && updates.responseFormat !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      responseFormat: updates.responseFormat
-    };
-  }
-
-  if ('reasoningMode' in updates && updates.reasoningMode !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      reasoningMode: updates.reasoningMode
-    };
-  }
-
-  if ('retryPolicy' in updates && updates.retryPolicy !== undefined) {
-    payload.overrides = {
-      ...payload.overrides,
-      retryPolicy: updates.retryPolicy
-    };
+  if (Object.keys(overrides).length > 0) {
+    payload.overrides = overrides;
   }
 
   return payload;
 }
 
-/**
- * Converte array de agentes do backend para array de agentes canônicos
- *
- * @param agents - Lista de agentes retornada pela API
- * @returns Lista de agentes no formato canônico
- */
 export function mapBackendAgentsToFrontend(agents: BackendAgent[]): AgentInstance[] {
   if (!Array.isArray(agents)) return [];
   return agents.map(mapBackendToFrontend);

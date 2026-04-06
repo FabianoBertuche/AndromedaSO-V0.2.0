@@ -5,10 +5,14 @@ export const agentOverridesSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().optional(),
   role: z.string().min(1).optional(),
+  mission: z.string().optional(),
+  scope: z.string().optional(),
   goal: z.string().min(1).optional(),
   personality: z.string().min(1).optional(),
   tone: z.string().min(1).optional(),
   responseStyle: z.string().min(1).optional(),
+  soul: z.string().optional(),
+  voice: z.string().optional(),
   systemInstructions: z.array(z.string().min(1)).optional(),
   restrictions: z.array(z.string().min(1)).optional(),
   securityRules: z.array(z.string().min(1)).optional(),
@@ -18,6 +22,41 @@ export const agentOverridesSchema = z.object({
   compatibleModelStrategy: z.string().min(1).nullable().optional(),
   allowedChannels: z.array(z.string().min(1)).optional(),
   enabledCapabilities: z.array(z.string().min(1)).optional(),
+  rules: z.object({
+    must: z.array(z.string().min(1)).optional(),
+    mustNot: z.array(z.string().min(1)).optional(),
+    delegateWhen: z.array(z.string().min(1)).optional(),
+    reviewWhen: z.array(z.string().min(1)).optional(),
+    feedbackWhen: z.array(z.string().min(1)).optional(),
+    interruptWhen: z.array(z.string().min(1)).optional(),
+    evidenceWhen: z.array(z.string().min(1)).optional()
+  }).optional(),
+  playbook: z.object({
+    start: z.array(z.string().min(1)).optional(),
+    execute: z.array(z.string().min(1)).optional(),
+    review: z.array(z.string().min(1)).optional(),
+    report: z.array(z.string().min(1)).optional()
+  }).optional(),
+  context: z.object({
+    stack: z.array(z.string().min(1)).optional(),
+    architecture: z.array(z.string().min(1)).optional(),
+    objectives: z.array(z.string().min(1)).optional(),
+    decisions: z.array(z.string().min(1)).optional(),
+    constraints: z.array(z.string().min(1)).optional(),
+    patterns: z.array(z.string().min(1)).optional()
+  }).optional(),
+  memory: z.object({
+    memorySessionEnabled: z.boolean().optional(),
+    memoryScopeType: z.enum(['session', 'persistent']).optional(),
+    memoryMaxEntries: z.number().int().positive().optional(),
+    memoryShared: z.boolean().optional(),
+    memoryRetentionPeriod: z.enum(['session', '24h', '7d', '30d', 'forever']).optional()
+  }).optional(),
+  memorySessionEnabled: z.boolean().optional(),
+  memoryScopeType: z.enum(['session', 'persistent']).optional(),
+  memoryMaxEntries: z.number().int().positive().optional(),
+  memoryShared: z.boolean().optional(),
+  memoryRetentionPeriod: z.enum(['session', '24h', '7d', '30d', 'forever']).optional(),
   operationalParameters: z.record(z.string(), z.unknown()).optional()
 });
 

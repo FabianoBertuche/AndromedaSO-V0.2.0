@@ -37,14 +37,14 @@ function MainApp() {
   ];
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#00ff4122_0%,#00d4ff11_35%,#030712_100%)] p-4 text-white sm:p-8">
-      <header className="mx-auto mb-8 max-w-6xl">
+    <div className="min-h-screen w-full bg-[radial-gradient(circle_at_top,#00ff4122_0%,#00d4ff11_35%,#030712_100%)] px-4 text-white sm:px-6 lg:px-8">
+      <header className="mb-8 w-full">
         <h1 className="font-mono text-4xl font-black tracking-wider text-green-300 drop-shadow-[0_0_14px_rgba(0,255,65,0.75)] sm:text-6xl">
           Andromeda OS
         </h1>
         <p className="mt-2 max-w-2xl font-mono text-lg text-cyan-300/90">LLM Connection Console + Router Intelligence</p>
 
-        <nav className="mt-4 flex flex-wrap gap-2">
+        <nav className="mt-4 flex w-full flex-wrap gap-2">
           {navItems.map((item) => (
             <button
               key={item.key}
@@ -60,7 +60,7 @@ function MainApp() {
       </header>
 
       {tab === 'dashboard' && (
-        <main className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2">
+        <main className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           <div className="transition-all hover:scale-[1.01]">
             <StatusCard status={data} isLoading={isLoading || isFetching} error={(error as Error) ?? null} />
           </div>
@@ -80,38 +80,38 @@ function MainApp() {
             <CostDashboard />
           </div>
 
-          <div className="md:col-span-2 transition-all hover:scale-[1.005]">
+          <div className="md:col-span-2 xl:col-span-3 transition-all hover:scale-[1.005]">
             <Orchestrator />
           </div>
         </main>
       )}
 
       {tab === 'agents' && (
-        <main className="mx-auto max-w-6xl">
+        <main className="w-full min-h-[calc(100vh-8rem)]">
           <Agents />
         </main>
       )}
 
       {tab === 'costs' && (
-        <main className="mx-auto max-w-6xl">
+        <main className="w-full">
           <CostDashboard />
         </main>
       )}
 
       {tab === 'models' && (
-        <main className="mx-auto max-w-6xl">
+        <main className="w-full">
           <LlmConnectionConsole />
         </main>
       )}
 
       {tab === 'chat' && (
-        <main className="mx-auto max-w-6xl">
+        <main className="w-full">
           <ModelChatConsole />
         </main>
       )}
 
       {tab === 'router' && (
-        <main className="mx-auto max-w-6xl">
+        <main className="w-full">
           <RouterIntelligence />
         </main>
       )}

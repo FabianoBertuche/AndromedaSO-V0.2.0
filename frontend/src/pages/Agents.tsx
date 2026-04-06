@@ -18,6 +18,7 @@ import type {
 import { mapBackendToFrontend, mapFrontendToBackend } from '../lib/agentMapper.js';
 import {
   Bot,
+  BrainCircuit,
   Copy,
   Cpu,
   History,
@@ -42,6 +43,7 @@ import { HistoryTab } from '../components/agents/tabs/HistoryTab.js';
 import { PerformanceTab } from '../components/agents/tabs/PerformanceTab.js';
 import { SuggestionsTab } from '../components/agents/tabs/SuggestionsTab.js';
 import { BehaviorTab } from '../components/agents/tabs/BehaviorTab.js';
+import { MemoryTab } from '../components/agents/tabs/MemoryTab.js';
 import { SafeguardsTab } from '../components/agents/tabs/SafeguardsTab.js';
 import { SandboxTab } from '../components/agents/tabs/SandboxTab.js';
 import { ChatTab } from '../components/agents/tabs/ChatTab.js';
@@ -78,7 +80,7 @@ function useModelCatalog() {
 // Tipos
 // ============================================
 
-type AgentTab = 'identity' | 'model' | 'history' | 'performance' | 'suggestions' | 'behavior' | 'safeguards' | 'sandbox' | 'chat' | 'capabilities' | 'channels';
+type AgentTab = 'identity' | 'model' | 'history' | 'performance' | 'suggestions' | 'behavior' | 'memory' | 'safeguards' | 'sandbox' | 'chat' | 'capabilities' | 'channels';
 
 interface TabConfig {
   id: AgentTab;
@@ -126,6 +128,7 @@ const TABS_CONFIG: TabConfig[] = [
   { id: 'performance', label: 'Performance', icon: LineChart },
   { id: 'suggestions', label: 'Suggestions', icon: Lightbulb },
   { id: 'behavior', label: 'Behavior', icon: SlidersHorizontal },
+  { id: 'memory', label: 'Memory', icon: BrainCircuit },
   { id: 'safeguards', label: 'Safeguards', icon: Shield },
   { id: 'sandbox', label: 'Sandbox', icon: Settings2 },
   { id: 'chat', label: 'Chat', icon: Bot },
@@ -210,9 +213,6 @@ export function Agents() {
   const agents = agentsData ? agentsData.map(agent => mapBackendToFrontend(agent as unknown as import('../lib/agentMapper.js').BackendAgent)) : [];
   const { data: templates } = useAgentTemplates();
   const { models } = useModelCatalog();
-
-  // Debug logs - REMOVER APÓS DEBUG
-  console.log('Agents - Models from catalog:', models);
 
   // State
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
@@ -405,7 +405,6 @@ export function Agents() {
       case 'identity':
         return <IdentityTab {...tabProps} />;
       case 'model':
-        console.log('Agents - Passing models to ModelTab:', models);
         return <ModelTab {...tabProps} availableModels={models} />;
       case 'history':
         return <HistoryTab {...tabProps} />;
@@ -415,6 +414,8 @@ export function Agents() {
         return <SuggestionsTab {...tabProps} />;
       case 'behavior':
         return <BehaviorTab {...tabProps} />;
+      case 'memory':
+        return <MemoryTab {...tabProps} />;
       case 'safeguards':
         return <SafeguardsTab {...tabProps} />;
       case 'sandbox':
